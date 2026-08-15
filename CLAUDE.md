@@ -1,7 +1,26 @@
-# parksanggyu — personal website of the artist Park Sang Gyu
+# CLAUDE.md
 
-Static site. No build step, no framework. Deployed on Cloudflare Pages with
-`public/` as the output directory.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+Personal website of the artist Park Sang Gyu. Static site: no build step, no
+framework, no dependencies. Deployed on Cloudflare Pages with `public/` as the
+output directory — files are served exactly as committed.
+
+## Commands
+
+```
+./serve.sh [port]                 # local preview → http://localhost:8000
+python3 scripts/check-links.py    # the test suite: every internal href/src/srcset must resolve (exit 1 on failure)
+scripts/build-images.sh           # source JPEGs (../sangyu/arts) → WebP in public/img/ (needs cwebp: brew install webp)
+```
+
+- Run `check-links.py` after adding, moving, or renaming any page or image.
+  There is no other lint/test tooling.
+- Plain `python3 -m http.server` 404s on the clean `…/ko` URLs (the `.html`
+  resolution is Cloudflare's job in production); `serve.sh` wraps
+  `scripts/serve.py`, which adds the same fallback locally.
+  `npx wrangler pages dev public` also works and additionally emulates
+  `_headers`.
 
 ## Principles (non-negotiable)
 
@@ -18,9 +37,10 @@ Static site. No build step, no framework. Deployed on Cloudflare Pages with
 - **English and Korean.** English is the default. Korean is a `ko.html` file
   next to each page's `index.html`, served at a clean `…/ko` URL by Cloudflare
   Pages (`/works/ecology/` ↔ `/works/ecology/ko`; the Korean landing is
-  `/ko`). Every page links its counterpart (`hreflang` alternates + the header
-  language toggle) and carries a self-referencing `rel=canonical` (relative
-  for now — make absolute once the domain exists).
+  `/ko`). This layout is the owner's choice — do not restructure it into a
+  `/ko/` directory tree. Every page links its counterpart (`hreflang`
+  alternates + the header language toggle) and carries a self-referencing
+  `rel=canonical` (relative for now — make absolute once the domain exists).
 - **Hypermedia philosophy.** HATEOAS: every page reachable by links, navigation
   is plain `<a>`. Semantic HTML5 (`<article>`, `<figure>`, `<time>`, `<search>`,
   `rel="prev/next"`). Schema.org via Microdata (`VisualArtwork`, `Person`,
@@ -38,67 +58,33 @@ Static site. No build step, no framework. Deployed on Cloudflare Pages with
 ## Structure
 
 ```
-public/                     ← Cloudflare Pages output directory
-  index.html                landing — only the centered name, linking to /works/
-  ko.html                   landing (KO), served at /ko
-  works/index.html          gallery list (EN) — masonry + bottom search/filter bar
-  works/ko.html             gallery list (KO), served at /works/ko
-  works/<slug>/index.html   one hand-made page per artwork (EN)
-  works/<slug>/ko.html                                      (KO)
-  exhibitions/origin-seoul-2026/   self-contained exhibition mini-site:
-    index.html, ko.html            EN + KO pages
-    origin-seoul-2026.css          its styles (dark, bitcoin orange)
-  css/site.css              shared styles (design system)
-  js/gallery.js             search + tag filter for the list page (~50 lines)
-  img/<slug>/{480,960,1600}.webp   one folder per artwork
-                                   (extra views: collective-gaze/view2-*.webp)
-  _headers                  Cache-Control rules
-  404.html, robots.txt
-scripts/build-images.sh     JPEG (../sangyu/arts) → WebP (public/img)
-scripts/serve.py            local preview with Cloudflare-style clean URLs
-DESIGN.md                   the design system
-TODO.md                     open items waiting on the owner (in Korean)
+public/                          ← Cloudflare Pages output directory
+  index.html, ko.html            landing (EN/KO) — only the centered name, linking to /works/
+  works/index.html, ko.html      gallery list — masonry + bottom search/filter bar
+  works/<slug>/index.html, ko.html   one hand-made page per artwork
+  exhibitions/<name>/            self-contained exhibition mini-sites (see WORKS.md)
+  css/site.css                   shared styles (design system)
+  js/gallery.js                  search + tag filter for the list page (~50 lines)
+  img/<slug>/{480,960,1600}.webp one folder per artwork (extra views: <slug>/view2-*.webp)
+  _headers                       Cache-Control rules
+scripts/                         build-images.sh · serve.py · check-links.py
 ```
 
-## Works (single source of truth)
+## Content rules
 
-Order below = curated order on the list page and the `rel=prev/next` chain.
+- `WORKS.md` is the single source of truth for the works: slugs, titles,
+  years, media, tags, and the curated order (= list-page order and the
+  `rel=prev/next` chain). It also documents the ORIGIN SEOUL 2026 exhibition
+  mini-site.
+- Every artwork page has a "to be written" description placeholder on
+  purpose — **do not invent descriptions, years, or dimensions.** Open items
+  waiting on the owner live in `TODO.md` (kept in Korean, deliberately).
+- Source artwork JPEGs live outside the repo in `../sangyu/arts`
+  (note the different spelling: `sangyu`, not `sangGyu`).
 
-| slug | title (EN) | title (KO) | year | medium | tags |
-|---|---|---|---|---|---|
-| the-stranger | The Stranger (Triptych) | 이방인 (삼면화) | 2025 | Ceramic, 30 × 20 cm | ceramic |
-| ecology | Ecology | 생태 | 2023 | Ceramic, 30 × 30 × 25 cm | ceramic |
-| collective-gaze | Collective Gaze | — | TBD | Ceramic | ceramic |
-| brave-new-world | Brave New World | — | TBD | Mixed-media installation | installation |
-| beyond-the-predetermined | Beyond the Predetermined | — | TBD | Mixed-media installation | installation |
-| a-cushion | A Cushion | — | TBD | Ceramic | ceramic |
-| untitled | Untitled | 무제 | TBD | Ceramic | ceramic |
+## Gotchas
 
-Notes: `collective-gaze` has a second view, `collective-gaze-2-*.webp`.
-The source file "A Cusion.jpg" is a typo; the site spells it "A Cushion".
-The ORIGIN SEOUL 2026 exhibition (Aug 31 – Sep 2, 2026, Seoul) appears as the
-first card on the list page and features Ecology and The Stranger.
-
-## Exhibition mini-site
-
-`/exhibitions/origin-seoul-2026/` is the page behind the single QR code printed
-next to the works at ORIGIN SEOUL 2026 (originseoulbtc.com). One QR → artist
-intro + both works + "Collect (Bitcoin only)" section that links to Telegram.
-Everything on it is written through a Bitcoin lens. No prices are shown.
-
-## TODO
-
-Open items waiting on the owner live in `TODO.md` (kept in Korean). Notably:
-every artwork page has a "to be written" description placeholder on purpose —
-do not invent descriptions, years, or dimensions.
-
-## Local preview
-
-```
-./serve.sh        # → http://localhost:8000 (wraps scripts/serve.py)
-```
-
-Plain `python3 -m http.server` 404s on the clean `…/ko` URLs (the `.html`
-resolution is Cloudflare's job in production); `scripts/serve.py` adds the
-same fallback locally. `npx wrangler pages dev public` also works and
-additionally emulates `_headers`.
+- Desktop Chrome (including headless on this machine) enforces a ~500px
+  minimum window width: a "390px mobile" screenshot silently renders a 500px
+  viewport and can fake horizontal-overflow bugs. To verify real phone widths,
+  load the page in a same-origin `<iframe>` of the target width instead.
