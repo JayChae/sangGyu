@@ -50,8 +50,12 @@ scripts/build-images.sh           # source JPEGs (../sangyu/arts) → WebP in pu
   gallery search/filter; the site works without it).
 - **Images are always WebP**, responsive (`srcset` 480/960/1600) with explicit
   `width`/`height` (no layout shift), `loading="lazy"` below the fold.
-- **HTTP caching** is configured in `public/_headers`: immutable for `/img/*`,
-  a week for CSS/JS, revalidate for HTML.
+- **HTTP caching** is configured in `public/_headers`: immutable for a year on
+  `/img/*`, an hour for CSS/JS, revalidate for HTML. Filenames are not
+  fingerprinted, so the year on images is a promise: **replacing an artwork
+  photo means a new filename** (use the version prefix in `build-images.sh`
+  and update the `srcset`) — overwriting in place leaves returning visitors on
+  the old photo, and no Cloudflare purge reaches a browser cache.
 - **Web performance**: no webfonts (system stack), no external requests, tiny
   CSS/JS, `fetchpriority="high"` on hero images only.
 

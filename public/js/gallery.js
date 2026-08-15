@@ -1,6 +1,6 @@
 // Live search + tag filter for the works list. Progressive enhancement:
-// without this file the full gallery simply shows (search bar is hidden
-// via <noscript>).
+// the bar is hidden in CSS and only revealed here, once it is wired up —
+// without this file (or if it fails to load) the full gallery simply shows.
 (() => {
   const bar = document.querySelector(".searchbar");
   if (!bar) return;
@@ -9,7 +9,8 @@
   const chips = [...bar.querySelectorAll(".chip")];
   const cards = [...document.querySelectorAll(".gallery > li")];
   const empty = document.querySelector(".gallery-empty");
-  let tag = "all";
+  const pressed = chips.find((c) => c.getAttribute("aria-pressed") === "true");
+  let tag = pressed ? pressed.dataset.tag : "all";
 
   const apply = () => {
     const q = input.value.trim().toLowerCase();
@@ -33,4 +34,9 @@
     });
   }
   input.addEventListener("input", apply);
+
+  // On back-navigation the browser restores the typed query, so filter once
+  // before revealing the bar — otherwise the box and the gallery disagree.
+  apply();
+  document.body.classList.add("search-ready");
 })();

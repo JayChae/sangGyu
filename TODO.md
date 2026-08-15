@@ -4,7 +4,9 @@
 
 ## 콘텐츠
 
-- [ ] **작품 설명 원고** — 모든 작품 상세페이지가 "작품 설명 작성 필요."
+- [ ] **작품 설명 원고** — 이방인·생태는 전시 원고를 상세페이지에도 반영함.
+      나머지 다섯 작품 (Collective Gaze, Brave New World, Beyond the
+      Predetermined, A Cushion, 무제) 은 아직 "작품 설명 작성 필요."
       플레이스홀더 상태. 원고가 오기 전까지 임의로 지어 넣지 말 것.
 - [ ] **다섯 작품의 연도·크기** — Collective Gaze, Brave New World,
       Beyond the Predetermined, A Cushion, 무제 (지금은 재료만 표기)
@@ -15,4 +17,5 @@
 - [ ] **텔레그램 핸들** — 전시 페이지의 `https://t.me/CHANGE_ME` 를
       실제 계정으로 교체
 - [ ] **도메인 확정** — 정해지면: canonical/hreflang 을 절대경로로 전환,
-      Open Graph 태그와 sitemap.xml 추가 (절대 URL이 필요해서 보류 중)
+      `og:image` · `og:url` 과 sitemap.xml 추가. (절대 URL이 필요 없는 나머지
+      Open Graph 태그는 이미 모든 페이지에 들어가 있음)
