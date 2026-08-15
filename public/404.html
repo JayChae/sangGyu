@@ -8,6 +8,20 @@
     <meta name="theme-color" content="#f7f6f3" />
     <link rel="icon" href="/favicon.svg" />
     <link rel="stylesheet" href="/css/site.css" />
+    <style>
+      /* The 404 borrows the landing's centering; the link row below it is
+         this page's alone, so it lives here rather than in site.css. */
+      .landing nav {
+        display: flex;
+        justify-content: center;
+        gap: 26px;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .landing nav a:hover { color: var(--ink); }
+    </style>
   </head>
   <body class="landing">
     <main>

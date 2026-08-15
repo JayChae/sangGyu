@@ -2,45 +2,34 @@
 """Local preview for public/ that mimics Cloudflare Pages: clean URLs
 (/works/ecology/ko is served from ko.html) and 404.html for anything missing.
 
+Routing and existence both come from pages.py — the same model check-links.py
+tests against, so the preview cannot render a URL the checker calls broken.
+
 Usage: python3 scripts/serve.py [port]   (default 8000)
 """
 import io
-import os
 import sys
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-from pathlib import Path
+from urllib.parse import quote, unquote
 
-ROOT = str(Path(__file__).resolve().parent.parent / "public")
+from pages import ROOT, exists, route
 
 
 class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=ROOT, **kwargs)
+        super().__init__(*args, directory=str(ROOT), **kwargs)
 
     def send_head(self):
-        path = self.path.split("?")[0].split("#")[0]
-        # Clean URLs only apply without a trailing slash, matching
-        # check-links.py: /works/ko serves ko.html, /works/ko/ does not.
-        if not path.endswith("/") and not os.path.exists(self.translate_path(path)):
-            candidate = path + ".html"
-            if os.path.isfile(self.translate_path(candidate)):
-                self.path = candidate
-        target = self.translate_path(self.path.split("?")[0].split("#")[0])
-        if os.path.isdir(target):
-            target = os.path.join(target, "index.html")
-        if not os.path.isfile(target):
+        target = route(unquote(self.path))
+        if not exists(target):
             return self.send_404()
+        self.path = quote("/" + target.relative_to(ROOT).as_posix())
         return super().send_head()
 
     def send_404(self):
         """Production serves public/404.html with a 404 status — do the same,
         so that page is reachable locally instead of only in production."""
-        page = os.path.join(ROOT, "404.html")
-        if not os.path.isfile(page):
-            self.send_error(404)
-            return None
-        with open(page, "rb") as fh:
-            body = fh.read()
+        body = (ROOT / "404.html").read_bytes()
         self.send_response(404)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))

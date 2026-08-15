@@ -21,26 +21,30 @@
 # revalidates on every visit — so keep these short enough that the two cannot
 # drift far apart. Filenames are not fingerprinted, so this is the only brake.
 # Re-checking costs one round trip and returns a bodyless 304 when unchanged.
-/css/*
+#
+# Matching on the extension rather than the folder also covers the exhibition
+# mini-sites, which keep their stylesheet inside their own folder — Cloudflare's
+# * spans path separators, so /*.css reaches
+# /exhibitions/origin-seoul-2026/origin-seoul-2026.css too. Their HTML keeps
+# revalidating like every other page.
+/*.css
   ! Cache-Control
   Cache-Control: public, max-age=3600
 
-/js/*
+/*.js
   ! Cache-Control
   Cache-Control: public, max-age=3600
 
-# Exhibition mini-sites keep their stylesheet inside their own folder. Matching
-# on the extension covers every exhibition, present and future, without
-# touching their HTML — which must keep revalidating like every other page.
-/exhibitions/*.css
-  ! Cache-Control
-  Cache-Control: public, max-age=3600
-
-# Safe to cache forever ONLY because an image's bytes never change under a
-# fixed name: to replace an artwork photo, give it a new filename (the version
-# prefix in build-images.sh) and update the srcset. Overwriting in place would
-# leave returning visitors on the old photo for up to a year, and no
-# Cloudflare purge can reach a file already in their browser.
+# Safe to cache forever ONLY because these bytes never change under a fixed
+# name — see the warning in scripts/build-images.sh before replacing a photo.
 /img/*
   ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
+
+# The favicons are tiny and near-static; without a rule they fall through to
+# /* and revalidate on every navigation, costing a round trip per page view.
+# A month, not a year, and not immutable: unlike an artwork photo these are not
+# renamed when they change, so staleness has to stay bounded.
+/*.svg
+  ! Cache-Control
+  Cache-Control: public, max-age=2592000

@@ -9,17 +9,18 @@
   const chips = [...bar.querySelectorAll(".chip")];
   const cards = [...document.querySelectorAll(".gallery > li")];
   const empty = document.querySelector(".gallery-empty");
-  const pressed = chips.find((c) => c.getAttribute("aria-pressed") === "true");
-  let tag = pressed ? pressed.dataset.tag : "all";
 
   const apply = () => {
+    // the pressed chip *is* the state — never mirrored into a variable that
+    // could disagree with the pill the reader can see
+    const tag = bar.querySelector('.chip[aria-pressed="true"]')?.dataset.tag;
     const q = input.value.trim().toLowerCase();
     let shown = 0;
     for (const card of cards) {
       const hit =
-        (tag === "all" || card.dataset.tags.split(" ").includes(tag)) &&
+        (!tag || tag === "all" || card.dataset.tags.split(" ").includes(tag)) &&
         (!q || card.dataset.search.includes(q));
-      card.hidden = !hit;
+      if (card.hidden === hit) card.hidden = !hit;
       if (hit) shown++;
     }
     empty.hidden = shown > 0;
@@ -27,7 +28,6 @@
 
   for (const chip of chips) {
     chip.addEventListener("click", () => {
-      tag = chip.dataset.tag;
       for (const c of chips)
         c.setAttribute("aria-pressed", String(c === chip));
       apply();

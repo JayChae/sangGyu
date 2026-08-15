@@ -72,13 +72,13 @@
                 src="/img/the-stranger/480.webp"
                 srcset="
                   /img/the-stranger/480.webp 480w,
+                  /img/the-stranger/640.webp 640w,
                   /img/the-stranger/960.webp 960w
                 "
-                sizes="(min-width: 760px) 340px, 46vw"
+                sizes="(min-width: 1120px) 332px, (min-width: 760px) calc((100vw - 84px) / 3), calc(50vw - 26px)"
                 width="480"
                 height="330"
                 alt="Ceramic relief triptych: a lone figure with hands bound behind its back, facing away, surrounded by a wall of small anonymous faces."
-                fetchpriority="high"
                 decoding="async"
               />
               <figcaption>
@@ -108,8 +108,12 @@
               <img
                 itemprop="image"
                 src="/img/ecology/480.webp"
-                srcset="/img/ecology/480.webp 480w, /img/ecology/960.webp 960w"
-                sizes="(min-width: 760px) 340px, 46vw"
+                srcset="
+                  /img/ecology/480.webp 480w,
+                  /img/ecology/640.webp 640w,
+                  /img/ecology/960.webp 960w
+                "
+                sizes="(min-width: 1120px) 332px, (min-width: 760px) calc((100vw - 84px) / 3), calc(50vw - 26px)"
                 width="480"
                 height="480"
                 alt="Ceramic sculpture of dark snakes tangled into a single mound, several heads emerging outward."
@@ -144,13 +148,13 @@
                 src="/img/collective-gaze/480.webp"
                 srcset="
                   /img/collective-gaze/480.webp 480w,
+                  /img/collective-gaze/640.webp 640w,
                   /img/collective-gaze/960.webp 960w
                 "
-                sizes="(min-width: 760px) 340px, 46vw"
+                sizes="(min-width: 1120px) 332px, (min-width: 760px) calc((100vw - 84px) / 3), calc(50vw - 26px)"
                 width="480"
                 height="367"
                 alt="Glazed ceramic vessel crowned with a cluster of bulbous head-like forms, seen from above."
-                loading="lazy"
                 decoding="async"
               />
               <figcaption><span itemprop="name">Collective Gaze</span></figcaption>
@@ -179,13 +183,13 @@
                 src="/img/brave-new-world/480.webp"
                 srcset="
                   /img/brave-new-world/480.webp 480w,
+                  /img/brave-new-world/640.webp 640w,
                   /img/brave-new-world/960.webp 960w
                 "
-                sizes="(min-width: 760px) 340px, 46vw"
+                sizes="(min-width: 1120px) 332px, (min-width: 760px) calc((100vw - 84px) / 3), calc(50vw - 26px)"
                 width="480"
                 height="693"
                 alt="Wall installation: rows of small vacuum-sealed fetus forms connected by glowing blue wires to a central sculpture of flesh-like forms fused with machine parts."
-                loading="lazy"
                 decoding="async"
               />
               <figcaption><span itemprop="name">Brave New World</span></figcaption>
@@ -214,9 +218,10 @@
                 src="/img/beyond-the-predetermined/480.webp"
                 srcset="
                   /img/beyond-the-predetermined/480.webp 480w,
+                  /img/beyond-the-predetermined/640.webp 640w,
                   /img/beyond-the-predetermined/960.webp 960w
                 "
-                sizes="(min-width: 760px) 340px, 46vw"
+                sizes="(min-width: 1120px) 332px, (min-width: 760px) calc((100vw - 84px) / 3), calc(50vw - 26px)"
                 width="480"
                 height="400"
                 alt="Installation of three arched lattice screens overgrown with root-like matter, standing over a grid field of thin sprouting figures."
@@ -251,9 +256,10 @@
                 src="/img/a-cushion/480.webp"
                 srcset="
                   /img/a-cushion/480.webp 480w,
+                  /img/a-cushion/640.webp 640w,
                   /img/a-cushion/960.webp 960w
                 "
-                sizes="(min-width: 760px) 340px, 46vw"
+                sizes="(min-width: 1120px) 332px, (min-width: 760px) calc((100vw - 84px) / 3), calc(50vw - 26px)"
                 width="480"
                 height="481"
                 alt="Black ceramic cushion with a single white ball pressed into its center."
@@ -284,8 +290,12 @@
               <img
                 itemprop="image"
                 src="/img/untitled/480.webp"
-                srcset="/img/untitled/480.webp 480w, /img/untitled/960.webp 960w"
-                sizes="(min-width: 760px) 340px, 46vw"
+                srcset="
+                  /img/untitled/480.webp 480w,
+                  /img/untitled/640.webp 640w,
+                  /img/untitled/960.webp 960w
+                "
+                sizes="(min-width: 1120px) 332px, (min-width: 760px) calc((100vw - 84px) / 3), calc(50vw - 26px)"
                 width="480"
                 height="480"
                 alt="Dark speckled ceramic head with hollow eyes and a long glazed red tongue extending from its open mouth."
@@ -302,42 +312,40 @@
     </main>
 
     <search class="searchbar">
-      <div class="panel">
-        <input
-          type="search"
-          placeholder="Search works…"
-          aria-label="Search works"
-          autocomplete="off"
-        />
-        <div class="chips" role="group" aria-label="Filter by type">
-          <button type="button" class="chip" data-tag="all" aria-pressed="true">
-            All
-          </button>
-          <button
-            type="button"
-            class="chip"
-            data-tag="ceramic"
-            aria-pressed="false"
-          >
-            Ceramic
-          </button>
-          <button
-            type="button"
-            class="chip"
-            data-tag="installation"
-            aria-pressed="false"
-          >
-            Installation
-          </button>
-          <button
-            type="button"
-            class="chip"
-            data-tag="exhibition"
-            aria-pressed="false"
-          >
-            Exhibition
-          </button>
-        </div>
+      <input
+        type="search"
+        placeholder="Search works…"
+        aria-label="Search works"
+        autocomplete="off"
+      />
+      <div class="chips" role="group" aria-label="Filter by type">
+        <button type="button" class="chip" data-tag="all" aria-pressed="true">
+          All
+        </button>
+        <button
+          type="button"
+          class="chip"
+          data-tag="ceramic"
+          aria-pressed="false"
+        >
+          Ceramic
+        </button>
+        <button
+          type="button"
+          class="chip"
+          data-tag="installation"
+          aria-pressed="false"
+        >
+          Installation
+        </button>
+        <button
+          type="button"
+          class="chip"
+          data-tag="exhibition"
+          aria-pressed="false"
+        >
+          Exhibition
+        </button>
       </div>
     </search>
 

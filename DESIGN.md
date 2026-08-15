@@ -12,13 +12,17 @@ The exhibition mini-site is the single inversion: a dark room with one accent.
 | `--muted` | `#6e6e6e` | secondary text, captions |
 | `--hair` | `#dcdcdc` | hairline borders |
 | `--accent` | `#f7931a` | bitcoin orange — **exhibition context only** |
+| `--dark-bg` / `--dark-ink` / `--dark-muted` | `#0e0e0e` / `#f2f2f2` / `#9b9b9b` | the dark room |
 | `--sans` | system sans (incl. Apple SD Gothic Neo, Malgun Gothic) | body |
 | `--serif` | Iowan Old Style / Palatino / Georgia | captions, years, kickers |
 | `--pad` | `20px` | page side padding |
 | `--max` | `1080px` | page max width |
+| `--measure` | `34em` | body-text line length |
 
-The exhibition page (`body.exhibition`) redefines `--bg/--ink/--muted/--hair`
-to dark values. Nothing else changes — same components, inverted room.
+There are two dark surfaces — the exhibition mini-site and `.card--exhibition`
+on the list page — and they must read as the same room, so the three dark
+values are tokens in `site.css` and both surfaces re-point `--bg/--ink/--muted`
+at them. Nothing else changes — same components, inverted room.
 Exhibition styles live inside the exhibition's own folder, named after it
 (`exhibitions/origin-seoul-2026/origin-seoul-2026.css`) — one file per
 exhibition, so future exhibitions stay self-contained.
@@ -27,7 +31,9 @@ exhibition, so future exhibitions stay self-contained.
 
 - Body: 16px / 1.7 sans. Korean pages add `letter-spacing: -0.01em`.
 - Kicker: 11px serif, uppercase, `letter-spacing: .22em`, muted.
-- Captions / tombstones / years: serif italic, 13–14px, muted.
+- Captions / tombstones / years: serif italic, 13–14px, muted. The trio
+  (serif + italic + muted) is one grouped rule per stylesheet; a component
+  adds only its own size and box.
 - Headings: sans 600. h1 24px on detail pages; the landing name scales with
   `clamp()`. No font is ever loaded over the network.
 - No orphans, ever: body text gets `text-wrap: pretty` + `word-break:
@@ -52,8 +58,13 @@ exhibition, so future exhibitions stay self-contained.
 - `.gallery` — `<ul>` masonry of `<figure>` cards; caption = title + serif year.
 - `.card--exhibition` — the one dark card in the white gallery; orange kicker.
 - `.searchbar` — fixed bottom, AI-chat-style panel: rounded 16px, hairline
-  border, blur, soft shadow. Input on top, filter chips below (like a model
-  picker). Chips are `<button aria-pressed>`; active chip = ink pill.
+  border, blur, soft shadow. It is one box, only as wide as the panel, so taps
+  beside it reach the gallery underneath. Input on top, filter chips below
+  (like a model picker). Chips are `<button aria-pressed>`; active chip = ink
+  pill, and that pressed chip *is* the filter state — `gallery.js` reads it
+  rather than keeping its own copy.
+- `.work-hero` / `.work-view` — the image plates on a detail page. `site.css`
+  centres them; a page's own `<style>` sets only the `max-width` it wants.
 - `.tombstone` — serif muted "year · medium · size" line.
 - `.todo` — dashed hairline box, serif italic, for not-yet-written text.
 - `.work-nav` — footer prev / all / next links with `rel="prev/next"`.

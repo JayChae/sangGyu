@@ -23,9 +23,8 @@
       /* A Cushion — 푹신해 보이지만 단단한 세라믹: 넓은 흰 벽에
          작품을 작게 하나만 걸고, 아래에 조용한 라벨만 둔다. */
       .detail main { padding-top: 42px; }
-      .work-hero { max-width: 480px; margin: 0 auto; }
-      .work-head { max-width: 480px; margin: 44px auto 0; }
-      .work-body { max-width: 480px; margin: 20px auto 0; }
+      .detail article { max-width: 480px; margin: 0 auto; }
+      .work-head { margin-top: 44px; }
     </style>
   </head>
   <body class="detail">
@@ -44,9 +43,10 @@
             srcset="
               /img/a-cushion/480.webp   480w,
               /img/a-cushion/960.webp   960w,
+              /img/a-cushion/1200.webp 1200w,
               /img/a-cushion/1600.webp 1600w
             "
-            sizes="(min-width: 520px) 480px, 100vw"
+            sizes="(min-width: 520px) 480px, calc(100vw - 40px)"
             width="960"
             height="962"
             alt="가운데에 흰 공 하나가 눌려 박힌 검은 세라믹 쿠션."

@@ -1,8 +1,20 @@
 #!/bin/bash
 # Convert source JPEGs (../sangyu/arts) to responsive WebP into public/img/.
-# One folder per artwork: public/img/<slug>/{480,960,1600}.webp
+# One folder per artwork: public/img/<slug>/{480,640,960,1200,1600}.webp
 # (extra views get a prefix, e.g. collective-gaze/view2-480.webp).
-# Quality 82. Rerunnable.
+# Quality 82. Rerunnable — outputs newer than their source are left alone, so
+# a rerun after adding one artwork re-encodes only that artwork.
+#
+# The tiers exist because a candidate that is merely "big enough" is the one
+# that gets downloaded, so a missing size means the next one up is paid for:
+#   640  — the gallery list renders thumbnails ~170px wide, so a 3x phone
+#          needs ~510px and would otherwise take the 960 file (~530KB extra
+#          on the site's entry page).
+#   1200 — a detail hero renders ~350px wide, so a 3x phone needs ~1050px and
+#          would otherwise take the 1600 file (~30% extra per artwork).
+# 1600 stays: a retina desktop needs up to 1680px and nothing smaller covers
+# it. Keep quality at 82 — those pages paint the 1600 file at roughly 1:1, so
+# it is the size, not the compression, that should absorb the savings.
 #
 # Widths larger than the source are skipped, not upscaled: cwebp -resize is a
 # target, not a cap, and an upscaled file is blurrier AND heavier than the
@@ -22,13 +34,16 @@ convert() { # $1=source jpg  $2=slug  $3=optional filename prefix (e.g. "view2-"
   mkdir -p "$OUT/$2"
   local src_w
   src_w=$(sips -g pixelWidth "$SRC/$1" | awk '/pixelWidth:/ { print $2 }')
-  for w in 480 960 1600; do
+  for w in 480 640 960 1200 1600; do
+    local out="$OUT/$2/${3}${w}.webp"
     if [ "$w" -gt "$src_w" ]; then
       echo "  ! $2/${3}${w}.webp 건너뜀 — 원본이 ${src_w}px. srcset 에서도 뺄 것."
       continue
     fi
-    cwebp -quiet -q 82 -resize "$w" 0 "$SRC/$1" -o "$OUT/$2/${3}${w}.webp"
+    if [ "$out" -nt "$SRC/$1" ]; then continue; fi
+    cwebp -quiet -q 82 -resize "$w" 0 "$SRC/$1" -o "$out" &
   done
+  wait
   echo "→ $2/${3}* (원본 ${src_w}px)"
 }
 

@@ -10,12 +10,19 @@ output directory — files are served exactly as committed.
 
 ```
 ./serve.sh [port]                 # local preview → http://localhost:8000
-python3 scripts/check-links.py    # the test suite: every internal href/src/srcset must resolve (exit 1 on failure)
+python3 scripts/check-links.py    # the test suite (exit 1 on failure)
 scripts/build-images.sh           # source JPEGs (../sangyu/arts) → WebP in public/img/ (needs cwebp: brew install webp)
 ```
 
-- Run `check-links.py` after adding, moving, or renaming any page or image.
-  There is no other lint/test tooling.
+- `check-links.py` asserts three things: every internal `href`/`src`/`srcset`
+  resolves; every page's `canonical`, `hreflang` alternates and language
+  toggle point at itself and its counterpart; and the works on disk are
+  exactly `WORKS.md`'s, walked in its order by both list pages and the
+  `rel=prev/next` chain. Run it after adding, moving, renaming or reordering
+  anything. There is no other lint/test tooling.
+- `scripts/pages.py` holds the one model of how Cloudflare Pages maps a URL to
+  a file (clean URLs, `index.html`, case-sensitivity). Both `check-links.py`
+  and `serve.py` import it — do not re-implement that routing in either.
 - Plain `python3 -m http.server` 404s on the clean `…/ko` URLs (the `.html`
   resolution is Cloudflare's job in production); `serve.sh` wraps
   `scripts/serve.py`, which adds the same fallback locally.
@@ -48,16 +55,21 @@ scripts/build-images.sh           # source JPEGs (../sangyu/arts) → WebP in pu
 - **Use HTML to the fullest.** Prefer an HTML element or attribute over CSS,
   and CSS over JS. JS is a progressive enhancement only (currently only the
   gallery search/filter; the site works without it).
-- **Images are always WebP**, responsive (`srcset` 480/960/1600) with explicit
-  `width`/`height` (no layout shift), `loading="lazy"` below the fold.
+- **Images are always WebP**, responsive (`srcset` 480/640/960/1200/1600) with
+  explicit `width`/`height` (no layout shift), `loading="lazy"` below the fold.
+  `sizes` must state the *rendered* width, gutters subtracted — an overstated
+  `sizes` silently ships the next tier up to every phone. When bytes need
+  cutting, add a tier that fits rather than lowering quality: a retina desktop
+  paints the 1600 file at roughly 1:1, so compression artefacts there are not
+  hidden by downscaling. Quality stays at 82.
 - **HTTP caching** is configured in `public/_headers`: immutable for a year on
-  `/img/*`, an hour for CSS/JS, revalidate for HTML. Filenames are not
-  fingerprinted, so the year on images is a promise: **replacing an artwork
-  photo means a new filename** (use the version prefix in `build-images.sh`
-  and update the `srcset`) — overwriting in place leaves returning visitors on
-  the old photo, and no Cloudflare purge reaches a browser cache.
+  `/img/*`, a month for icons, an hour for CSS/JS, revalidate for HTML.
+  Filenames are not fingerprinted, so the year on images is a promise —
+  **replacing an artwork photo means a new filename**; the full warning lives
+  in `scripts/build-images.sh`, where the replacing is done.
 - **Web performance**: no webfonts (system stack), no external requests, tiny
-  CSS/JS, `fetchpriority="high"` on hero images only.
+  CSS/JS. `fetchpriority="high"` on a single hero image only — never on the
+  masonry list, where the columns rebalance and no one item is the hero.
 
 ## Structure
 
@@ -69,9 +81,9 @@ public/                          ← Cloudflare Pages output directory
   exhibitions/<name>/            self-contained exhibition mini-sites (see WORKS.md)
   css/site.css                   shared styles (design system)
   js/gallery.js                  search + tag filter for the list page (~50 lines)
-  img/<slug>/{480,960,1600}.webp one folder per artwork (extra views: <slug>/view2-*.webp)
+  img/<slug>/{480,640,960,1200,1600}.webp  one folder per artwork (extra views: <slug>/view2-*.webp)
   _headers                       Cache-Control rules
-scripts/                         build-images.sh · serve.py · check-links.py
+scripts/                         pages.py (URL model) · build-images.sh · serve.py · check-links.py
 ```
 
 ## Content rules

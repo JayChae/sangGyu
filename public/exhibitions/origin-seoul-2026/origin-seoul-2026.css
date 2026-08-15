@@ -2,12 +2,21 @@
    Loads after site.css; only re-points the tokens and adds its sections. */
 
 body.exhibition {
-  --bg: #0e0e0e;
-  --ink: #f2f2f2;
-  --muted: #9b9b9b;
+  --bg: var(--dark-bg);
+  --ink: var(--dark-ink);
+  --muted: var(--dark-muted);
   --hair: #2a2a2a;
   background: var(--bg);
   color: var(--ink);
+}
+
+/* Same trio as site.css's captions, for this file's own components. */
+.exh-dates,
+.exh-work figcaption,
+.collect .fine {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--muted);
 }
 
 .exhibition main { max-width: 720px; margin: 0 auto; padding: 0 var(--pad) 8px; }
@@ -24,12 +33,7 @@ body.exhibition {
   line-height: 1.25;
 }
 .exh-fact { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--hair); }
-.exh-dates {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 16px;
-  color: var(--muted);
-}
+.exh-dates { font-size: 16px; }
 .exh-url { margin-top: 8px; font-size: 13px; letter-spacing: 0.08em; }
 .exh-url a {
   color: var(--accent);
@@ -41,27 +45,15 @@ body.exhibition {
 /* ── sections ────────────────────────────────── */
 
 .exh-section { padding: 44px 0 10px; }
-.exh-section > h2 {
-  font-family: var(--serif);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-.bio { margin-top: 18px; max-width: 34em; }
+/* section headings are .kicker in the accent — see the markup */
+.exh-section > h2 { font-size: 12px; font-weight: 600; color: var(--accent); }
+.bio { margin-top: 18px; max-width: var(--measure); }
 .bio p + p { margin-top: 14px; }
 
 /* ── works ───────────────────────────────────── */
 
 .exh-work { margin-top: 26px; padding-top: 28px; border-top: 1px solid var(--hair); }
-.exh-work figcaption {
-  margin-top: 8px;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 13px;
-  color: var(--muted);
-}
+.exh-work figcaption { margin-top: 8px; font-size: 13px; }
 .exh-work h3 { margin-top: 18px; font-size: 20px; font-weight: 600; }
 .exh-work h3 em {
   margin-left: 8px;
@@ -70,11 +62,11 @@ body.exhibition {
   font-weight: 400;
   color: var(--muted);
 }
-.exh-work .desc { margin-top: 12px; max-width: 34em; }
+.exh-work .desc { margin-top: 12px; max-width: var(--measure); }
 
 /* ── collect ─────────────────────────────────── */
 
-.collect p { max-width: 34em; margin-top: 18px; }
+.collect p { max-width: var(--measure); margin-top: 18px; }
 .btn-btc {
   display: inline-flex;
   align-items: center;
@@ -82,7 +74,7 @@ body.exhibition {
   margin-top: 24px;
   padding: 14px 26px;
   background: var(--accent);
-  color: #0e0e0e;
+  color: var(--bg);
   font-size: 15px;
   font-weight: 600;
   transition: opacity 0.15s;
@@ -98,13 +90,10 @@ body.exhibition {
 
 /* ── footer ──────────────────────────────────── */
 
+/* the shared .site-footer, narrowed to the mini-site's column and ruled off */
 .exh-footer {
   max-width: 720px;
-  margin: 40px auto 0;
+  margin-top: 40px;
   padding: 26px var(--pad) 44px;
   border-top: 1px solid var(--hair);
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 12px;
-  color: var(--muted);
 }
