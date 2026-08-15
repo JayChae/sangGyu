@@ -1,0 +1,19 @@
+# HTTP caching (Cloudflare Pages). Later rules override earlier ones.
+
+/*
+  X-Content-Type-Options: nosniff
+  Cache-Control: public, max-age=0, must-revalidate
+
+/css/*
+  Cache-Control: public, max-age=604800
+
+/js/*
+  Cache-Control: public, max-age=604800
+
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Per-exhibition stylesheets live inside their exhibition folder —
+# add a rule per exhibition.
+/exhibitions/origin-seoul-2026/origin-seoul-2026.css
+  Cache-Control: public, max-age=604800
