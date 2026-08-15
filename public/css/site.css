@@ -84,14 +84,16 @@ a { color: inherit; text-decoration: none; }
 
 /* ── landing ─────────────────────────────────── */
 
-.landing main {
+/* the link is the whole screen, so a tap anywhere enters the works */
+.landing main a {
   min-height: 100dvh;
   display: grid;
   place-content: center;
   text-align: center;
-  gap: 30px;
   padding: var(--pad);
+  transition: opacity 0.2s;
 }
+.landing main a:hover { opacity: 0.55; }
 .landing h1 {
   font-size: clamp(24px, 6.4vw, 54px);
   font-weight: 600;
@@ -99,8 +101,6 @@ a { color: inherit; text-decoration: none; }
   margin-left: 0.14em; /* optically recenters the tracked-out caps */
   white-space: nowrap;
 }
-.landing h1 a { transition: opacity 0.2s; }
-.landing h1 a:hover { opacity: 0.55; }
 
 /* ── gallery list ────────────────────────────── */
 
