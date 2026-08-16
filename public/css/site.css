@@ -91,15 +91,60 @@ a { color: inherit; text-decoration: none; }
   place-content: center;
   text-align: center;
   padding: var(--pad);
-  transition: opacity 0.2s;
+  overflow: clip; /* the name is widest mid-arrival — never a scrollbar for it */
 }
-.landing main a:hover { opacity: 0.55; }
+
+/* The name arrives once, the way raking light crosses a gallery wall: a soft
+   lit edge travels left to right while the tracking settles and the letters
+   come into focus. The mask is that edge — a gradient three times wider than
+   the line, slid across it; at rest only its opaque end covers the text, so
+   nothing is left running and nothing is dimmed. Two curves: the type snaps
+   out of the blur and then micro-settles (1.4s), the light crosses at its own
+   even, decelerating pace (1.8s), so a letter is still resolving as the light
+   reaches it. Tracking and the optical margin always move together, or the
+   name drifts off centre on the way in. */
 .landing h1 {
   font-size: clamp(24px, 6.4vw, 54px);
   font-weight: 600;
   letter-spacing: 0.14em;
   margin-left: 0.14em; /* optically recenters the tracked-out caps */
   white-space: nowrap;
+  mask: linear-gradient(100deg, #000 40%, transparent 58%) 0 0 / 300% 100%
+    no-repeat;
+  animation: name-settle 1.4s cubic-bezier(0.16, 1, 0.3, 1) backwards,
+    name-light 1.8s ease-out backwards;
+  transition: letter-spacing 0.6s ease, margin-left 0.6s ease, opacity 0.3s;
+}
+/* Only a from-frame: the animation lands on the rule above — or on the hover
+   state, if the pointer was already there. Nothing is left filled forwards,
+   so the hover below stays free to transition once the name has arrived. */
+@keyframes name-settle {
+  from {
+    opacity: 0;
+    letter-spacing: 0.26em;
+    margin-left: 0.26em;
+    filter: blur(0.18em); /* em, so it scales with the clamped size */
+  }
+}
+@keyframes name-light {
+  from { mask-position: 100% 0; }
+}
+/* The whole screen is the link, so hovering only ever means "a pointer is
+   here": the name steps back — and, for anyone who welcomes movement, opens
+   a little — instead of blinking. Split in two so the reduced-motion reader
+   keeps the affordance and loses only the motion. */
+@media (hover: hover) {
+  .landing main a:hover h1 { opacity: 0.6; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .landing main a:hover h1 { letter-spacing: 0.17em; margin-left: 0.17em; }
+}
+/* no light, no focus pull, no travel — the name simply appears */
+@media (prefers-reduced-motion: reduce) {
+  .landing h1 { mask: none; animation: name-fade 0.7s ease-out backwards; }
+}
+@keyframes name-fade {
+  from { opacity: 0; }
 }
 
 /* ── gallery list ────────────────────────────── */
