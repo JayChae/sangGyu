@@ -215,8 +215,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .gallery a { display: block; }
-.gallery img { width: 100%; transition: opacity 0.2s; }
-.gallery a:hover img { opacity: 0.9; }
+.gallery img { width: 100%; }
 .gallery figcaption { margin-top: 7px; font-size: 13px; line-height: 1.5; }
 .gallery figcaption time { margin-left: 4px; }
 .gallery-empty { text-align: center; padding: 48px 0; }

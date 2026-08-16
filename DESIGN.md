@@ -62,6 +62,7 @@ exhibition, so future exhibitions stay self-contained.
 - `.back` — muted "← Works / ← 작품" link, first element inside a detail
   page's `<main>`.
 - `.gallery` — `<ul>` masonry of `<figure>` cards; caption = title + serif year.
+  No hover state: the photograph never dims under the pointer.
 - `.card--exhibition` — the one dark card in the white gallery; orange kicker.
 - `.searchbar` — fixed bottom, AI-chat-style panel: rounded 16px, hairline
   border, blur, soft shadow. It is one box, only as wide as the panel, so taps
@@ -115,11 +116,17 @@ those four pages alone — landing and works, EN and KO. Do not move it into
 name changes hands in 0.3s, because moment 3 is the part meant to be watched.
 
 Coming back is a plain cut, and deliberately so: a document styles only the
-crossings that *end* in it, so the landing's own `<style>` cancels them
-(`::view-transition-*(*) { animation: none !important }`) — otherwise the glide
-would land on top of moment 1 and you would never see the name arrive. Measured
-in Chrome: out 1.1s, back 18ms, with `name-settle` and `name-light` running
-from the first frame of the landing.
+crossings that *end* in it, so the landing's own `<style>` cancels them —
+otherwise the glide would land on top of moment 1 and you would never see the
+name arrive. Two rules, and both are needed. `animation: none` on the group and
+the new snapshot stops the glide; `display: none` on the **old** snapshot
+matters just as much, because a cancelled transition still paints one frame,
+and that frame would otherwise carry the list you came from with the header
+wordmark blown up to the landing's geometry — read as the name blinking before
+its own arrival. No JS: `@view-transition` cannot be made one-directional, but
+what the crossing paints is entirely CSS's to decide. Measured in Chrome
+(screencast, frame by frame): out 1.1s; back 14ms with the frame after the list
+already the empty wall, and `name-settle` / `name-light` running from there.
 
 **3 · The works are hung** (list, 0.7s each). Each card lifts 14px and
 resolves, 55ms after the one before it, so the list arrives with the same

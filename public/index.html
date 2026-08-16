@@ -29,11 +29,14 @@
          works alone and lets the name play its own arrival, undisturbed. -->
     <style>
       @view-transition { navigation: auto; }
-      /* `!important` on purpose: this must outrank site.css's named rules,
-         whatever a snapshot happens to be called. */
+      /* Nothing glides *into* this page — see the comment above. `!important`
+         so it outranks site.css's named rules, whatever a snapshot is called.
+         Cancelled is not enough on its own: the transition still paints one
+         frame, and that frame must not carry the page you came from, or the
+         name blinks before its own arrival starts. */
       ::view-transition-group(*),
-      ::view-transition-old(*),
       ::view-transition-new(*) { animation: none !important; }
+      ::view-transition-old(*) { display: none !important; }
     </style>
   </head>
   <body class="landing">
