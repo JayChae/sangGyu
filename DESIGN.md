@@ -35,7 +35,11 @@ exhibition, so future exhibitions stay self-contained.
   (serif + italic + muted) is one grouped rule per stylesheet; a component
   adds only its own size and box.
 - Headings: sans 600. h1 24px on detail pages; the landing name scales with
-  `clamp()`. No font is ever loaded over the network.
+  `clamp()`. The exhibition's wall label is one line at every width, so it is
+  sized off the column instead (`--title` in the mini-site's stylesheet, with
+  `--sub` keeping every heading under it smaller — on a phone the label lands
+  around 18px and nothing may outgrow it). No font is ever loaded over the
+  network.
 - No orphans, ever: body text gets `text-wrap: pretty` + `word-break:
   keep-all` (Korean wraps between words, never inside one), headings get
   `text-wrap: balance`. A lone syllable on its own line is a bug.
@@ -53,6 +57,8 @@ exhibition, so future exhibitions stay self-contained.
 ## Components (all in `site.css`)
 
 - `.site-header` — exactly two things: wordmark left, language toggle right.
+- `.site-footer` — the © line and the build credit, a hairline link, in the
+  same muted serif italic. The landing has no footer: it is only the name.
 - `.back` — muted "← Works / ← 작품" link, first element inside a detail
   page's `<main>`.
 - `.gallery` — `<ul>` masonry of `<figure>` cards; caption = title + serif year.
@@ -67,7 +73,8 @@ exhibition, so future exhibitions stay self-contained.
   centres them; a page's own `<style>` sets only the `max-width` it wants.
 - `.tombstone` — serif muted "year · medium · size" line.
 - `.todo` — dashed hairline box, serif italic, for not-yet-written text.
-- `.work-nav` — footer prev / all / next links with `rel="prev/next"`.
+- `.work-nav` — the one way out of a work: a single centred "All works /
+  전체 작품" link under a hairline. No prev/next; the list holds the order.
 
 ## Per-page character
 
@@ -92,11 +99,13 @@ travels left to right in 1.8s while the tracking settles from `.26em` to
 resolving as the light reaches it. No JS and no per-letter markup: the mask
 gives the letter-by-letter reading while the `<h1>` stays one selectable,
 screen-readable string. Tracking and `margin-left` always move together or the
-name drifts off centre. Hovering (pointer only) steps it back to `.6` opacity
-and opens the tracking to `.17em`.
+name drifts off centre. Hovering the name itself (pointer only — the hover is
+on the `<h1>`, whose box is exactly the line of text, not on the full-screen
+link around it) steps it back to `.6` opacity and opens the tracking to
+`.17em`.
 
-**2 · The name carries you across** (landing ↔ works, 0.6s). The name *is* the
-landing and it *is* the header of the list, so both carry
+**2 · The name carries you across** (landing → works, 1.1s, one way only). The
+name *is* the landing and it *is* the header of the list, so both carry
 `view-transition-name: wordmark` and the browser glides one into the other
 instead of blinking. This is the only crossing that animates. A cross-document
 transition needs **both** documents to opt in, and that is exactly what keeps
@@ -104,6 +113,13 @@ it scoped: `@view-transition { navigation: auto }` sits in a `<style>` block on
 those four pages alone — landing and works, EN and KO. Do not move it into
 `site.css`; that would animate every navigation on the site. The page under the
 name changes hands in 0.3s, because moment 3 is the part meant to be watched.
+
+Coming back is a plain cut, and deliberately so: a document styles only the
+crossings that *end* in it, so the landing's own `<style>` cancels them
+(`::view-transition-*(*) { animation: none !important }`) — otherwise the glide
+would land on top of moment 1 and you would never see the name arrive. Measured
+in Chrome: out 1.1s, back 18ms, with `name-settle` and `name-light` running
+from the first frame of the landing.
 
 **3 · The works are hung** (list, 0.7s each). Each card lifts 14px and
 resolves, 55ms after the one before it, so the list arrives with the same

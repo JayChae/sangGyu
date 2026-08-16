@@ -6,13 +6,17 @@ body.exhibition {
   --ink: var(--dark-ink);
   --muted: var(--dark-muted);
   --hair: #2a2a2a;
+  /* The title is one line at every width (see .exh-hero h1), so on a phone it
+     is the column that decides how big it can be. Every heading under it is
+     sized off this, or the wall label would end up smaller than the labels. */
+  --title: min(35px, calc((100vw - 2 * var(--pad)) / 19.5));
+  --sub: clamp(15px, calc(var(--title) * 0.88), 20px);
   background: var(--bg);
   color: var(--ink);
 }
 
 /* Same trio as site.css's captions, for this file's own components. */
 .exh-dates,
-.exh-work figcaption,
 .collect .fine {
   font-family: var(--serif);
   font-style: italic;
@@ -24,12 +28,15 @@ body.exhibition {
 /* ── hero — an exhibition wall label ─────────── */
 
 .exh-hero { padding: 56px 0 40px; border-bottom: 1px solid var(--hair); }
-.exh-hero .kicker { color: var(--accent); }
+/* One line, always. The column is exactly `100vw - 2 × --pad` until it stops
+   at 720px, and this string measures ~18em at this tracking, so a twentieth of
+   that column keeps it on one line at every width (measured, with room to
+   spare for a wider fallback font — which would simply wrap rather than
+   overflow). */
 .exh-hero h1 {
-  margin-top: 14px;
-  font-size: clamp(24px, 6.4vw, 44px);
+  font-size: var(--title);
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.04em;
   line-height: 1.25;
 }
 .exh-fact { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--hair); }
@@ -48,13 +55,17 @@ body.exhibition {
 /* section headings are .kicker in the accent — see the markup */
 .exh-section > h2 { font-size: 12px; font-weight: 600; color: var(--accent); }
 .bio { margin-top: 18px; max-width: var(--measure); }
+.bio h3 { font-size: var(--sub); font-weight: 600; letter-spacing: 0.08em; }
+.bio h3 + p { margin-top: 12px; }
 .bio p + p { margin-top: 14px; }
+/* the artist's own site, set like the exhibition's URL above it */
+.bio .exh-url { margin-top: 18px; }
 
 /* ── works ───────────────────────────────────── */
 
 .exh-work { margin-top: 26px; padding-top: 28px; border-top: 1px solid var(--hair); }
-.exh-work figcaption { margin-top: 8px; font-size: 13px; }
-.exh-work h3 { margin-top: 18px; font-size: 20px; font-weight: 600; }
+/* no caption under the plate — the title and year follow immediately below */
+.exh-work h3 { margin-top: 18px; font-size: var(--sub); font-weight: 600; }
 .exh-work h3 em {
   margin-left: 8px;
   font-family: var(--serif);

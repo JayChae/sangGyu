@@ -18,4 +18,5 @@
       실제 계정으로 교체
 - [ ] **도메인 확정** — 정해지면: canonical/hreflang 을 절대경로로 전환,
       `og:image` · `og:url` 과 sitemap.xml 추가. (절대 URL이 필요 없는 나머지
-      Open Graph 태그는 이미 모든 페이지에 들어가 있음)
+      Open Graph 태그는 이미 모든 페이지에 들어가 있음) 전시 페이지 작가
+      소개의 웹사이트 링크 문구도 도메인으로 교체.

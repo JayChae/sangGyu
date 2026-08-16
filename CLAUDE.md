@@ -17,9 +17,10 @@ scripts/build-images.sh           # source JPEGs (../sangyu/arts) → WebP in pu
 - `check-links.py` asserts three things: every internal `href`/`src`/`srcset`
   resolves; every page's `canonical`, `hreflang` alternates and language
   toggle point at itself and its counterpart; and the works on disk are
-  exactly `WORKS.md`'s, walked in its order by both list pages and the
-  `rel=prev/next` chain. Run it after adding, moving, renaming or reordering
-  anything. There is no other lint/test tooling.
+  exactly `WORKS.md`'s, walked in its order by both list pages, each work page
+  leading back to the list and nowhere else (no `rel=prev/next`). Run it after
+  adding, moving, renaming or reordering anything. There is no other lint/test
+  tooling.
 - `scripts/pages.py` holds the one model of how Cloudflare Pages maps a URL to
   a file (clean URLs, `index.html`, case-sensitivity). Both `check-links.py`
   and `serve.py` import it — do not re-implement that routing in either.

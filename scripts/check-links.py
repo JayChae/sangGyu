@@ -6,8 +6,8 @@
 2. every page claims its own URL as canonical and points its hreflang
    alternates and its language toggle at itself and its counterpart;
 3. WORKS.md really is the source of truth — the works on disk are exactly the
-   works in the table, and both languages walk them in the table's order, on
-   the list page and through the rel=prev/next chain.
+   works in the table, and both list pages walk them in the table's order. A
+   work page leads back to the list and nowhere else: no prev/next chain.
 
 Checks 2 and 3 exist because the only authoring method here is copy-paste-then-
 translate, whose usual failure is a stale-but-valid URL: it resolves, so check 1
@@ -96,14 +96,15 @@ else:
         listed = [s for i, s in enumerate(found) if i == 0 or s != found[i - 1]]
         check(page, listed == rows, f"list order {listed} != WORKS.md order {rows}")
 
-        for i, slug in enumerate(rows):
+        # the one way out of a work is the list — the walk lives there alone,
+        # so a copy-pasted prev/next must not creep back in
+        for slug in rows:
             work = ROOT / "works" / slug / name
             html = work.read_text(encoding="utf-8")
-            for rel, neighbour in (("prev", rows[i - 1] if i else None),
-                                   ("next", rows[i + 1] if i + 1 < len(rows) else None)):
-                want = f"/works/{neighbour}{suffix}" if neighbour else None
-                check(work, attr(html, rf'<a rel="{rel}" href="([^"]+)"') == want,
-                      f"rel={rel} must be {want or 'absent (end of the chain)'}")
+            check(work, 'rel="prev"' not in html and 'rel="next"' not in html,
+                  "work pages carry no rel=prev/next — only the list link")
+            check(work, f'<a href="/works{suffix}">' in html,
+                  f'must link back to /works{suffix}')
 
 if errors:
     print("\n".join(errors))

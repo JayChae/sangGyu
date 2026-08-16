@@ -6,13 +6,13 @@
     <title>PARK SANG GYU</title>
     <meta
       name="description"
-      content="박상규 — 예술가. 검열, 통제, 주권에 관한 도자·설치 작업."
+      content="Art gallery of Park Sang Gyu."
     />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="PARK SANG GYU" />
     <meta
       property="og:description"
-      content="박상규 — 예술가. 검열, 통제, 주권에 관한 도자·설치 작업."
+      content="Art gallery of Park Sang Gyu."
     />
     <meta property="og:locale" content="ko_KR" />
     <meta property="og:locale:alternate" content="en_US" />
@@ -22,10 +22,18 @@
     <link rel="alternate" hreflang="en" href="/" />
     <link rel="alternate" hreflang="ko" href="/ko" />
     <link rel="stylesheet" href="/css/site.css" />
-    <!-- the one animated crossing, landing ↔ works: both ends must opt in,
-         which is what keeps every other navigation a plain cut (site.css) -->
+    <!-- the one animated crossing, landing → works: both ends must opt in,
+         which is what keeps every other navigation a plain cut (site.css).
+         Coming back the other way is a cut too: a document styles only the
+         crossings that *end* in it, so cancelling them here leaves landing →
+         works alone and lets the name play its own arrival, undisturbed. -->
     <style>
       @view-transition { navigation: auto; }
+      /* `!important` on purpose: this must outrank site.css's named rules,
+         whatever a snapshot happens to be called. */
+      ::view-transition-group(*),
+      ::view-transition-old(*),
+      ::view-transition-new(*) { animation: none !important; }
     </style>
   </head>
   <body class="landing">
