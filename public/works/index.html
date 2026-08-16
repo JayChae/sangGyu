@@ -22,6 +22,11 @@
     <link rel="alternate" hreflang="en" href="/works/" />
     <link rel="alternate" hreflang="ko" href="/works/ko" />
     <link rel="stylesheet" href="/css/site.css" />
+    <!-- the one animated crossing, landing ↔ works: both ends must opt in,
+         which is what keeps every other navigation a plain cut (site.css) -->
+    <style>
+      @view-transition { navigation: auto; }
+    </style>
   </head>
   <body class="gallery-page">
     <header class="site-header">

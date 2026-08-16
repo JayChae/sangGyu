@@ -78,30 +78,51 @@ is the sole dark room, with its own stylesheet inside its folder.
 It must keep the shared header, `.back` link, tombstone, `.todo` placeholder,
 `.work-nav`, and Microdata.
 
-## The one animation
+## Motion
 
-The landing name arrives once — raking light crossing a gallery wall. A soft
-lit edge (a `mask` gradient 3× the width of the line, slid across it) travels
-left to right in 1.8s while the tracking settles from `.26em` to `.14em` and a
-`.18em` blur clears in 1.4s. Two curves, so a letter is still resolving as the
-light reaches it. Then nothing moves, ever: the animations fill `backwards`
-only, so at rest the name is exactly the plain rule — full ink, no mask
-dimming, no loop, no repaint. Hovering (pointer only) steps it back to `.6`
-opacity and opens the tracking to `.17em`; `prefers-reduced-motion` keeps the
-dim and drops every trace of movement, leaving a 0.7s fade.
+Motion happens **three times, and nowhere else**. It is one continuous idea —
+light crosses a wall, the name carries you over, the works are hung — and the
+list below is closed. Everything else on the site, every other navigation
+included, is a plain cut.
 
-Constraints that keep it honest: no JS and no per-letter markup — the mask
+**1 · The name arrives** (landing). Raking light crossing a gallery wall: a
+soft lit edge — a `mask` gradient 3× the width of the line, slid across it —
+travels left to right in 1.8s while the tracking settles from `.26em` to
+`.14em` and a `.18em` blur clears in 1.4s. Two curves, so a letter is still
+resolving as the light reaches it. No JS and no per-letter markup: the mask
 gives the letter-by-letter reading while the `<h1>` stays one selectable,
 screen-readable string. Tracking and `margin-left` always move together or the
-name drifts off centre. It lives with the other landing rules in `site.css`,
-because both landing pages share it.
+name drifts off centre. Hovering (pointer only) steps it back to `.6` opacity
+and opens the tracking to `.17em`.
+
+**2 · The name carries you across** (landing ↔ works, 0.6s). The name *is* the
+landing and it *is* the header of the list, so both carry
+`view-transition-name: wordmark` and the browser glides one into the other
+instead of blinking. This is the only crossing that animates. A cross-document
+transition needs **both** documents to opt in, and that is exactly what keeps
+it scoped: `@view-transition { navigation: auto }` sits in a `<style>` block on
+those four pages alone — landing and works, EN and KO. Do not move it into
+`site.css`; that would animate every navigation on the site. The page under the
+name changes hands in 0.3s, because moment 3 is the part meant to be watched.
+
+**3 · The works are hung** (list, 0.7s each). Each card lifts 14px and
+resolves, 55ms after the one before it, so the list arrives with the same
+unhurried left-to-right movement. `sibling-index()` carries the rhythm, so
+`WORKS.md` can grow without a rule per card; where it is unsupported the cards
+simply arrive together. Filtering replays it only for cards that genuinely
+come back — `gallery.js` never touches the ones already on screen.
+
+At rest, nothing moves, ever: every one of these fills `backwards` only, so a
+settled page is exactly its plain rules — full ink, no mask dimming, no loop,
+no repaint. `prefers-reduced-motion` drops all travel and leaves a plain fade
+(and, on the landing, keeps the hover dim as the affordance).
 
 ## Rules
 
 - No shadows except the search bar. No border radius except the search bar and
   chips. No animation except `opacity`/`color` transitions ≤ 200ms — and the
-  landing name above, the single deliberate exception. It stays single: a
-  second animated thing anywhere on the site is a bug.
+  three moments above, which are deliberate and closed. A fourth animated
+  thing anywhere on the site is a bug.
 - Never crop an artwork. Never place text over an artwork.
 - Alt text describes the artwork plainly, in the page language.
 - If a page needs more than this document offers, the page is too complicated.

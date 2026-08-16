@@ -39,6 +39,29 @@ h1, h2, h3 { text-wrap: balance; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: none; }
 
+/* ── landing → works ─────────────────────────── */
+
+/* The name is the hinge between those two pages: it *is* the landing, and it
+   is the header of the list. Naming both makes the browser treat them as one
+   thing, so it glides from the middle of the screen up into the header
+   instead of blinking out. This is the only crossing that animates: a
+   cross-document transition needs BOTH documents to opt in, so the opt-in
+   (`@view-transition`) sits in a <style> block on those four pages alone —
+   landing and works, EN and KO. Every other navigation stays a plain cut.
+   The naming and the timing live here because both ends need them, and
+   because the destination document is the one that styles the transition.
+   Browsers without view transitions get today's cut everywhere. */
+.wordmark,
+.landing h1 { view-transition-name: wordmark; }
+::view-transition-group(wordmark) {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* the page under it changes hands quickly; the works arriving (below) is the
+   part meant to be watched */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.3s; }
+
 .kicker {
   font-family: var(--serif);
   font-size: 11px;
@@ -163,6 +186,27 @@ a { color: inherit; text-decoration: none; }
   .gallery { columns: 3; column-gap: 22px; }
   .gallery > li { margin-bottom: 30px; }
 }
+/* The works are hung, not dropped: each card lifts into place a beat after
+   the one before it, so the list arrives with the same unhurried left-to-right
+   movement as the name it came from. sibling-index() keeps that rhythm without
+   a rule per card — WORKS.md can grow and nothing here changes; where it is
+   unsupported the cards simply arrive together, which is the same idea with
+   the rhythm removed. Filtering replays it only for cards that actually come
+   back: gallery.js leaves the ones already on screen untouched. */
+.gallery > li {
+  animation: plate-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(sibling-index() * 55ms);
+}
+@keyframes plate-in {
+  from { opacity: 0; translate: 0 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery > li { animation: plate-fade 0.5s ease-out backwards; }
+}
+@keyframes plate-fade {
+  from { opacity: 0; }
+}
+
 .gallery a { display: block; }
 .gallery img { width: 100%; transition: opacity 0.2s; }
 .gallery a:hover img { opacity: 0.9; }
