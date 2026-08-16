@@ -12,6 +12,7 @@ output directory — files are served exactly as committed.
 ./serve.sh [port]                 # local preview → http://localhost:8000
 python3 scripts/check-links.py    # the test suite (exit 1 on failure)
 scripts/build-images.sh           # source JPEGs (../sangyu/arts) → WebP in public/img/ (needs cwebp: brew install webp)
+scripts/build-icons.sh            # the app icon → public/icon-{192,512}.png (needs Chrome)
 ```
 
 - `check-links.py` asserts three things: every internal `href`/`src`/`srcset`
@@ -71,6 +72,15 @@ scripts/build-images.sh           # source JPEGs (../sangyu/arts) → WebP in pu
 - **Web performance**: no webfonts (system stack), no external requests, tiny
   CSS/JS. `fetchpriority="high"` on a single hero image only — never on the
   masonry list, where the columns rebalance and no one item is the hero.
+- **Installable, and no more than that.** A manifest and two PNG icons let a
+  phone keep the site on its home screen and open it without browser chrome.
+  That is the whole feature: no service worker, no offline cache, no JS — the
+  site stays a set of pages the browser happens to be able to hold on to. There
+  are two manifests for the same reason every page has a counterpart:
+  installing from `/works/ko` must open at `/ko`, not at the English landing,
+  so `ko.html` links `manifest.ko.webmanifest` and everything else links
+  `manifest.webmanifest`. `theme_color`/`background_color` are the `--bg`
+  token, matching each page's `theme-color` meta.
 
 ## Structure
 
@@ -83,8 +93,10 @@ public/                          ← Cloudflare Pages output directory
   css/site.css                   shared styles (design system)
   js/gallery.js                  search + tag filter for the list page (~50 lines)
   img/<slug>/{480,640,960,1200,1600}.webp  one folder per artwork (extra views: <slug>/view2-*.webp)
+  manifest.webmanifest, manifest.ko.webmanifest   home-screen install (EN/KO)
+  favicon.svg, icon-{192,512}.png   tab icon · app icon (scripts/build-icons.sh)
   _headers                       Cache-Control rules
-scripts/                         pages.py (URL model) · build-images.sh · serve.py · check-links.py
+scripts/                         pages.py (URL model) · build-images.sh · build-icons.sh · serve.py · check-links.py
 ```
 
 ## Content rules

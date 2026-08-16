@@ -1,0 +1,26 @@
+{
+  "id": "/ko",
+  "lang": "ko",
+  "name": "PARK SANG GYU",
+  "short_name": "SANG GYU",
+  "description": "도자·설치 작품 모음.",
+  "start_url": "/ko",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f6f3",
+  "theme_color": "#f7f6f3",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

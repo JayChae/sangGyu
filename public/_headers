@@ -48,3 +48,17 @@
 /*.svg
   ! Cache-Control
   Cache-Control: public, max-age=2592000
+
+# The app icons (scripts/build-icons.sh), on the same terms as the favicon and
+# for the same reason. Matched by name rather than by extension, unlike the
+# rules above: /*.png would also reach into /img/, and being the later rule it
+# would quietly detach the immutable year an artwork photo is entitled to.
+/icon-*.png
+  ! Cache-Control
+  Cache-Control: public, max-age=2592000
+
+# The manifest names the icons and the start URL, so it shares a contract with
+# both — an hour, like the CSS and JS, keeps the three from drifting apart.
+/*.webmanifest
+  ! Cache-Control
+  Cache-Control: public, max-age=3600

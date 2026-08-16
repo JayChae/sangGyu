@@ -140,6 +140,14 @@ settled page is exactly its plain rules — full ink, no mask dimming, no loop,
 no repaint. `prefers-reduced-motion` drops all travel and leaves a plain fade
 (and, on the landing, keeps the hover dim as the affordance).
 
+## App icon
+
+The home-screen icon is the landing name cropped to its initials — `PSG`, ink
+on the warm-white wall, set the way `.landing h1` is set (sans 600, tracked
+`.14em`). Rendered, never hand-drawn: `scripts/build-icons.sh`, which also
+holds the maskable safe-zone budget that caps how large the letters may go. If
+the landing's type ever changes, rebuild the icon with it.
+
 ## Rules
 
 - No shadows except the search bar. No border radius except the search bar and
