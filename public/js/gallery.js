@@ -26,14 +26,25 @@
     empty.hidden = shown > 0;
   };
 
+  // The bar is fixed to the bottom of the phone, but the results start at the
+  // top of the page: filter from halfway down the list and the matches land
+  // above the fold, leaving the reader looking at the gap the hidden cards
+  // left. So every filter the reader triggers also takes them to the first
+  // result. Not on the initial apply() below — that one must not overwrite the
+  // scroll position the browser restores on back-navigation.
+  const filter = () => {
+    apply();
+    window.scrollTo({ top: 0 });
+  };
+
   for (const chip of chips) {
     chip.addEventListener("click", () => {
       for (const c of chips)
         c.setAttribute("aria-pressed", String(c === chip));
-      apply();
+      filter();
     });
   }
-  input.addEventListener("input", apply);
+  input.addEventListener("input", filter);
 
   // On back-navigation the browser restores the typed query, so filter once
   // before revealing the bar — otherwise the box and the gallery disagree.
