@@ -11,7 +11,7 @@ output directory — files are served exactly as committed.
 ```
 ./serve.sh [port]                 # local preview → http://localhost:8000
 python3 scripts/check-links.py    # the test suite (exit 1 on failure)
-scripts/build-images.sh           # source JPEGs (../sangyu/arts) → WebP in public/img/ (needs cwebp: brew install webp)
+scripts/build-images.sh           # source photos (../sangyu/arts/<work>/) → WebP in public/img/ (needs cwebp: brew install webp)
 scripts/build-icons.sh            # the app icon → public/icon-{192,512}.png (needs Chrome)
 ```
 
@@ -89,10 +89,12 @@ public/                          ← Cloudflare Pages output directory
   index.html, ko.html            landing (EN/KO) — only the centered name, linking to /works/
   works/index.html, ko.html      gallery list — masonry + bottom search/filter bar
   works/<slug>/index.html, ko.html   one hand-made page per artwork
+  cv/index.html, ko.html         the artist's CV (English on both pages) — also the first card on the list
   exhibitions/<name>/            self-contained exhibition mini-sites (see WORKS.md)
   css/site.css                   shared styles (design system)
   js/gallery.js                  search + tag filter for the list page (~50 lines)
-  img/<slug>/{480,640,960,1200,1600}.webp  one folder per artwork (extra views: <slug>/view2-*.webp)
+  img/<slug>/{480,640,960,1200,1600}.webp  one folder per artwork (extra views: <slug>/view2-*.webp;
+                                 a replaced hero is <slug>/v2-*.webp — see build-images.sh)
   manifest.webmanifest, manifest.ko.webmanifest   home-screen install (EN/KO)
   favicon.svg, icon-{192,512}.png   tab icon · app icon (scripts/build-icons.sh)
   _headers                       Cache-Control rules
@@ -102,14 +104,17 @@ scripts/                         pages.py (URL model) · build-images.sh · buil
 ## Content rules
 
 - `WORKS.md` is the single source of truth for the works: slugs, titles,
-  years, media, tags, and the curated order (= list-page order and the
-  `rel=prev/next` chain). It also documents the ORIGIN SEOUL 2026 exhibition
-  mini-site.
-- Every artwork page has a "to be written" description placeholder on
-  purpose — **do not invent descriptions, years, or dimensions.** Open items
-  waiting on the owner live in `TODO.md` (kept in Korean, deliberately).
-- Source artwork JPEGs live outside the repo in `../sangyu/arts`
-  (note the different spelling: `sangyu`, not `sangGyu`).
+  years, media, sizes, tags, and the curated order (= list-page order). It
+  also documents the ORIGIN SEOUL 2026 exhibition mini-site.
+- A work page says title, year, medium, size — **no descriptions**, by the
+  artist's request (they live on Instagram), and **never invent a year, a
+  title or a dimension**: the artist's Instagram captions are the source.
+  Open items waiting on the owner live in `TODO.md` (kept in Korean,
+  deliberately).
+- Source photos live outside the repo in `../sangyu/arts`, one folder per
+  work named by the artist in Korean (note the different spelling: `sangyu`,
+  not `sangGyu`); the CV PDF is there too. `_old-2026-07/` holds the first
+  photo set.
 
 ## Gotchas
 

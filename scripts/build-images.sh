@@ -1,7 +1,8 @@
 #!/bin/bash
-# Convert source JPEGs (../sangyu/arts) to responsive WebP into public/img/.
+# Convert the artist's source photos (../sangyu/arts, one folder per work,
+# named by the artist) to responsive WebP into public/img/.
 # One folder per artwork: public/img/<slug>/{480,640,960,1200,1600}.webp
-# (extra views get a prefix, e.g. collective-gaze/view2-480.webp).
+# (extra views get a prefix, e.g. the-stranger/view2-480.webp).
 # Quality 82. Rerunnable — outputs newer than their source are left alone, so
 # a rerun after adding one artwork re-encodes only that artwork.
 #
@@ -22,15 +23,20 @@
 # candidate from the page's srcset too.
 #
 # Replacing an artwork photo: /img/* is cached immutable for a year, so give
-# the new file a version prefix (convert "Ecology.jpg" ecology "v2-") and
-# update the srcset. Overwriting in place strands returning visitors.
+# the new file a version prefix and update the srcset. Overwriting in place
+# strands returning visitors. The works below whose hero is a different photo
+# (or a different crop) from the 2026-07 set carry "v2-" for exactly that
+# reason; that first set is kept in ../sangyu/arts/_old-2026-07.
+#
+# Every photo the artist sent is used: the first line of a work is its hero,
+# the rest are its views, in the order of the artist's folder.
 set -e
 cd "$(dirname "$0")/.."
 
 SRC="../sangyu/arts"
 OUT="public/img"
 
-convert() { # $1=source jpg  $2=slug  $3=optional filename prefix (e.g. "view2-")
+convert() { # $1=source photo  $2=slug  $3=optional filename prefix (e.g. "view2-")
   mkdir -p "$OUT/$2"
   local src_w
   src_w=$(sips -g pixelWidth "$SRC/$1" | awk '/pixelWidth:/ { print $2 }')
@@ -41,17 +47,131 @@ convert() { # $1=source jpg  $2=slug  $3=optional filename prefix (e.g. "view2-"
       continue
     fi
     if [ "$out" -nt "$SRC/$1" ]; then continue; fi
-    cwebp -quiet -q 82 -resize "$w" 0 "$SRC/$1" -o "$out" &
+    cwebp -quiet -q 82 -metadata none -resize "$w" 0 "$SRC/$1" -o "$out" &
   done
   wait
   echo "→ $2/${3}* (원본 ${src_w}px)"
 }
 
-convert "A Cusion.jpg"                 a-cushion
-convert "Beyond the Predetermined.jpg" beyond-the-predetermined
-convert "Brave new world.jpg"          brave-new-world
-convert "Collective Gaze.jpg"          collective-gaze
-convert "Collective Gaze2.jpg"         collective-gaze view2-
-convert "Ecology.jpg"                  ecology
-convert "The Stranger.jpg"             the-stranger
-convert "무제.jpg"                      untitled
+
+convert "폐허풍경(beyond the predetermined)/완성본 전경 복사본.jpg"                beyond-the-predetermined v2-
+convert "폐허풍경(beyond the predetermined)/IMG_6226.jpg"                  beyond-the-predetermined view2-
+convert "폐허풍경(beyond the predetermined)/IMG_6227.jpg"                  beyond-the-predetermined view3-
+convert "폐허풍경(beyond the predetermined)/IMG_6235.jpg"                  beyond-the-predetermined view4-
+convert "폐허풍경(beyond the predetermined)/IMG_6238.jpg"                  beyond-the-predetermined view5-
+convert "폐허풍경(beyond the predetermined)/IMG_6242.jpg"                  beyond-the-predetermined view6-
+convert "폐허풍경(beyond the predetermined)/IMG_6243.jpg"                  beyond-the-predetermined view7-
+convert "폐허풍경(beyond the predetermined)/IMG_6248.jpg"                  beyond-the-predetermined view8-
+convert "폐허풍경(beyond the predetermined)/IMG_6250.jpg"                  beyond-the-predetermined view9-
+convert "폐허풍경(beyond the predetermined)/IMG_6531.jpg"                  beyond-the-predetermined view10-
+
+convert "산화형상 #10/IMG_6110.jpg"                                        oxidized-figures-10
+convert "산화형상 #10/IMG_6111.jpg"                                        oxidized-figures-10 view2-
+convert "산화형상 #10/IMG_6112.jpg"                                        oxidized-figures-10 view3-
+convert "산화형상 #10/IMG_6113.jpg"                                        oxidized-figures-10 view4-
+convert "산화형상 #10/IMG_6114.jpg"                                        oxidized-figures-10 view5-
+convert "산화형상 #10/IMG_6115.jpg"                                        oxidized-figures-10 view6-
+
+convert "산화형상 #6/IMG_6056.jpg"                                         oxidized-figures-6
+convert "산화형상 #6/IMG_6058.jpg"                                         oxidized-figures-6 view2-
+convert "산화형상 #6/IMG_6059.jpg"                                         oxidized-figures-6 view3-
+convert "산화형상 #6/IMG_6060.jpg"                                         oxidized-figures-6 view4-
+convert "산화형상 #6/IMG_6062.jpg"                                         oxidized-figures-6 view5-
+convert "산화형상 #6/IMG_6063.jpg"                                         oxidized-figures-6 view6-
+
+convert "산화형상 #5/IMG_6104.jpg"                                         oxidized-figures-5
+convert "산화형상 #5/IMG_6105.jpg"                                         oxidized-figures-5 view2-
+convert "산화형상 #5/IMG_6106.jpg"                                         oxidized-figures-5 view3-
+convert "산화형상 #5/IMG_6107.jpg"                                         oxidized-figures-5 view4-
+convert "산화형상 #5/IMG_6108.jpg"                                         oxidized-figures-5 view5-
+convert "산화형상 #5/IMG_6109.jpg"                                         oxidized-figures-5 view6-
+
+convert "산화형상 #3/IMG_6092.jpg"                                         oxidized-figures-3
+convert "산화형상 #3/IMG_6093.jpg"                                         oxidized-figures-3 view2-
+convert "산화형상 #3/IMG_6094.jpg"                                         oxidized-figures-3 view3-
+convert "산화형상 #3/IMG_6095.jpg"                                         oxidized-figures-3 view4-
+convert "산화형상 #3/IMG_6096.jpg"                                         oxidized-figures-3 view5-
+convert "산화형상 #3/IMG_6097.jpg"                                         oxidized-figures-3 view6-
+
+convert "산화형상 #2/IMG_6098.jpg"                                         oxidized-figures-2
+convert "산화형상 #2/IMG_6099.jpg"                                         oxidized-figures-2 view2-
+convert "산화형상 #2/IMG_6100.jpg"                                         oxidized-figures-2 view3-
+convert "산화형상 #2/IMG_6101.jpg"                                         oxidized-figures-2 view4-
+convert "산화형상 #2/IMG_6102.jpg"                                         oxidized-figures-2 view5-
+convert "산화형상 #2/IMG_6103.jpg"                                         oxidized-figures-2 view6-
+
+convert "응시/IMG_5780.jpg"                                              collective-gaze v2-
+convert "응시/IMG_5769.jpg"                                              collective-gaze view2-
+convert "응시/IMG_5772.jpg"                                              collective-gaze view3-
+convert "응시/IMG_5778.jpg"                                              collective-gaze view4-
+convert "응시/IMG_5783.jpg"                                              collective-gaze view5-
+convert "응시/IMG_8646.jpeg"                                             collective-gaze view6-
+convert "응시/IMG_8650.jpeg"                                             collective-gaze view7-
+convert "응시/IMG_8651.jpeg"                                             collective-gaze view8-
+convert "응시/IMG_8654.jpeg"                                             collective-gaze view9-
+
+convert "이방인/IMG_9172.jpeg"                                            the-stranger v2-
+convert "이방인/IMG_9166.jpeg"                                            the-stranger view2-
+convert "이방인/IMG_9171.jpeg"                                            the-stranger view3-
+
+convert "자소상/IMG_8988.jpeg"                                            self-portrait
+convert "자소상/IMG_8985.jpeg"                                            self-portrait view2-
+convert "자소상/IMG_8987.jpeg"                                            self-portrait view3-
+convert "자소상/IMG_8990.jpeg"                                            self-portrait view4-
+
+convert "나한들 - 작은 존재들/IMG_8620.jpeg"                                   arhats-little-beings
+convert "나한들 - 작은 존재들/IMG_8621.jpeg"                                   arhats-little-beings view2-
+convert "나한들 - 작은 존재들/IMG_8622.jpeg"                                   arhats-little-beings view3-
+convert "나한들 - 작은 존재들/IMG_8623.jpeg"                                   arhats-little-beings view4-
+convert "나한들 - 작은 존재들/IMG_8627.jpeg"                                   arhats-little-beings view5-
+
+convert "손/IMG_8608.jpeg"                                              a-hand
+convert "손/IMG_8609.jpeg"                                              a-hand view2-
+convert "손/IMG_8610.jpeg"                                              a-hand view3-
+
+convert "두 세개의 연못/IMG_9095.jpg"                                        the-pool-of-two-worlds
+convert "두 세개의 연못/IMG_9093.jpg"                                        the-pool-of-two-worlds view2-
+convert "두 세개의 연못/1.png"                                               the-pool-of-two-worlds view3-
+convert "두 세개의 연못/2.png"                                               the-pool-of-two-worlds view4-
+convert "두 세개의 연못/스크린샷 2026-08-20 12.41.38.png"                        the-pool-of-two-worlds view5-
+convert "두 세개의 연못/스크린샷 2026-08-20 12.41.51.png"                        the-pool-of-two-worlds view6-
+
+convert "얼굴/IMG_9086.jpeg"                                             a-face
+convert "얼굴/IMG_8594.jpeg"                                             a-face view2-
+convert "얼굴/IMG_8598.jpeg"                                             a-face view3-
+
+convert "멋진 신세계/IMG_3208.jpeg"                                         brave-new-world
+convert "멋진 신세계/IMG_2581.jpeg"                                         brave-new-world view2-
+convert "멋진 신세계/IMG_3209.jpeg"                                         brave-new-world view3-
+convert "멋진 신세계/IMG_3210.jpeg"                                         brave-new-world view4-
+convert "멋진 신세계/IMG_3211.jpeg"                                         brave-new-world view5-
+convert "멋진 신세계/IMG_3212.jpeg"                                         brave-new-world view6-
+convert "멋진 신세계/IMG_3213.jpeg"                                         brave-new-world view7-
+convert "멋진 신세계/IMG_3214.jpeg"                                         brave-new-world view8-
+
+convert "생태/IMG_3150.jpeg"                                             ecology
+convert "생태/IMG_3143.jpeg"                                             ecology view2-
+convert "생태/IMG_3144.jpeg"                                             ecology view3-
+convert "생태/IMG_3145.jpeg"                                             ecology view4-
+convert "생태/IMG_3146.jpeg"                                             ecology view5-
+convert "생태/IMG_3147.jpeg"                                             ecology view6-
+
+convert "연소/연소.jpg"                                                    combustion
+
+convert "무제/제목_없는_아트워크.jpg"                                            untitled v2-
+
+convert "해골/IMG_0979.jpeg"                                             skull
+convert "해골/IMG_0980.jpeg"                                             skull view2-
+convert "해골/IMG_0961.jpeg"                                             skull view3-
+convert "해골/IMG_0962.jpeg"                                             skull view4-
+convert "해골/IMG_0963.jpeg"                                             skull view5-
+convert "해골/IMG_0964.jpeg"                                             skull view6-
+convert "해골/IMG_0965.jpeg"                                             skull view7-
+
+convert "쿠션/IMG_8093.jpeg"                                             a-cushion
+convert "쿠션/IMG_8092.jpeg"                                             a-cushion view2-
+convert "쿠션/IMG_8094.jpeg"                                             a-cushion view3-
+
+convert "추상인체/1.正面-1.jpg"                                              abstract-body-3
+convert "추상인체/2正面-2.jpg"                                               abstract-body-3 view2-
+convert "추상인체/5.局部-1.jpg"                                              abstract-body-3 view3-

@@ -3,14 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>A Cushion</title>
+    <title>쿠션 (2022)</title>
     <meta
       name="description"
-      content="A Cushion, 세라믹."
+      content="쿠션 (2022), 화강암, 대리석, 22 × 22 × 10 cm."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="A Cushion" />
-    <meta property="og:description" content="A Cushion, 세라믹." />
+    <meta property="og:title" content="쿠션 (2022)" />
+    <meta
+      property="og:description"
+      content="쿠션 (2022), 화강암, 대리석, 22 × 22 × 10 cm."
+    />
     <meta property="og:locale" content="ko_KR" />
     <meta property="og:locale:alternate" content="en_US" />
     <meta name="theme-color" content="#f7f6f3" />
@@ -22,11 +25,12 @@
     <link rel="alternate" hreflang="ko" href="/works/a-cushion/ko" />
     <link rel="stylesheet" href="/css/site.css" />
     <style>
-      /* A Cushion — 푹신해 보이지만 단단한 세라믹: 넓은 흰 벽에
-         작품을 작게 하나만 걸고, 아래에 조용한 라벨만 둔다. */
+      /* 쿠션 — 부드러운 형태의 단단한 돌: 넓은 흰 바탕에 작고 외롭게 걸고, 아래에
+         조용한 라벨을, 다른 면도 같은 크기로. */
       .detail main { padding-top: 42px; }
       .detail article { max-width: 480px; margin: 0 auto; }
       .work-head { margin-top: 44px; }
+      .work-view { margin-top: 44px; }
     </style>
   </head>
   <body class="detail">
@@ -51,25 +55,58 @@
             sizes="(min-width: 520px) 480px, calc(100vw - 40px)"
             width="960"
             height="962"
-            alt="가운데에 흰 공 하나가 눌려 박힌 검은 세라믹 쿠션."
+            alt="가운데에 흰 대리석 공 하나가 눌려 박힌, 광택 나는 검은 돌 쿠션."
             fetchpriority="high"
             decoding="async"
           />
         </figure>
 
         <header class="work-head">
-          <h1 itemprop="name" lang="en">A Cushion</h1>
+          <h1 itemprop="name">쿠션 <em lang="en">A Cushion</em></h1>
           <p class="tombstone">
-            <span itemprop="artMedium">세라믹</span>
+            <time itemprop="dateCreated" datetime="2022">2022</time> ·
+            <span itemprop="artMedium">화강암, 대리석</span> · 22 × 22 × 10 cm
           </p>
           <span hidden itemprop="creator" itemscope itemtype="https://schema.org/Person">
             <meta itemprop="name" content="박상규" />
           </span>
         </header>
-
-        <div class="work-body">
-          <p class="todo">작품 설명 작성 필요.</p>
-        </div>
+        <figure class="work-view">
+          <img
+            src="/img/a-cushion/view2-960.webp"
+            srcset="
+              /img/a-cushion/view2-480.webp   480w,
+              /img/a-cushion/view2-960.webp   960w,
+              /img/a-cushion/view2-1200.webp 1200w,
+              /img/a-cushion/view2-1600.webp 1600w
+            "
+            sizes="(min-width: 520px) 480px, calc(100vw - 40px)"
+            width="960"
+            height="960"
+            alt="정면에서 본 쿠션. 움푹한 자리에 공이 박혀 있다."
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>정면</figcaption>
+        </figure>
+        <figure class="work-view">
+          <img
+            src="/img/a-cushion/view3-960.webp"
+            srcset="
+              /img/a-cushion/view3-480.webp   480w,
+              /img/a-cushion/view3-960.webp   960w,
+              /img/a-cushion/view3-1200.webp 1200w,
+              /img/a-cushion/view3-1600.webp 1600w
+            "
+            sizes="(min-width: 520px) 480px, calc(100vw - 40px)"
+            width="960"
+            height="960"
+            alt="옆에서 본 쿠션. 공이 살짝 보인다."
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>측면</figcaption>
+        </figure>
       </article>
     </main>
 
