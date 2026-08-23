@@ -89,7 +89,7 @@ public/                          ← Cloudflare Pages output directory
   index.html, ko.html            landing (EN/KO) — only the centered name, linking to /works/
   works/index.html, ko.html      gallery list — masonry + bottom search/filter bar
   works/<slug>/index.html, ko.html   one hand-made page per artwork
-  cv/index.html, ko.html         the artist's CV (EN/KO) — also the first card on the list
+  cv/index.html, ko.html         the artist's CV (English on both pages) — also the first card on the list
   exhibitions/<name>/            self-contained exhibition mini-sites (see WORKS.md)
   css/site.css                   shared styles (design system)
   js/gallery.js                  search + tag filter for the list page (~50 lines)

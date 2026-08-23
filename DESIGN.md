@@ -81,7 +81,8 @@ exhibition, so future exhibitions stay self-contained.
 - `.tombstone` — serif muted "year · medium · size" line.
 - `.cv` — the CV: a `<dl>` per section, the year in the caption serif beside
   its line. Built from tokens only, so it sits on the white wall (`/cv/`) and
-  in the dark room (the exhibition page) unchanged.
+  in the dark room (the exhibition page) unchanged. It is English on the
+  Korean pages too (`lang="en"`, no Korean tracking) — the owner's choice.
 - `.work-nav` — the one way out of a work: a single centred "All works /
   전체 작품" link under a hairline. No prev/next; the list holds the order.
 

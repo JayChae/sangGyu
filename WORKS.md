@@ -55,8 +55,8 @@ Notes:
   ceramic.
 - `oxidized-figures-2`'s photos are 1546/1506 px wide, so it has no 1600 tier.
 - The artist's CV (`../sangyu/arts/작가약력.pdf`) is `public/cv/` and the CV
-  section of the exhibition page; the Korean version is a translation waiting
-  on the owner's check (see `TODO.md`).
+  section of the exhibition page. It is English on the Korean pages too —
+  the owner's choice — so there is nothing to translate.
 
 ## ORIGIN SEOUL 2026 (exhibition mini-site)
 
