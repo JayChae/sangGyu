@@ -78,7 +78,7 @@ a { color: inherit; text-decoration: none; }
 .gallery figcaption time,
 .gallery-empty,
 .detail figcaption,
-.todo {
+.cv dt {
   font-family: var(--serif);
   font-style: italic;
   color: var(--muted);
@@ -220,6 +220,20 @@ a { color: inherit; text-decoration: none; }
 .gallery figcaption time { margin-left: 4px; }
 .gallery-empty { text-align: center; padding: 48px 0; }
 
+/* Two text cards hang among the photographs: the exhibition and the artist.
+   One box, set the same way; only the wall behind it differs. */
+.card--exhibition a,
+.card--cv a { padding: 24px 18px 22px; }
+.card--exhibition h2,
+.card--cv h2 { margin-top: 12px; font-size: 20px; font-weight: 600; }
+.card--exhibition p,
+.card--cv p {
+  margin-top: 8px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--muted);
+}
 /* A swatch of the exhibition's dark room, so it must read as the same room:
    re-point the tokens rather than restate the hex. */
 .card--exhibition a {
@@ -227,17 +241,11 @@ a { color: inherit; text-decoration: none; }
   --muted: var(--dark-muted);
   background: var(--dark-bg);
   color: var(--ink);
-  padding: 24px 18px 22px;
 }
 .card--exhibition .kicker { color: var(--accent); }
-.card--exhibition h2 { margin-top: 12px; font-size: 20px; font-weight: 600; }
-.card--exhibition p {
-  margin-top: 8px;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 13px;
-  color: var(--muted);
-}
+/* the artist's card stays on the white wall: an ink rule around it, like the
+   rule over a work's title */
+.card--cv a { border: 1px solid var(--ink); }
 
 /* ── search / filter bar ─────────────────────── */
 
@@ -319,13 +327,24 @@ a { color: inherit; text-decoration: none; }
   font-size: 14px;
   color: var(--muted);
 }
-.work-body { margin-top: 20px; max-width: var(--measure); }
-.work-body p + p { margin-top: 14px; }
-.todo {
-  border: 1px dashed var(--hair);
-  padding: 14px 16px;
-  font-size: 14px;
+
+/* ── CV ──────────────────────────────────────── */
+
+/* A list of years: the year in the caption serif, the line beside it. Built
+   only from tokens, so the exhibition's dark room inverts it for free. */
+.cv section { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--hair); }
+.cv dl { margin-top: 10px; max-width: 40em; }
+.cv dl div {
+  display: grid;
+  grid-template-columns: 4.6em 1fr;
+  gap: 0 12px;
+  padding: 5px 0;
+  font-size: 15px;
+  line-height: 1.55;
 }
+.cv dt { font-size: 14px; padding-top: 1px; }
+.cv .tombstone a { border-bottom: 1px solid var(--hair); transition: color 0.15s; }
+.cv .tombstone a:hover { color: var(--ink); }
 
 /* One way out of a work: back to all of them, centred. No prev/next — the list
    is the only order the site claims. */

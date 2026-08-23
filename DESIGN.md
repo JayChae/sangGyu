@@ -50,7 +50,11 @@ exhibition, so future exhibitions stay self-contained.
 - Gallery: CSS multi-columns (2 columns, 3 from 760px) — pure-CSS masonry that
   absorbs any aspect ratio. `break-inside: avoid` on items.
 - Detail pages: image first, full column width (max 880px), then a
-  `border-top` rule, title, serif tombstone, body text at `max-width: 34em`.
+  `border-top` rule, title, serif tombstone — and nothing else in words: a
+  work page is title, year, medium, size. Every other photo of the work hangs
+  below the tombstone as a `.work-view` plate, in the artist's order, with a
+  short serif caption where one says something (detail, installation view,
+  side) and none otherwise.
 - Spacing rhythm: multiples of ~6px (6 / 12 / 18 / 26 / 40). Eyeball it; do not
   invent a spacing framework.
 
@@ -64,6 +68,8 @@ exhibition, so future exhibitions stay self-contained.
 - `.gallery` — `<ul>` masonry of `<figure>` cards; caption = title + serif year.
   No hover state: the photograph never dims under the pointer.
 - `.card--exhibition` — the one dark card in the white gallery; orange kicker.
+- `.card--cv` — the artist's card, first in the gallery: the same box on the
+  white wall, ruled in ink, linking to the CV.
 - `.searchbar` — fixed bottom, AI-chat-style panel: rounded 16px, hairline
   border, blur, soft shadow. It is one box, only as wide as the panel, so taps
   beside it reach the gallery underneath. Input on top, filter chips below
@@ -73,7 +79,9 @@ exhibition, so future exhibitions stay self-contained.
 - `.work-hero` / `.work-view` — the image plates on a detail page. `site.css`
   centres them; a page's own `<style>` sets only the `max-width` it wants.
 - `.tombstone` — serif muted "year · medium · size" line.
-- `.todo` — dashed hairline box, serif italic, for not-yet-written text.
+- `.cv` — the CV: a `<dl>` per section, the year in the caption serif beside
+  its line. Built from tokens only, so it sits on the white wall (`/cv/`) and
+  in the dark room (the exhibition page) unchanged.
 - `.work-nav` — the one way out of a work: a single centred "All works /
   전체 작품" link under a hairline. No prev/next; the list holds the order.
 
@@ -83,8 +91,8 @@ Each artwork page may add **one `<style>` block, ≤ 40 lines**, to fit the work
 (e.g. a narrow column for a tall piece, a hairline case, extra air). Layout
 only — every artwork page stays on the light tokens; the exhibition mini-site
 is the sole dark room, with its own stylesheet inside its folder.
-It must keep the shared header, `.back` link, tombstone, `.todo` placeholder,
-`.work-nav`, and Microdata.
+It must keep the shared header, `.back` link, tombstone, `.work-nav`, and
+Microdata.
 
 ## Motion
 
