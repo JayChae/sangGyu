@@ -46,6 +46,10 @@ Notes:
   from the 2026-07 set, so those hero files are `v2-*.webp` (`/img/*` is
   cached immutable — see CLAUDE.md). `brave-new-world`, `ecology` and
   `a-cushion` kept the same hero photo, re-encoded from the larger original.
+- `brave-new-world`'s 2nd, 4th and 8th photos are portrait shots the phone
+  stored landscape, with an EXIF orientation tag saying to turn them — a tag
+  cwebp ignores, so they first shipped sideways. `build-images.sh` now turns
+  the pixels itself; the upright files are `view{2,4,8}-v2-*.webp`.
 - Renamed in that update: the head with the tongue was "Untitled" and is now
   **A Face** (`a-face`); `untitled` is now the 2023 lithograph. The
   "산화형상" series is titled *Open Lack – Oxidized Figures #N*. "The Stranger
@@ -61,9 +65,11 @@ Notes:
 ## ORIGIN SEOUL 2026 (exhibition mini-site)
 
 `/exhibitions/origin-seoul-2026/` is the page behind the single QR code
-printed next to the works at ORIGIN SEOUL 2026 (Aug 31 – Sep 2, 2026, Seoul —
+(`print/qr-exhibitions-origin-seoul-2026.svg`, made by `scripts/build-qr.py`,
+pointing at the English page) printed next to the works at ORIGIN SEOUL 2026 (Aug 31 – Sep 2, 2026, Seoul —
 originseoulbtc.com). One QR → artist intro (name, bio, link to this site) + both featured works
-(Ecology and The Stranger) + the CV + a "Collect" section that links to Telegram.
+(Ecology and The Stranger) + a "Collect" section that links to Telegram
+(@TH4NK_YOU) + the CV last.
 Everything on it is written through a Bitcoin lens: peer to peer, bitcoin
 only, no prices anywhere. The two work descriptions there are the exhibition's
 wall texts and stay — the work pages themselves carry none.

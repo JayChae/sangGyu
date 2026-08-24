@@ -12,6 +12,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent / "public"
 
+# The site's origin — the one place it is written down. canonical, hreflang,
+# og:url, og:image and sitemap.xml all carry it, because crawlers and share
+# previews need absolute URLs. To move to a custom domain: change it here,
+# then search-and-replace the old value across public/ (the pages are
+# hand-written, so nothing regenerates them).
+ORIGIN = "https://sanggyu.pages.dev"
+
 
 def route(url_path: str, base: Path = ROOT) -> Path:
     """The file Cloudflare Pages serves for a URL path.

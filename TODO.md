@@ -16,9 +16,7 @@
 
 ## 설정
 
-- [ ] **텔레그램 핸들** — 전시 페이지의 `https://t.me/CHANGE_ME` 를
-      실제 계정으로 교체
-- [ ] **도메인 확정** — 정해지면: canonical/hreflang 을 절대경로로 전환,
-      `og:image` · `og:url` 과 sitemap.xml 추가. (절대 URL이 필요 없는 나머지
-      Open Graph 태그는 이미 모든 페이지에 들어가 있음) 전시 페이지 작가
-      소개의 웹사이트 링크 문구도 도메인으로 교체.
+- [ ] **커스텀 도메인** — 지금은 `https://sanggyu.pages.dev` 기준으로
+      canonical/hreflang/og:url/og:image/sitemap 이 모두 절대경로임. 도메인이
+      바뀌면 `scripts/pages.py` 의 `ORIGIN` 을 고치고 `public/` 전체에서
+      옛 주소를 새 주소로 일괄 치환 (전시 페이지 작가 소개의 링크 문구 포함).

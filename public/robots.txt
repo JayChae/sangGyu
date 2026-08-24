@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://sanggyu.pages.dev/sitemap.xml

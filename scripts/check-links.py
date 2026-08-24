@@ -3,8 +3,10 @@
 
 1. every internal href/src/srcset resolves to a real file, the way Cloudflare
    Pages would serve it;
-2. every page claims its own URL as canonical and points its hreflang
-   alternates and its language toggle at itself and its counterpart;
+2. every page claims its own absolute URL as canonical and og:url, points
+   its hreflang alternates and its language toggle at itself and its
+   counterpart, and names an og:image that exists; sitemap.xml lists exactly
+   the indexable pages;
 3. WORKS.md really is the source of truth — the works on disk are exactly the
    works in the table, and both list pages walk them in the table's order. A
    work page leads back to the list and nowhere else: no prev/next chain.
@@ -19,7 +21,7 @@ import re
 import sys
 from pathlib import Path
 
-from pages import ROOT, counterpart, exists, route, url_of
+from pages import ORIGIN, ROOT, counterpart, exists, route, url_of
 
 REPO = ROOT.parent
 errors = []
@@ -45,6 +47,8 @@ for page in pages:
     for srcset in re.findall(r'srcset="([^"]+)"', html):
         urls += [p.strip().split()[0] for p in srcset.split(",") if p.strip()]
     for url in urls:
+        if url.startswith(ORIGIN + "/"):  # our own absolute URLs are internal
+            url = url[len(ORIGIN):]
         if url.startswith(("http://", "https://", "data:", "mailto:", "#")):
             continue
         if not url.split("#")[0].split("?")[0]:
@@ -59,6 +63,7 @@ for page in pages:
     html = page.read_text(encoding="utf-8")
     own, other = url_of(page), url_of(counterpart(page))
     en, ko = (own, other) if page.name == "index.html" else (other, own)
+    own, en, ko = ORIGIN + own, ORIGIN + en, ORIGIN + ko
 
     check(page, exists(counterpart(page)), f"no counterpart {counterpart(page).name}")
     check(page, attr(html, r'<html lang="([^"]+)"') ==
@@ -69,9 +74,23 @@ for page in pages:
           f"hreflang=en must be {en}")
     check(page, attr(html, r'<link rel="alternate" hreflang="ko" href="([^"]+)"') == ko,
           f"hreflang=ko must be {ko}")
+    check(page, attr(html, r'<meta property="og:url" content="([^"]+)"') == own,
+          f"og:url must be {own}")
+    image = attr(html, r'<meta property="og:image" content="([^"]+)"')
+    check(page, image and image.startswith(ORIGIN + "/img/")
+          and exists(route(image[len(ORIGIN):])), f"og:image {image} must be ours")
     toggle = attr(html, r'<a class="lang"[^>]*?href="([^"]+)"')
     check(page, toggle is None or toggle == other,
           f"language toggle must point at {other}")
+
+# sitemap.xml names every indexable page once, at its canonical URL, and
+# nothing else — the 404 stays out
+sitemap = ROOT / "sitemap.xml"
+listed = sorted(re.findall(r"<loc>([^<]+)</loc>", sitemap.read_text(encoding="utf-8")))
+indexable = sorted(ORIGIN + url_of(p) for p in pages if p.name != "404.html")
+if listed != indexable:
+    errors.append("sitemap.xml: lists %s, pages are %s"
+                  % (sorted(set(listed) ^ set(indexable)), len(indexable)))
 
 # ── 3. WORKS.md is the source of truth for the works ─────────────
 
@@ -110,4 +129,4 @@ if errors:
     print("\n".join(errors))
     sys.exit(1)
 print(f"OK — {len(pages)} pages: links resolve, EN/KO pairs agree, "
-      f"{len(rows)} works match WORKS.md order")
+      f"sitemap complete, {len(rows)} works match WORKS.md order")
