@@ -35,11 +35,54 @@ cd "$(dirname "$0")/.."
 
 SRC="../sangyu/arts"
 OUT="public/img"
+TMP=$(mktemp -d)
+trap 'rm -rf "$TMP"' EXIT
+
+# A phone often stores a portrait photo landscape and adds an EXIF orientation
+# tag saying to turn it. cwebp ignores that tag (and -metadata none drops it),
+# so such a photo is baked in sideways — brave-new-world shipped three views
+# that way. Rotate the pixels first instead, losslessly, with jpegtran (it
+# comes with jpeg-turbo, which libwebp already depends on).
+exif_orientation() { # $1=photo → its orientation tag, 1 when there is none
+  python3 -c '
+import struct, sys
+d = open(sys.argv[1], "rb").read(300000)
+i = d.find(b"Exif\x00\x00")
+o = 1
+if i >= 0:
+    t = i + 6
+    e = "<" if d[t:t + 2] == b"II" else ">"
+    p = t + struct.unpack(e + "I", d[t + 4:t + 8])[0]
+    for n in range(struct.unpack(e + "H", d[p:p + 2])[0]):
+        f = p + 2 + 12 * n
+        if struct.unpack(e + "H", d[f:f + 2])[0] == 0x0112:
+            o = struct.unpack(e + "H", d[f + 8:f + 10])[0]
+print(o)
+' "$1"
+}
+
+upright() { # $1=photo → it, or an upright copy of it in $TMP
+  local turn=()
+  case "$(exif_orientation "$1")" in
+    2) turn=(-flip horizontal);;
+    3) turn=(-rotate 180);;
+    4) turn=(-flip vertical);;
+    5) turn=(-transpose);;
+    6) turn=(-rotate 90);;
+    7) turn=(-transverse);;
+    8) turn=(-rotate 270);;
+    *) echo "$1"; return;;
+  esac
+  local out="$TMP/upright.jpg"   # one at a time: convert() waits for its tiers
+  jpegtran "${turn[@]}" -copy none "$1" > "$out"
+  echo "$out"
+}
 
 convert() { # $1=source photo  $2=slug  $3=optional filename prefix (e.g. "view2-")
   mkdir -p "$OUT/$2"
-  local src_w
-  src_w=$(sips -g pixelWidth "$SRC/$1" | awk '/pixelWidth:/ { print $2 }')
+  local photo src_w
+  photo=$(upright "$SRC/$1")
+  src_w=$(sips -g pixelWidth "$photo" | awk '/pixelWidth:/ { print $2 }')
   for w in 480 640 960 1200 1600; do
     local out="$OUT/$2/${3}${w}.webp"
     if [ "$w" -gt "$src_w" ]; then
@@ -47,7 +90,7 @@ convert() { # $1=source photo  $2=slug  $3=optional filename prefix (e.g. "view2
       continue
     fi
     if [ "$out" -nt "$SRC/$1" ]; then continue; fi
-    cwebp -quiet -q 82 -metadata none -resize "$w" 0 "$SRC/$1" -o "$out" &
+    cwebp -quiet -q 82 -metadata none -resize "$w" 0 "$photo" -o "$out" &
   done
   wait
   echo "→ $2/${3}* (원본 ${src_w}px)"
@@ -141,13 +184,13 @@ convert "얼굴/IMG_8594.jpeg"                                             a-fac
 convert "얼굴/IMG_8598.jpeg"                                             a-face view3-
 
 convert "멋진 신세계/IMG_3208.jpeg"                                         brave-new-world
-convert "멋진 신세계/IMG_2581.jpeg"                                         brave-new-world view2-
+convert "멋진 신세계/IMG_2581.jpeg"                                         brave-new-world view2-v2-
 convert "멋진 신세계/IMG_3209.jpeg"                                         brave-new-world view3-
-convert "멋진 신세계/IMG_3210.jpeg"                                         brave-new-world view4-
+convert "멋진 신세계/IMG_3210.jpeg"                                         brave-new-world view4-v2-
 convert "멋진 신세계/IMG_3211.jpeg"                                         brave-new-world view5-
 convert "멋진 신세계/IMG_3212.jpeg"                                         brave-new-world view6-
 convert "멋진 신세계/IMG_3213.jpeg"                                         brave-new-world view7-
-convert "멋진 신세계/IMG_3214.jpeg"                                         brave-new-world view8-
+convert "멋진 신세계/IMG_3214.jpeg"                                         brave-new-world view8-v2-
 
 convert "생태/IMG_3150.jpeg"                                             ecology
 convert "생태/IMG_3143.jpeg"                                             ecology view2-

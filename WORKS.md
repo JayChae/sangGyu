@@ -46,6 +46,10 @@ Notes:
   from the 2026-07 set, so those hero files are `v2-*.webp` (`/img/*` is
   cached immutable — see CLAUDE.md). `brave-new-world`, `ecology` and
   `a-cushion` kept the same hero photo, re-encoded from the larger original.
+- `brave-new-world`'s 2nd, 4th and 8th photos are portrait shots the phone
+  stored landscape, with an EXIF orientation tag saying to turn them — a tag
+  cwebp ignores, so they first shipped sideways. `build-images.sh` now turns
+  the pixels itself; the upright files are `view{2,4,8}-v2-*.webp`.
 - Renamed in that update: the head with the tongue was "Untitled" and is now
   **A Face** (`a-face`); `untitled` is now the 2023 lithograph. The
   "산화형상" series is titled *Open Lack – Oxidized Figures #N*. "The Stranger

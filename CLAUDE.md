@@ -11,7 +11,7 @@ output directory — files are served exactly as committed.
 ```
 ./serve.sh [port]                 # local preview → http://localhost:8000
 python3 scripts/check-links.py    # the test suite (exit 1 on failure)
-scripts/build-images.sh           # source photos (../sangyu/arts/<work>/) → WebP in public/img/ (needs cwebp: brew install webp)
+scripts/build-images.sh           # source photos (../sangyu/arts/<work>/) → WebP in public/img/ (needs cwebp + jpegtran: brew install webp)
 scripts/build-icons.sh            # the app icon → public/icon-{192,512}.png (needs Chrome)
 python3 scripts/build-qr.py [/path ...]   # print-ready QR for any page → print/qr-<path>.{svg,png} (default: the exhibition page)
 ```
@@ -101,7 +101,8 @@ public/                          ← Cloudflare Pages output directory
   css/site.css                   shared styles (design system)
   js/gallery.js                  search + tag filter for the list page (~50 lines)
   img/<slug>/{480,640,960,1200,1600}.webp  one folder per artwork (extra views: <slug>/view2-*.webp;
-                                 a replaced hero is <slug>/v2-*.webp — see build-images.sh)
+                                 a replaced photo carries a v2- version, <slug>/v2-*.webp for a hero and
+                                 <slug>/view2-v2-*.webp for a view — see build-images.sh)
   manifest.webmanifest, manifest.ko.webmanifest   home-screen install (EN/KO)
   favicon.svg, icon-{192,512}.png   tab icon · app icon (scripts/build-icons.sh)
   sitemap.xml, robots.txt        every indexable page (EN + KO) with hreflang alternates
