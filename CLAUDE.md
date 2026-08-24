@@ -13,18 +13,21 @@ output directory — files are served exactly as committed.
 python3 scripts/check-links.py    # the test suite (exit 1 on failure)
 scripts/build-images.sh           # source photos (../sangyu/arts/<work>/) → WebP in public/img/ (needs cwebp: brew install webp)
 scripts/build-icons.sh            # the app icon → public/icon-{192,512}.png (needs Chrome)
+python3 scripts/build-qr.py [/path ...]   # print-ready QR for any page → print/qr-<path>.{svg,png} (default: the exhibition page)
 ```
 
 - `check-links.py` asserts three things: every internal `href`/`src`/`srcset`
-  resolves; every page's `canonical`, `hreflang` alternates and language
-  toggle point at itself and its counterpart; and the works on disk are
-  exactly `WORKS.md`'s, walked in its order by both list pages, each work page
-  leading back to the list and nowhere else (no `rel=prev/next`). Run it after
-  adding, moving, renaming or reordering anything. There is no other lint/test
-  tooling.
+  resolves; every page's `canonical`, `og:url`, `hreflang` alternates and
+  language toggle point at itself and its counterpart (absolute, on `ORIGIN`),
+  its `og:image` exists, and `sitemap.xml` lists exactly the indexable pages;
+  and the works on disk are exactly `WORKS.md`'s, walked in its order by both
+  list pages, each work page leading back to the list and nowhere else (no
+  `rel=prev/next`). Run it after adding, moving, renaming or reordering
+  anything. There is no other lint/test tooling.
 - `scripts/pages.py` holds the one model of how Cloudflare Pages maps a URL to
-  a file (clean URLs, `index.html`, case-sensitivity). Both `check-links.py`
-  and `serve.py` import it — do not re-implement that routing in either.
+  a file (clean URLs, `index.html`, case-sensitivity) and the site's `ORIGIN`
+  (`https://sanggyu.pages.dev`). Both `check-links.py` and `serve.py` import
+  it — do not re-implement that routing in either.
 - Plain `python3 -m http.server` 404s on the clean `…/ko` URLs (the `.html`
   resolution is Cloudflare's job in production); `serve.sh` wraps
   `scripts/serve.py`, which adds the same fallback locally.
@@ -49,7 +52,11 @@ scripts/build-icons.sh            # the app icon → public/icon-{192,512}.png (
   `/ko`). This layout is the owner's choice — do not restructure it into a
   `/ko/` directory tree. Every page links its counterpart (`hreflang`
   alternates + the header language toggle) and carries a self-referencing
-  `rel=canonical` (relative for now — make absolute once the domain exists).
+  `rel=canonical` and `og:url`, absolute on `ORIGIN`. `og:image` is the page's
+  own hero at the 1200 tier; pages without one (landing, list, CV) use the
+  first work on the list, the exhibition page its first featured work.
+  `sitemap.xml` is hand-written like everything else — add both URLs of a new
+  page to it (`check-links.py` refuses to pass otherwise).
 - **Hypermedia philosophy.** HATEOAS: every page reachable by links, navigation
   is plain `<a>`. Semantic HTML5 (`<article>`, `<figure>`, `<time>`, `<search>`,
   `rel="prev/next"`). Schema.org via Microdata (`VisualArtwork`, `Person`,
@@ -97,8 +104,10 @@ public/                          ← Cloudflare Pages output directory
                                  a replaced hero is <slug>/v2-*.webp — see build-images.sh)
   manifest.webmanifest, manifest.ko.webmanifest   home-screen install (EN/KO)
   favicon.svg, icon-{192,512}.png   tab icon · app icon (scripts/build-icons.sh)
+  sitemap.xml, robots.txt        every indexable page (EN + KO) with hreflang alternates
   _headers                       Cache-Control rules
-scripts/                         pages.py (URL model) · build-images.sh · build-icons.sh · serve.py · check-links.py
+scripts/                         pages.py (URL model) · build-images.sh · build-icons.sh · build-qr.py · serve.py · check-links.py
+print/                           not served — QR codes for print (scripts/build-qr.py; SVG for print, PNG preview)
 ```
 
 ## Content rules

@@ -61,9 +61,11 @@ Notes:
 ## ORIGIN SEOUL 2026 (exhibition mini-site)
 
 `/exhibitions/origin-seoul-2026/` is the page behind the single QR code
-printed next to the works at ORIGIN SEOUL 2026 (Aug 31 – Sep 2, 2026, Seoul —
+(`print/qr-exhibitions-origin-seoul-2026.svg`, made by `scripts/build-qr.py`,
+pointing at the English page) printed next to the works at ORIGIN SEOUL 2026 (Aug 31 – Sep 2, 2026, Seoul —
 originseoulbtc.com). One QR → artist intro (name, bio, link to this site) + both featured works
-(Ecology and The Stranger) + the CV + a "Collect" section that links to Telegram.
+(Ecology and The Stranger) + a "Collect" section that links to Telegram
+(@TH4NK_YOU) + the CV last.
 Everything on it is written through a Bitcoin lens: peer to peer, bitcoin
 only, no prices anywhere. The two work descriptions there are the exhibition's
 wall texts and stay — the work pages themselves carry none.
