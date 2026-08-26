@@ -23,10 +23,10 @@
 # Re-checking costs one round trip and returns a bodyless 304 when unchanged.
 #
 # Matching on the extension rather than the folder also covers the exhibition
-# mini-sites, which keep their stylesheet inside their own folder — Cloudflare's
-# * spans path separators, so /*.css reaches
-# /exhibitions/origin-seoul-2026/origin-seoul-2026.css too. Their HTML keeps
-# revalidating like every other page.
+# mini-sites, which keep their stylesheet and script inside their own folder —
+# Cloudflare's * spans path separators, so /*.css and /*.js reach
+# /exhibitions/origin-seoul-2026/origin-seoul-2026.css and the .js beside it
+# too. Their HTML keeps revalidating like every other page.
 /*.css
   ! Cache-Control
   Cache-Control: public, max-age=3600

@@ -10,6 +10,7 @@
 3. WORKS.md really is the source of truth — the works on disk are exactly the
    works in the table, and both list pages walk them in the table's order. A
    work page leads back to the list and nowhere else: no prev/next chain.
+4. a plates strip carries one dot per photo, in both locales.
 
 Checks 2 and 3 exist because the only authoring method here is copy-paste-then-
 translate, whose usual failure is a stale-but-valid URL: it resolves, so check 1
@@ -124,6 +125,22 @@ else:
                   "work pages carry no rel=prev/next — only the list link")
             check(work, f'<a href="/works{suffix}">' in html,
                   f'must link back to /works{suffix}')
+
+# ── 4. a plates strip is marked photo for photo ──────────────────
+
+# The dots beside a multi-photo work are hand-written next to the photos they
+# mark, in both locales, and the script reads its position off the lit one. A
+# strip whose dots have drifted still renders and still resolves, so check 1
+# would report OK while the reader is told there are two reliefs, not three.
+for page in pages:
+    html = page.read_text(encoding="utf-8")
+    for fig in re.findall(r'<figure class="exh-plates">(.*?)</figure>', html, re.S):
+        strip = re.search(r'<div class="plates">(.*?)</div>', fig, re.S)
+        dots = re.search(r'<div class="plates-dots"[^>]*>(.*?)</div>', fig, re.S)
+        photos = strip.group(1).count("<img") if strip else 0
+        marks = dots.group(1).count("<span") if dots else 0
+        check(page, photos > 1 and photos == marks,
+              f"plates: {photos} photos but {marks} dots")
 
 if errors:
     print("\n".join(errors))

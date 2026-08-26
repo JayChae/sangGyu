@@ -73,6 +73,9 @@ originseoulbtc.com). One QR → artist intro (name, bio, link to this site) + bo
 Everything on it is written through a Bitcoin lens: peer to peer, bitcoin
 only, no prices anywhere. The two work descriptions there are the exhibition's
 wall texts and stay — the work pages themselves carry none.
+The Stranger is three reliefs, so it is shown there as three plates: on a
+phone one swipeable strip with arrows and dots, wider the first leading
+with the other two side by side under it.
 
 The artist's CV card is the first card on the works list page, the exhibition
 the second; the works follow.

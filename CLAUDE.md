@@ -13,7 +13,7 @@ output directory — files are served exactly as committed.
 python3 scripts/check-links.py    # the test suite (exit 1 on failure)
 scripts/build-images.sh           # source photos (../sangyu/arts/<work>/) → WebP in public/img/ (needs cwebp + jpegtran: brew install webp)
 scripts/build-icons.sh            # the app icon → public/icon-{192,512}.png (needs Chrome)
-python3 scripts/build-qr.py [/path ...]   # print-ready QR for any page → print/qr-<path>.{svg,png} (default: the exhibition page)
+python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR for any page → print/qr-<path>.{svg,png} (default: the exhibition page, 50 mm square, black; --clear = no white behind the PNG)
 ```
 
 - `check-links.py` asserts three things: every internal `href`/`src`/`srcset`
@@ -42,9 +42,10 @@ python3 scripts/build-qr.py [/path ...]   # print-ready QR for any page → prin
 - **Speed matters.** Every page must be fast on a slow phone at a gallery.
 - **CSS stays minimal.** One shared stylesheet (`public/css/site.css`). Each
   exhibition mini-site is self-contained: everything specific to it, including
-  its stylesheet, lives inside its own folder and is named after it
-  (`public/exhibitions/origin-seoul-2026/origin-seoul-2026.css`). A page may
-  add its own `<style>` block of at most ~40 lines for page-specific character.
+  its stylesheet and any script, lives inside its own folder and is named
+  after it (`public/exhibitions/origin-seoul-2026/origin-seoul-2026.css`,
+  `…/origin-seoul-2026.js`). A page may add its own `<style>` block of at most
+  ~40 lines for page-specific character.
 - **A (very simple) design system** lives in `DESIGN.md`. Follow it.
 - **English and Korean.** English is the default. Korean is a `ko.html` file
   next to each page's `index.html`, served at a clean `…/ko` URL by Cloudflare
@@ -62,8 +63,9 @@ python3 scripts/build-qr.py [/path ...]   # print-ready QR for any page → prin
   `rel="prev/next"`). Schema.org via Microdata (`VisualArtwork`, `Person`,
   `ExhibitionEvent`).
 - **Use HTML to the fullest.** Prefer an HTML element or attribute over CSS,
-  and CSS over JS. JS is a progressive enhancement only (currently only the
-  gallery search/filter; the site works without it).
+  and CSS over JS. JS is a progressive enhancement only (the gallery
+  search/filter, and the arrows and dots on the exhibition's phone photo strip
+  — which swipes on its own, in CSS; the site works without either).
 - **Images are always WebP**, responsive (`srcset` 480/640/960/1200/1600) with
   explicit `width`/`height` (no layout shift), `loading="lazy"` below the fold.
   `sizes` must state the *rendered* width, gutters subtracted — an overstated
@@ -108,7 +110,7 @@ public/                          ← Cloudflare Pages output directory
   sitemap.xml, robots.txt        every indexable page (EN + KO) with hreflang alternates
   _headers                       Cache-Control rules
 scripts/                         pages.py (URL model) · build-images.sh · build-icons.sh · build-qr.py · serve.py · check-links.py
-print/                           not served — QR codes for print (scripts/build-qr.py; SVG for print, PNG preview)
+print/                           not served — QR codes for print (scripts/build-qr.py; SVG for print, PNG at 600 dpi, both 50 mm; -clear.png has no background)
 ```
 
 ## Content rules

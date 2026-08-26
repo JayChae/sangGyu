@@ -90,7 +90,7 @@
                 /img/ecology/1200.webp 1200w,
                 /img/ecology/1600.webp 1600w
               "
-              sizes="(min-width: 760px) 720px, calc(100vw - 40px)"
+              sizes="(min-width: 760px) 680px, calc(100vw - 40px)"
               width="960"
               height="960"
               alt="Ceramic sculpture of dark snakes tangled into a single mound on a white plinth, several heads with pale eyes emerging outward."
@@ -118,23 +118,69 @@
           itemscope
           itemtype="https://schema.org/VisualArtwork"
         >
-          <figure>
-            <img
-              itemprop="image"
-              src="/img/the-stranger/v2-960.webp"
-              srcset="
-                /img/the-stranger/v2-480.webp   480w,
-                /img/the-stranger/v2-960.webp   960w,
-                /img/the-stranger/v2-1200.webp 1200w,
-                /img/the-stranger/v2-1600.webp 1600w
-              "
-              sizes="(min-width: 760px) 720px, calc(100vw - 40px)"
-              width="960"
-              height="653"
-              alt="Glazed ceramic relief: a lone figure seen from behind, surrounded by a field of small anonymous faces."
-              loading="lazy"
-              decoding="async"
-            />
+          <figure class="exh-plates">
+            <div class="plates-frame">
+              <div class="plates">
+                <img
+                  itemprop="image"
+                  src="/img/the-stranger/v2-960.webp"
+                  srcset="
+                    /img/the-stranger/v2-480.webp  480w,
+                    /img/the-stranger/v2-640.webp  640w,
+                    /img/the-stranger/v2-960.webp  960w,
+                    /img/the-stranger/v2-1200.webp 1200w,
+                    /img/the-stranger/v2-1600.webp 1600w
+                  "
+                  sizes="(min-width: 760px) 680px, calc(100vw - 40px)"
+                  width="960"
+                  height="653"
+                  alt="Glazed ceramic relief: a lone figure seen from behind, surrounded by a field of small anonymous faces."
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  src="/img/the-stranger/view2-960.webp"
+                  srcset="
+                    /img/the-stranger/view2-480.webp  480w,
+                    /img/the-stranger/view2-640.webp  640w,
+                    /img/the-stranger/view2-960.webp  960w,
+                    /img/the-stranger/view2-1200.webp 1200w,
+                    /img/the-stranger/view2-1600.webp 1600w
+                  "
+                  sizes="(min-width: 760px) 335px, (min-width: 560px) calc((100vw - 50px) / 2), calc(100vw - 40px)"
+                  width="960"
+                  height="664"
+                  alt="A second relief: the figure with hands bound behind its back, pressed into a cracked, scale-like surface."
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                />
+                <img
+                  src="/img/the-stranger/view3-960.webp"
+                  srcset="
+                    /img/the-stranger/view3-480.webp  480w,
+                    /img/the-stranger/view3-640.webp  640w,
+                    /img/the-stranger/view3-960.webp  960w,
+                    /img/the-stranger/view3-1200.webp 1200w,
+                    /img/the-stranger/view3-1600.webp 1600w
+                  "
+                  sizes="(min-width: 760px) 335px, (min-width: 560px) calc((100vw - 50px) / 2), calc(100vw - 40px)"
+                  width="960"
+                  height="670"
+                  alt="A third relief: the figure in a mottled green-grey field."
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                />
+              </div>
+              <button class="plates-arrow" type="button" data-dir="-1" aria-label="Previous photo"></button>
+              <button class="plates-arrow" type="button" data-dir="1" aria-label="Next photo"></button>
+            </div>
+            <div class="plates-dots" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </figure>
           <h3 itemprop="name">The Stranger <em lang="ko">이방인</em></h3>
           <p class="tombstone">
@@ -251,5 +297,6 @@
     </main>
 
     <footer class="site-footer exh-footer">© 2026 Park Sang Gyu · built by <a href="https://x.com/IvarChae" rel="external">ivar</a></footer>
+    <script src="/exhibitions/origin-seoul-2026/origin-seoul-2026.js" defer></script>
   </body>
 </html>

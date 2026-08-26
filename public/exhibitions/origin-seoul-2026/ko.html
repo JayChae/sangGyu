@@ -89,7 +89,7 @@
                 /img/ecology/1200.webp 1200w,
                 /img/ecology/1600.webp 1600w
               "
-              sizes="(min-width: 760px) 720px, calc(100vw - 40px)"
+              sizes="(min-width: 760px) 680px, calc(100vw - 40px)"
               width="960"
               height="960"
               alt="흰 좌대 위, 어두운 뱀들이 한 덩어리로 뒤엉킨 세라믹 조각. 옅은 눈을 가진 머리 여럿이 바깥으로 뻗어 있다."
@@ -117,23 +117,69 @@
           itemscope
           itemtype="https://schema.org/VisualArtwork"
         >
-          <figure>
-            <img
-              itemprop="image"
-              src="/img/the-stranger/v2-960.webp"
-              srcset="
-                /img/the-stranger/v2-480.webp   480w,
-                /img/the-stranger/v2-960.webp   960w,
-                /img/the-stranger/v2-1200.webp 1200w,
-                /img/the-stranger/v2-1600.webp 1600w
-              "
-              sizes="(min-width: 760px) 720px, calc(100vw - 40px)"
-              width="960"
-              height="653"
-              alt="유약 세라믹 부조. 등을 보인 채 선 인물 하나를 익명의 작은 얼굴들이 둘러싸고 있다."
-              loading="lazy"
-              decoding="async"
-            />
+          <figure class="exh-plates">
+            <div class="plates-frame">
+              <div class="plates">
+                <img
+                  itemprop="image"
+                  src="/img/the-stranger/v2-960.webp"
+                  srcset="
+                    /img/the-stranger/v2-480.webp  480w,
+                    /img/the-stranger/v2-640.webp  640w,
+                    /img/the-stranger/v2-960.webp  960w,
+                    /img/the-stranger/v2-1200.webp 1200w,
+                    /img/the-stranger/v2-1600.webp 1600w
+                  "
+                  sizes="(min-width: 760px) 680px, calc(100vw - 40px)"
+                  width="960"
+                  height="653"
+                  alt="유약 세라믹 부조. 등을 보인 채 선 인물 하나를 익명의 작은 얼굴들이 둘러싸고 있다."
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  src="/img/the-stranger/view2-960.webp"
+                  srcset="
+                    /img/the-stranger/view2-480.webp  480w,
+                    /img/the-stranger/view2-640.webp  640w,
+                    /img/the-stranger/view2-960.webp  960w,
+                    /img/the-stranger/view2-1200.webp 1200w,
+                    /img/the-stranger/view2-1600.webp 1600w
+                  "
+                  sizes="(min-width: 760px) 335px, (min-width: 560px) calc((100vw - 50px) / 2), calc(100vw - 40px)"
+                  width="960"
+                  height="664"
+                  alt="두 번째 부조: 두 손이 등 뒤로 묶인 인물이 갈라지고 비늘 같은 표면에 묻혀 있다."
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                />
+                <img
+                  src="/img/the-stranger/view3-960.webp"
+                  srcset="
+                    /img/the-stranger/view3-480.webp  480w,
+                    /img/the-stranger/view3-640.webp  640w,
+                    /img/the-stranger/view3-960.webp  960w,
+                    /img/the-stranger/view3-1200.webp 1200w,
+                    /img/the-stranger/view3-1600.webp 1600w
+                  "
+                  sizes="(min-width: 760px) 335px, (min-width: 560px) calc((100vw - 50px) / 2), calc(100vw - 40px)"
+                  width="960"
+                  height="670"
+                  alt="세 번째 부조: 얼룩진 청회색 바탕 속의 인물."
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                />
+              </div>
+              <button class="plates-arrow" type="button" data-dir="-1" aria-label="이전 사진"></button>
+              <button class="plates-arrow" type="button" data-dir="1" aria-label="다음 사진"></button>
+            </div>
+            <div class="plates-dots" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </figure>
           <h3 itemprop="name">이방인 <em lang="en">The Stranger</em></h3>
           <p class="tombstone">
@@ -249,5 +295,6 @@
     </main>
 
     <footer class="site-footer exh-footer">© 2026 Park Sang Gyu · 개발 <a href="https://x.com/IvarChae" rel="external">ivar</a></footer>
+    <script src="/exhibitions/origin-seoul-2026/origin-seoul-2026.js" defer></script>
   </body>
 </html>

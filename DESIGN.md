@@ -24,8 +24,13 @@ on the list page — and they must read as the same room, so the three dark
 values are tokens in `site.css` and both surfaces re-point `--bg/--ink/--muted`
 at them. Nothing else changes — same components, inverted room.
 Exhibition styles live inside the exhibition's own folder, named after it
-(`exhibitions/origin-seoul-2026/origin-seoul-2026.css`) — one file per
-exhibition, so future exhibitions stay self-contained.
+(`exhibitions/origin-seoul-2026/origin-seoul-2026.css`, and any script beside
+it) — one of each per exhibition, so future exhibitions stay self-contained.
+The one component with no equivalent on a work page is `.exh-plates`, a work
+that is more than one photo: below 560px a scroll-snap strip swiped a photo at
+a time, with arrows (the script's, hidden until it wires them) and one dot per
+photo; above, the set is simply hung — first plate leading, the rest side by
+side under it.
 
 ## Type
 
@@ -159,10 +164,15 @@ the landing's type ever changes, rebuild the icon with it.
 
 ## Rules
 
-- No shadows except the search bar. No border radius except the search bar and
-  chips. No animation except `opacity`/`color` transitions ≤ 200ms — and the
-  three moments above, which are deliberate and closed. A fourth animated
-  thing anywhere on the site is a bug.
+- No shadows except the search bar. No border radius except the search bar,
+  the chips, and `.exh-plates`'s arrows and dots — round because the shape is
+  the affordance, on top of a photo that offers no edge to align to. No
+  animation except `opacity`/`color` transitions ≤ 200ms — and the three
+  moments above, which are deliberate and closed. `.exh-plates` glides when an
+  arrow is tapped, and that is not a fourth moment: nothing on the page
+  animates, only how far the tap carries a scroller the reader could just as
+  well have swiped by hand, and `prefers-reduced-motion` drops it to `auto`. A
+  fourth animated thing anywhere on the site is still a bug.
 - Never crop an artwork. Never place text over an artwork.
 - Alt text describes the artwork plainly, in the page language.
 - If a page needs more than this document offers, the page is too complicated.

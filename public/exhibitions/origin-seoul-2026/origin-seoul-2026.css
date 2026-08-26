@@ -64,6 +64,91 @@ body.exhibition {
 /* ── works ───────────────────────────────────── */
 
 .exh-work { margin-top: 26px; padding-top: 28px; border-top: 1px solid var(--hair); }
+
+/* ── plates — a work that is more than one photo ───────────────────────────
+   The Stranger is three reliefs of one figure. On a phone they are a strip
+   swiped one photo at a time: the strip itself is the scroller and the photos
+   are its snap points, so the swipe is the browser's, not ours. Wider, half a
+   column is big enough for a relief to read, so the set is simply hung — the
+   first plate leading, the other two side by side under it. */
+.plates-frame { position: relative; }
+.plates {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  /* the dots under it are the scrollbar, and they are there with or without JS */
+  scrollbar-width: none;
+  /* an arrow glides the strip; a swipe is the reader's own and is untouched */
+  scroll-behavior: smooth;
+}
+.plates::-webkit-scrollbar { display: none; }
+.plates > img { scroll-snap-align: start; }
+@media (prefers-reduced-motion: reduce) {
+  .plates { scroll-behavior: auto; }
+}
+
+/* The arrows are the script's: a control that does nothing is worse than none,
+   so they stay hidden until it has wired them (like the list page's search
+   bar). The dots are not a control but a mark — three reliefs, and which one
+   you are on — so they are drawn either way; with no script none is lit, and
+   three plain dots say "three" without claiming to know which one you see. */
+.plates-arrow {
+  display: none; /* revealed by origin-seoul-2026.js — see .plates-ready */
+  position: absolute;
+  top: calc(50% - 17px); /* half the 34px below, so no transform is needed */
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  color: var(--ink);
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.plates-arrow[data-dir="-1"] { left: 8px; }
+/* one chevron, turned — the optical nudge below turns with it */
+.plates-arrow[data-dir="1"] { right: 8px; rotate: 180deg; }
+.plates-arrow[aria-disabled="true"] { opacity: 0.2; cursor: default; }
+/* the chevron: two borders of a square, turned */
+.plates-arrow::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  margin-left: 3px;
+  border-left: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+.plates-ready .plates-arrow { display: grid; }
+
+.plates-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+.plates-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--muted) 45%, var(--bg));
+  transition: background 0.15s;
+}
+.plates-dots .on { background: var(--accent); }
+
+@media (min-width: 560px) {
+  .plates {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    overflow-x: visible;
+  }
+  .plates > img:first-child { grid-column: 1 / -1; }
+  /* the whole set is on screen: nothing left to step through, nothing to mark.
+     Both selectors match the specificity of the rules above, so order decides. */
+  .plates-ready .plates-arrow,
+  .plates-dots { display: none; }
+}
+
 /* no caption under the plate — the title and year follow immediately below */
 .exh-work h3 { margin-top: 18px; font-size: var(--sub); font-weight: 600; }
 .exh-work h3 em {
