@@ -85,7 +85,14 @@ body.exhibition {
   scroll-behavior: smooth;
 }
 .plates::-webkit-scrollbar { display: none; }
-.plates > img { scroll-snap-align: start; }
+.plates > img {
+  scroll-snap-align: start;
+  /* one photo per swipe. `mandatory` above only says where a scroll may come
+     to rest, so a hard flick keeps its momentum and sails past the second
+     relief to land on the third; `always` makes every plate a stop the
+     scroller is not allowed to pass. */
+  scroll-snap-stop: always;
+}
 @media (prefers-reduced-motion: reduce) {
   .plates { scroll-behavior: auto; }
 }
