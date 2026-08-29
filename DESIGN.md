@@ -66,8 +66,16 @@ side under it.
 ## Components (all in `site.css`)
 
 - `.site-header` — exactly two things: wordmark left, language toggle right.
-- `.site-footer` — the © line and the build credit, a hairline link, in the
-  same muted serif italic. The landing has no footer: it is only the name.
+- `.site-footer` — the header's mirror: one ruled line in the same container,
+  how to reach the artist on the left (an `<address>`: the email and
+  *Telegram* — the handle is never printed, only the word, linked) and the ©
+  line with the build credit on the right, as `<small>` print in the muted
+  serif italic. 13px muted sans, links to ink on hover, no underlines but the
+  hairline under the credit. On a phone the two simply stack, left. After a
+  `.work-nav` the rule is already drawn, so the footer drops its own and keeps
+  the air. On the list page the room for the fixed search bar is under the
+  footer, so at the end of the page the contact stands clear above the bar.
+  The landing has no footer: it is only the name.
 - `.back` — muted "← Works / ← 작품" link, first element inside a detail
   page's `<main>`.
 - `.gallery` — `<ul>` masonry of `<figure>` cards; caption = title + serif year.

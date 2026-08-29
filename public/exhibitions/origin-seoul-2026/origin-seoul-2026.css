@@ -15,9 +15,8 @@ body.exhibition {
   color: var(--ink);
 }
 
-/* Same trio as site.css's captions, for this file's own components. */
-.exh-dates,
-.collect .fine {
+/* Same trio as site.css's captions, for the dates line. */
+.exh-dates {
   font-family: var(--serif);
   font-style: italic;
   color: var(--muted);
@@ -183,20 +182,12 @@ body.exhibition {
   transition: opacity 0.15s;
 }
 .btn-btc:hover { opacity: 0.85; }
-.collect .fine {
-  margin-top: 16px;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 13px;
-  color: var(--muted);
-}
 
 /* ── footer ──────────────────────────────────── */
 
-/* the shared .site-footer, narrowed to the mini-site's column and ruled off */
+/* the shared .site-footer, narrowed to the mini-site's column */
 .exh-footer {
   max-width: 720px;
   margin-top: 40px;
   padding: 26px var(--pad) 44px;
-  border-top: 1px solid var(--hair);
 }
