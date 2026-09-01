@@ -79,8 +79,14 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   **replacing an artwork photo means a new filename**; the full warning lives
   in `scripts/build-images.sh`, where the replacing is done.
 - **Web performance**: no webfonts (system stack), no external requests, tiny
-  CSS/JS. `fetchpriority="high"` on a single hero image only — never on the
-  masonry list, where the columns rebalance and no one item is the hero.
+  CSS/JS — with one deliberate exception: Cloudflare Web Analytics' beacon
+  (`static.cloudflareinsights.com`, ~6 KB, `defer`), which counts visitors
+  without cookies. It is not in these files and must not be added to them: it
+  is a toggle on the Pages project (Metrics → Web Analytics) and Cloudflare
+  injects it at the edge on every deployment. Present in the served HTML,
+  absent from the source — that gap is the design, not a bug to fix.
+  `fetchpriority="high"` on a single hero image only — never on the masonry
+  list, where the columns rebalance and no one item is the hero.
 - **Installable, and no more than that.** A manifest and two PNG icons let a
   phone keep the site on its home screen and open it without browser chrome.
   That is the whole feature: no service worker, no offline cache, no JS — the
