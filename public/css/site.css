@@ -216,10 +216,19 @@ a { color: inherit; text-decoration: none; }
    a rule per card — WORKS.md can grow and nothing here changes; where it is
    unsupported the cards simply arrive together, which is the same idea with
    the rhythm removed. Filtering replays it only for cards that actually come
-   back: gallery.js leaves the ones already on screen untouched. */
+   back: gallery.js leaves the ones already on screen untouched.
+
+   Six beats, then the rest arrive together. `backwards` holds a card that is
+   still waiting at opacity 0, and a fully transparent element is not a
+   candidate for the largest paint — so an uncapped ramp made the browser wait
+   for a card's turn rather than for its photo. The columns are filled one
+   after another, which puts a card near the middle of the source order at the
+   very top of the second column: it was waiting six tenths of a second there
+   with its photo already in hand. The cap bounds that, and the rhythm the
+   reader actually watches — the first column coming down — is untouched. */
 .gallery > li {
   animation: plate-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  animation-delay: calc(sibling-index() * 55ms);
+  animation-delay: calc(min(sibling-index(), 6) * 45ms);
 }
 @keyframes plate-in {
   from { opacity: 0; translate: 0 14px; }

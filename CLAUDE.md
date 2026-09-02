@@ -67,7 +67,12 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   search/filter, and the arrows and dots on the exhibition's phone photo strip
   — which swipes on its own, in CSS; the site works without either).
 - **Images are always WebP**, responsive (`srcset` 480/640/960/1200/1600) with
-  explicit `width`/`height` (no layout shift), `loading="lazy"` below the fold.
+  explicit `width`/`height` (no layout shift), `loading="lazy"` below the fold
+  — and on the masonry list, on *every* card. The columns are filled one after
+  another, so source order is not screen order there: the card at the top of
+  the second column sits in the middle of the HTML. Marking the first few
+  eager therefore preloads photos below the fold and leaves the ones a reader
+  actually sees to the lazy queue. Let the browser decide instead.
   `sizes` must state the *rendered* width, gutters subtracted — an overstated
   `sizes` silently ships the next tier up to every phone. When bytes need
   cutting, add a tier that fits rather than lowering quality: a retina desktop

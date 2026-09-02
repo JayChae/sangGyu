@@ -151,11 +151,15 @@ what the crossing paints is entirely CSS's to decide. Measured in Chrome
 already the empty wall, and `name-settle` / `name-light` running from there.
 
 **3 · The works are hung** (list, 0.7s each). Each card lifts 14px and
-resolves, 55ms after the one before it, so the list arrives with the same
+resolves, 45ms after the one before it, so the list arrives with the same
 unhurried left-to-right movement. `sibling-index()` carries the rhythm, so
 `WORKS.md` can grow without a rule per card; where it is unsupported the cards
 simply arrive together. Filtering replays it only for cards that genuinely
-come back — `gallery.js` never touches the ones already on screen.
+come back — `gallery.js` never touches the ones already on screen. The wait is
+capped at six beats: a card still waiting is held at opacity 0, which is also
+how a browser decides nothing has been painted yet, and the columns put a card
+from the middle of the source order at the top of the screen. Six beats is the
+first column's rhythm; past that the wait would only be measured, not seen.
 
 At rest, nothing moves, ever: every one of these fills `backwards` only, so a
 settled page is exactly its plain rules — full ink, no mask dimming, no loop,
