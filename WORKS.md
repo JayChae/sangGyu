@@ -79,3 +79,54 @@ with the other two side by side under it.
 
 The artist's CV card is the first card on the works list page, the exhibition
 the second; the works follow.
+
+## Themes
+
+The artist's four themes, from their classification sheet of 2026-09-11
+(`~/Downloads/작업 분류 및 웹페이지 수정희망사항_260911_131321.pdf`). Each is a
+page at `/themes/<slug>/`: the works marked ● (main) first, then — under a
+rule — the works marked ○ (related), each group in the list order above.
+`/themes/` lists the four in this order. The English names are a draft
+waiting on the artist.
+
+| theme | name (EN) | name (KO) |
+|---|---|---|
+| social-structure | Social Structure · Logic · Discipline | 사회구조 · 논리 · 규율 |
+| dismantling | Dismantling | 해체 |
+| residue | Residue · Sense · Spirit | 잔여 · 감각 · 영성 |
+| irreducibility | Irreducibility · Contradiction · Ambivalence | 환원불가성 · 모순성 · 양가성 |
+
+The sheet, for the works on the site (a work with no mark is on no theme page):
+
+| work | social-structure | dismantling | residue | irreducibility |
+|---|---|---|---|---|
+| beyond-the-predetermined | | | ● | ● |
+| collective-gaze | ● | ○ | | ● |
+| the-stranger | ● | ○ | | |
+| self-portrait | ○ | ● | ○ | ● |
+| arhats-little-beings | ○ | | ● | |
+| a-hand | | | ● | |
+| the-pool-of-two-worlds | | | ● | |
+| a-face | | | ○ | ● |
+| brave-new-world | ● | ○ | | ○ |
+| ecology | ● | ○ | | ○ |
+| combustion | | | ● | ○ |
+| untitled | | ● | ● | |
+| skull | | | ● | |
+| a-cushion | | ○ | | ● |
+| abstract-body-3 | | | ● | |
+
+The sheet also places six works that are not on the site (불상, Imagine
+재구성, 돌도끼 만들기, 새로운 수, 잔디 자르기, Cock) — the artist is deciding
+whether to add them. The Open Lack – Oxidized Figures are not on the sheet:
+they are a series.
+
+## Series
+
+Each series is a page at `/series/<slug>/` holding its works in the list order
+above; `/series/` lists them. The 소실점 (vanishing point) series is still
+being made — its page comes when its photos do.
+
+| series | name (EN) | name (KO) | works |
+|---|---|---|---|
+| oxidized-figures | Open Lack – Oxidized Figures | 산화형상 | oxidized-figures-10, oxidized-figures-6, oxidized-figures-5, oxidized-figures-3, oxidized-figures-2 |

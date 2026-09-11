@@ -32,6 +32,76 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/ko" />
   </url>
   <url>
+    <loc>https://sanggyu.pages.dev/series/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/series/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/series/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/series/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/series/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/series/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/series/oxidized-figures/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/series/oxidized-figures/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/series/oxidized-figures/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/series/oxidized-figures/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/series/oxidized-figures/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/series/oxidized-figures/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/themes/dismantling/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/themes/dismantling/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/themes/dismantling/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/themes/dismantling/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/themes/dismantling/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/themes/dismantling/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/themes/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/themes/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/themes/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/themes/irreducibility/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/themes/irreducibility/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/themes/irreducibility/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/themes/irreducibility/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/themes/irreducibility/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/themes/irreducibility/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/themes/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/themes/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/themes/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/themes/residue/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/themes/residue/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/themes/residue/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/themes/residue/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/themes/residue/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/themes/residue/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/themes/social-structure/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/themes/social-structure/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/themes/social-structure/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/themes/social-structure/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/themes/social-structure/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/themes/social-structure/ko" />
+  </url>
+  <url>
     <loc>https://sanggyu.pages.dev/works/a-cushion/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/a-cushion/" />
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/a-cushion/ko" />

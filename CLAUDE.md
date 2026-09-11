@@ -22,7 +22,9 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   its `og:image` exists, and `sitemap.xml` lists exactly the indexable pages;
   and the works on disk are exactly `WORKS.md`'s, walked in its order by both
   list pages, each work page leading back to the list and nowhere else (no
-  `rel=prev/next`). Run it after adding, moving, renaming or reordering
+  `rel=prev/next`) — and each theme page walks `WORKS.md`'s sheet (● works,
+  then ○ works), each series page its works, in that same order. Run it after
+  adding, moving, renaming, reordering or re-theming
   anything. There is no other lint/test tooling.
 - `scripts/pages.py` holds the one model of how Cloudflare Pages maps a URL to
   a file (clean URLs, `index.html`, case-sensitivity) and the site's `ORIGIN`
@@ -54,8 +56,9 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   `/ko/` directory tree. Every page links its counterpart (`hreflang`
   alternates + the header language toggle) and carries a self-referencing
   `rel=canonical` and `og:url`, absolute on `ORIGIN`. `og:image` is the page's
-  own hero at the 1200 tier; pages without one (landing, list, CV) use the
-  first work on the list, the exhibition page its first featured work.
+  own hero at the 1200 tier; pages without one (landing, lists, CV) use the
+  first work on the list, the exhibition page its first featured work, a
+  theme page its first main (●) work and a series page its first work.
   `sitemap.xml` is hand-written like everything else — add both URLs of a new
   page to it (`check-links.py` refuses to pass otherwise).
 - **Hypermedia philosophy.** HATEOAS: every page reachable by links, navigation
@@ -106,9 +109,13 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
 
 ```
 public/                          ← Cloudflare Pages output directory
-  index.html, ko.html            landing (EN/KO) — only the centered name, linking to /works/
+  index.html, ko.html            landing (EN/KO) — the centered name, and under it CV · Works · Series · Themes
   works/index.html, ko.html      gallery list — masonry + bottom search/filter bar
   works/<slug>/index.html, ko.html   one hand-made page per artwork
+  themes/index.html, ko.html     the artist's four themes, listed (WORKS.md "Themes")
+  themes/<slug>/index.html, ko.html  one theme: main (●) works, then related (○) under a rule
+  series/index.html, ko.html     the series, listed (WORKS.md "Series")
+  series/<slug>/index.html, ko.html  one series, hung in rows
   cv/index.html, ko.html         the artist's CV (English on both pages) — also the first card on the list
   exhibitions/<name>/            self-contained exhibition mini-sites (see WORKS.md)
   css/site.css                   shared styles (design system)
@@ -127,8 +134,12 @@ print/                           not served — QR codes for print (scripts/buil
 ## Content rules
 
 - `WORKS.md` is the single source of truth for the works: slugs, titles,
-  years, media, sizes, tags, and the curated order (= list-page order). It
-  also documents the ORIGIN SEOUL 2026 exhibition mini-site.
+  years, media, sizes, tags, and the curated order (= list-page order); also
+  the artist's theme sheet (which work is ● main or ○ related on which theme)
+  and the series. It also documents the ORIGIN SEOUL 2026 exhibition mini-site.
+- Words by the artist appear at the level of a theme or a series only — a
+  short text under its name, when the artist sends one. Never write it for
+  them.
 - A work page says title, year, medium, size — **no descriptions**, by the
   artist's request (they live on Instagram), and **never invent a year, a
   title or a dimension**: the artist's Instagram captions are the source.

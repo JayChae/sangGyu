@@ -53,7 +53,8 @@ side under it.
 
 - Mobile first. One shared header (`.site-header`), one footer.
 - Gallery: CSS multi-columns (2 columns, 3 from 760px) — pure-CSS masonry that
-  absorbs any aspect ratio. `break-inside: avoid` on items.
+  absorbs any aspect ratio. `break-inside: avoid` on items. A series hangs
+  in rows instead (`.gallery--rows`), because it is read in its numbers.
 - Detail pages: image first, full column width (max 880px), then a
   `border-top` rule, title, serif tombstone — and nothing else in words: a
   work page is title, year, medium, size. Every other photo of the work hangs
@@ -75,14 +76,29 @@ side under it.
   `.work-nav` the rule is already drawn, so the footer drops its own and keeps
   the air. On the list page the room for the fixed search bar is under the
   footer, so at the end of the page the contact stands clear above the bar.
-  The landing has no footer: it is only the name.
+  The landing has no footer: it is the name and the four ways in.
+- `.landing nav` — under the name, the four ways in: CV · Works · Series ·
+  Themes (약력 · 작품 · 연작 · 주제). 13px muted sans, lightly tracked, ink on
+  hover, a finger's height of padding. The name itself is not a link — the
+  landing is where you choose.
 - `.back` — muted "← Works / ← 작품" link, first element inside a detail
-  page's `<main>`.
+  page's `<main>` (on a theme or series page: "← Themes" / "← Series").
 - `.gallery` — `<ul>` masonry of `<figure>` cards; caption = title + serif year.
   No hover state: the photograph never dims under the pointer.
 - `.card--exhibition` — the one dark card in the white gallery; orange kicker.
 - `.card--cv` — the artist's card, first in the gallery: the same box on the
   white wall, ruled in ink, linking to the CV.
+- `.section-head` — a theme's or a series' name over its gallery: kicker
+  ("Theme" / "Series"), h1 24px, and — once the artist has written it — a
+  short text at `--measure`. The artist's only words on the site are here, at
+  the level of a theme or a series; a work page still carries none.
+- `.gallery-related` — on a theme page, the kicker that hangs the related (○)
+  works under a hairline, below the main (●) ones.
+- `.gallery--rows` — a series is read in its numbers, so its gallery is a grid
+  of rows, not masonry columns (which fill top to bottom and would set #3
+  beside #10). Same widths and gaps as `.gallery`, so the same `sizes`.
+- `.index-list` — `/themes/` and `/series/`: the names ruled in hairlines like
+  the CV, each with its count in the caption serif.
 - `.searchbar` — fixed bottom, AI-chat-style panel: rounded 16px, hairline
   border, blur, soft shadow. It is one box, only as wide as the panel, so taps
   beside it reach the gallery underneath. Input on top, filter chips below
@@ -122,10 +138,9 @@ travels left to right in 1.8s while the tracking settles from `.26em` to
 resolving as the light reaches it. No JS and no per-letter markup: the mask
 gives the letter-by-letter reading while the `<h1>` stays one selectable,
 screen-readable string. Tracking and `margin-left` always move together or the
-name drifts off centre. Hovering the name itself (pointer only — the hover is
-on the `<h1>`, whose box is exactly the line of text, not on the full-screen
-link around it) steps it back to `.6` opacity and opens the tracking to
-`.17em`.
+name drifts off centre. The four ways in fade up under it once the light has
+crossed (0.8s, from 1.2s) — part of the name's arrival, not a moment of their
+own. The name has no hover: it is not a link.
 
 **2 · The name carries you across** (landing → works, 1.1s, one way only). The
 name *is* the landing and it *is* the header of the list, so both carry
@@ -150,21 +165,18 @@ what the crossing paints is entirely CSS's to decide. Measured in Chrome
 (screencast, frame by frame): out 1.1s; back 14ms with the frame after the list
 already the empty wall, and `name-settle` / `name-light` running from there.
 
-**3 · The works are hung** (list, 0.7s each). Each card lifts 14px and
-resolves, 45ms after the one before it, so the list arrives with the same
-unhurried left-to-right movement. `sibling-index()` carries the rhythm, so
-`WORKS.md` can grow without a rule per card; where it is unsupported the cards
-simply arrive together. Filtering replays it only for cards that genuinely
-come back — `gallery.js` never touches the ones already on screen. The wait is
-capped at six beats: a card still waiting is held at opacity 0, which is also
-how a browser decides nothing has been painted yet, and the columns put a card
-from the middle of the source order at the top of the screen. Six beats is the
-first column's rhythm; past that the wait would only be measured, not seen.
+**3 · The works are hung** (every gallery, 0.7s). The cards lift 14px and
+resolve — together, so the top edge of the photographs is one straight line
+from the first frame (the artist's request, 2026-09). Until then it was a
+stagger, a beat per card; but masonry columns fill one after another, so the
+card at the top of the second column comes from the middle of the source
+order, and it rose late and low beside the first — on opening a page and on
+every filter. Filtering replays the lift only for cards that genuinely come
+back — `gallery.js` never touches the ones already on screen.
 
 At rest, nothing moves, ever: every one of these fills `backwards` only, so a
 settled page is exactly its plain rules — full ink, no mask dimming, no loop,
-no repaint. `prefers-reduced-motion` drops all travel and leaves a plain fade
-(and, on the landing, keeps the hover dim as the affordance).
+no repaint. `prefers-reduced-motion` drops all travel and leaves a plain fade.
 
 ## App icon
 

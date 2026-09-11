@@ -10,6 +10,8 @@
 3. WORKS.md really is the source of truth — the works on disk are exactly the
    works in the table, and both list pages walk them in the table's order. A
    work page leads back to the list and nowhere else: no prev/next chain.
+   Each theme page walks the sheet's ● works then its ○ works, each series
+   page its works — in that same order.
 4. a plates strip carries one dot per photo, in both locales.
 
 Checks 2 and 3 exist because the only authoring method here is copy-paste-then-
@@ -95,13 +97,33 @@ if listed != indexable:
 
 # ── 3. WORKS.md is the source of truth for the works ─────────────
 
-rows = []
-for line in (REPO / "WORKS.md").read_text(encoding="utf-8").splitlines():
-    if not line.startswith("|"):
-        continue
-    slug = line.strip("|").split("|")[0].strip()
-    if slug and slug != "slug" and not set(slug) <= set("-: "):
-        rows.append(slug)
+WORKS_MD = (REPO / "WORKS.md").read_text(encoding="utf-8")
+
+
+def table(heading, first):
+    """The rows, as lists of cells, of the table in WORKS.md's section
+    `heading` (None: the top one, before any ##) whose header cell is `first`."""
+    parts = re.split(r"^## ", WORKS_MD, flags=re.M)
+    section = parts[0] if heading is None else next(
+        p for p in parts[1:] if p.startswith(heading + "\n"))
+    lines = section.splitlines()
+    start = lines.index(next(l for l in lines if l.startswith(f"| {first} |")))
+    cells = []
+    for line in lines[start + 2:]:  # past the header and the |---| rule
+        if not line.startswith("|"):
+            break
+        cells.append([c.strip() for c in line.strip()[1:-1].split("|")])
+    return cells
+
+
+def listed_works(html):
+    """The works a list of cards walks, in order — each card names its slug
+    twice, the <a href> and its itemprop="url"."""
+    found = re.findall(r'href="/works/([a-z0-9-]+)/(?:ko)?"', html)
+    return [s for i, s in enumerate(found) if i == 0 or s != found[i - 1]]
+
+
+rows = [r[0] for r in table(None, "slug")]
 
 on_disk = sorted(d.name for d in (ROOT / "works").iterdir() if d.is_dir())
 if sorted(rows) != on_disk:
@@ -110,10 +132,7 @@ if sorted(rows) != on_disk:
 else:
     for name, suffix in (("index.html", "/"), ("ko.html", "/ko")):
         page = ROOT / "works" / name
-        # each card names its slug twice — the <a href> and its itemprop="url"
-        found = re.findall(r'href="/works/([a-z0-9-]+)/(?:ko)?"',
-                           page.read_text(encoding="utf-8"))
-        listed = [s for i, s in enumerate(found) if i == 0 or s != found[i - 1]]
+        listed = listed_works(page.read_text(encoding="utf-8"))
         check(page, listed == rows, f"list order {listed} != WORKS.md order {rows}")
 
         # the one way out of a work is the list — the walk lives there alone,
@@ -125,6 +144,53 @@ else:
                   "work pages carry no rel=prev/next — only the list link")
             check(work, f'<a href="/works{suffix}">' in html,
                   f'must link back to /works{suffix}')
+
+# ── 3b. themes and series, too ───────────────────────────────────
+
+# A theme page is the artist's sheet made visible: its ● works, then its ○
+# works, each in the list's order. A series page is its works in that order.
+# The cards are copies of the list's, so this is the same guard as above: a
+# work moved on the sheet, or added to the list, must reach every page it
+# belongs on — in both locales.
+themes = [r[0] for r in table("Themes", "theme")]
+sheet = {r[0]: r[1:] for r in table("Themes", "work")}
+series = {r[0]: [w.strip() for w in r[3].split(",")] for r in table("Series", "series")}
+
+for work, marks in sheet.items():
+    if work not in rows or len(marks) != len(themes) or set(marks) - {"", "●", "○"}:
+        errors.append(f"WORKS.md: theme sheet row {work} {marks} is not a work "
+                      f"with one ●/○/blank per theme")
+for kind, names in (("themes", themes), ("series", list(series))):
+    on_disk = sorted(d.name for d in (ROOT / kind).iterdir() if d.is_dir())
+    if on_disk != sorted(names):
+        errors.append(f"WORKS.md: {kind} {sorted(names)}, public/{kind}/ holds {on_disk}")
+
+for name in ("index.html", "ko.html"):
+    for kind, names in (("themes", themes), ("series", list(series))):
+        page = ROOT / kind / name
+        found = re.findall(rf'href="/{kind}/([a-z0-9-]+)/(?:ko)?"',
+                           page.read_text(encoding="utf-8"))
+        check(page, found == names, f"lists {found}, WORKS.md {names}")
+
+    for col, theme in enumerate(themes):
+        want = [[w for w in rows if sheet.get(w, [""] * len(themes))[col] == mark]
+                for mark in ("●", "○")]
+        want = [g for g in want if g]
+        page = ROOT / "themes" / theme / name
+        if page.is_file():
+            groups = re.findall(r'<ul class="gallery\b.*?</ul>',
+                                page.read_text(encoding="utf-8"), re.S)
+            check(page, [listed_works(g) for g in groups] == want,
+                  f"walks {[listed_works(g) for g in groups]}, "
+                  f"the sheet says ● then ○: {want}")
+
+    for slug, works in series.items():
+        check(ROOT / "series" / slug, works == [w for w in rows if w in works],
+              f"WORKS.md lists the series {works} out of the list's order")
+        page = ROOT / "series" / slug / name
+        if page.is_file():
+            listed = listed_works(page.read_text(encoding="utf-8"))
+            check(page, listed == works, f"walks {listed}, WORKS.md {works}")
 
 # ── 4. a plates strip is marked photo for photo ──────────────────
 
@@ -146,4 +212,5 @@ if errors:
     print("\n".join(errors))
     sys.exit(1)
 print(f"OK — {len(pages)} pages: links resolve, EN/KO pairs agree, "
-      f"sitemap complete, {len(rows)} works match WORKS.md order")
+      f"sitemap complete, {len(rows)} works match WORKS.md order, "
+      f"{len(themes)} themes and {len(series)} series match its sheet")
