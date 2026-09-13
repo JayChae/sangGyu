@@ -21,7 +21,8 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   language toggle point at itself and its counterpart (absolute, on `ORIGIN`),
   its `og:image` exists, and `sitemap.xml` lists exactly the indexable pages;
   and the works on disk are exactly `WORKS.md`'s, walked in its order by both
-  list pages, each work page leading back to the list and nowhere else (no
+  list pages and carrying its theme and series marks under its chips, each work
+  page leading back to the list and nowhere else (no
   `rel=prev/next`). Run it after adding, moving, renaming or reordering
   anything. There is no other lint/test tooling.
 - `scripts/pages.py` holds the one model of how Cloudflare Pages maps a URL to
@@ -112,7 +113,7 @@ public/                          ← Cloudflare Pages output directory
   cv/index.html, ko.html         the artist's CV (English on both pages) — also the first card on the list
   exhibitions/<name>/            self-contained exhibition mini-sites (see WORKS.md)
   css/site.css                   shared styles (design system)
-  js/gallery.js                  search + tag filter for the list page (~50 lines)
+  js/gallery.js                  search + theme/series filter for the list page (~80 lines)
   img/<slug>/{480,640,960,1200,1600}.webp  one folder per artwork (extra views: <slug>/view2-*.webp;
                                  a replaced photo carries a v2- version, <slug>/v2-*.webp for a hero and
                                  <slug>/view2-v2-*.webp for a view — see build-images.sh)
@@ -127,7 +128,8 @@ print/                           not served — QR codes for print (scripts/buil
 ## Content rules
 
 - `WORKS.md` is the single source of truth for the works: slugs, titles,
-  years, media, sizes, tags, and the curated order (= list-page order). It
+  years, media, sizes, the artist's themes and series (the list page's
+  filter) and the curated order (= list-page order). It
   also documents the ORIGIN SEOUL 2026 exhibition mini-site.
 - A work page says title, year, medium, size — **no descriptions**, by the
   artist's request (they live on Instagram), and **never invent a year, a
