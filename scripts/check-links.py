@@ -8,8 +8,10 @@
    counterpart, and names an og:image that exists; sitemap.xml lists exactly
    the indexable pages;
 3. WORKS.md really is the source of truth — the works on disk are exactly the
-   works in the table, and both list pages walk them in the table's order. A
-   work page leads back to the list and nowhere else: no prev/next chain.
+   works in the table, both list pages walk them in the table's order, and
+   each card carries the marks of the artist's theme sheet and its series,
+   under chips that are the sheet's themes and the series. A work page leads
+   back to the list and nowhere else: no prev/next chain.
 4. a plates strip carries one dot per photo, in both locales.
 
 Checks 2 and 3 exist because the only authoring method here is copy-paste-then-
@@ -95,13 +97,39 @@ if listed != indexable:
 
 # ── 3. WORKS.md is the source of truth for the works ─────────────
 
-rows = []
-for line in (REPO / "WORKS.md").read_text(encoding="utf-8").splitlines():
-    if not line.startswith("|"):
-        continue
-    slug = line.strip("|").split("|")[0].strip()
-    if slug and slug != "slug" and not set(slug) <= set("-: "):
-        rows.append(slug)
+WORKS_MD = (REPO / "WORKS.md").read_text(encoding="utf-8").splitlines()
+
+
+def table(first):
+    """The WORKS.md table whose first header cell is `first`: header, rows."""
+    found = []
+    for line in WORKS_MD:
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if line.startswith("|") and (found or cells[0] == first):
+            found.append(cells)
+        elif found:
+            break
+    header, _separator, *body = found
+    return header, body
+
+
+rows = [r[0] for r in table("slug")[1]]
+# the artist's theme sheet: a column per theme, ● a main work, ○ a related one
+header, sheet = table("work")
+themes = header[1:]
+marks = {r[0]: dict(zip(themes, r[1:])) for r in sheet}
+# each series and its works — a chip after the themes
+series = {r[0]: r[3].replace(" ", "").split(",") for r in table("series")[1]}
+named = set(marks).union(*series.values())
+if named - set(rows):
+    errors.append("WORKS.md: themes/series name %s, not in the works table"
+                  % sorted(named - set(rows)))
+# a series is one more column of the sheet, every work in it ●: carried in
+# data-main, just as gallery.js reads it
+for name, works in series.items():
+    for work in works:
+        marks.setdefault(work, {})[name] = "●"
+filters = [*themes, *series]
 
 on_disk = sorted(d.name for d in (ROOT / "works").iterdir() if d.is_dir())
 if sorted(rows) != on_disk:
@@ -110,11 +138,27 @@ if sorted(rows) != on_disk:
 else:
     for name, suffix in (("index.html", "/"), ("ko.html", "/ko")):
         page = ROOT / "works" / name
+        html = page.read_text(encoding="utf-8")
         # each card names its slug twice — the <a href> and its itemprop="url"
-        found = re.findall(r'href="/works/([a-z0-9-]+)/(?:ko)?"',
-                           page.read_text(encoding="utf-8"))
+        found = re.findall(r'href="/works/([a-z0-9-]+)/(?:ko)?"', html)
         listed = [s for i, s in enumerate(found) if i == 0 or s != found[i - 1]]
         check(page, listed == rows, f"list order {listed} != WORKS.md order {rows}")
+
+        # the filter is the sheet and the series, copied by hand into both
+        # locales: the chips are its themes and series, each card its marks
+        chips = re.findall(r'data-tag="([^"]+)"', html)
+        check(page, chips == ["all", *filters],
+              f"chips {chips} != all + WORKS.md themes and series")
+        for card in re.split(r"<li[\s>]", html)[1:]:
+            work = re.search(r'href="/works/([a-z0-9-]+)/', card)
+            if not work:
+                continue
+            attrs, row = card.split(">", 1)[0], marks.get(work[1], {})
+            for key, mark in (("main", "●"), ("related", "○")):
+                got = (attr(attrs, rf'data-{key}="([^"]*)"') or "").split()
+                want = [f for f in filters if row.get(f) == mark]
+                check(page, sorted(got) == sorted(want),
+                      f"{work[1]}: data-{key} {got} != WORKS.md {want}")
 
         # the one way out of a work is the list — the walk lives there alone,
         # so a copy-pasted prev/next must not creep back in
@@ -146,4 +190,4 @@ if errors:
     print("\n".join(errors))
     sys.exit(1)
 print(f"OK — {len(pages)} pages: links resolve, EN/KO pairs agree, "
-      f"sitemap complete, {len(rows)} works match WORKS.md order")
+      f"sitemap complete, {len(rows)} works match WORKS.md order, themes and series")

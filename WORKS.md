@@ -12,28 +12,28 @@ in August 2026 (`../sangyu/arts/<Korean folder name>/`). The Korean titles are
 the artist's folder names. Work pages carry only title, year, medium and size —
 no descriptions, by the artist's request.
 
-| slug | title (EN) | title (KO) | year | medium | size | tags | photos |
-|---|---|---|---|---|---|---|---|
-| beyond-the-predetermined | Beyond the Predetermined | 폐허풍경 | 2026 | Plaster, metal powder | 200 × 200 × 200 cm | installation | 10 |
-| oxidized-figures-10 | Open Lack – Oxidized Figures #10 | 산화형상 #10 | 2026 | Plaster, metal powder | 17 × 15 × 77 cm | sculpture | 6 |
-| oxidized-figures-6 | Open Lack – Oxidized Figures #6 | 산화형상 #6 | 2025 | Plaster, metal powder | 10 × 10 × 30 cm | sculpture | 6 |
-| oxidized-figures-5 | Open Lack – Oxidized Figures #5 | 산화형상 #5 | 2025 | Plaster, metal powder | 15 × 10 × 34 cm | sculpture | 6 |
-| oxidized-figures-3 | Open Lack – Oxidized Figures #3 | 산화형상 #3 | 2025 | Plaster, metal powder | 8 × 9 × 30 cm | sculpture | 6 |
-| oxidized-figures-2 | Open Lack – Oxidized Figures #2 | 산화형상 #2 | 2025 | Plaster, metal powder | 7 × 9 × 20 cm | sculpture | 6 |
-| collective-gaze | Collective Gaze | 응시 | 2025 | Glazed ceramic | 40 × 40 × 80 cm | ceramic | 9 |
-| the-stranger | The Stranger | 이방인 | 2025 | Glazed ceramic | 30 × 20 cm | ceramic | 3 |
-| self-portrait | Self-Portrait | 자소상 | 2025 | Plaster, animal horn | 40 × 20 × 40 cm | sculpture | 4 |
-| arhats-little-beings | Arhats – Little Beings | 나한들 – 작은 존재들 | 2025 | Glazed ceramic | Dimensions variable | ceramic | 5 |
-| a-hand | A Hand | 손 | 2025 | Ceramic | 25 × 9 × 4 cm | ceramic | 3 |
-| the-pool-of-two-worlds | The Pool of Two Worlds | 두 세개의 연못 | 2025 | Plaster on wood panel | 30 × 30 × 50 cm | sculpture | 6 |
-| a-face | A Face | 얼굴 | 2025 | Ceramic | 20 × 20 × 20 cm | ceramic | 3 |
-| brave-new-world | Brave New World | 멋진 신세계 | 2023 | Plastic resin, acrylic | Dimensions variable | installation | 8 |
-| ecology | Ecology | 생태 | 2023 | Ceramic | 30 × 30 × 25 cm | ceramic | 6 |
-| combustion | Combustion | 연소 | 2023 | Etching | 21 × 15 cm | print | 1 |
-| untitled | Untitled | 무제 | 2023 | Lithograph | 20 × 20 cm | print | 1 |
-| skull | Skull | 해골 | 2023 | Lithograph | 30 × 40 cm | print | 7 |
-| a-cushion | A Cushion | 쿠션 | 2022 | Granite, marble | 22 × 22 × 10 cm | sculpture | 3 |
-| abstract-body-3 | Study of Abstract Body #3 | 추상인체 | 2024 | Wood panel, plaster, acrylic | 60 × 90 × 55 cm | sculpture | 3 |
+| slug | title (EN) | title (KO) | year | medium | size | photos |
+|---|---|---|---|---|---|---|
+| beyond-the-predetermined | Beyond the Predetermined | 폐허풍경 | 2026 | Plaster, metal powder | 200 × 200 × 200 cm | 10 |
+| oxidized-figures-10 | Open Lack – Oxidized Figures #10 | 산화형상 #10 | 2026 | Plaster, metal powder | 17 × 15 × 77 cm | 6 |
+| oxidized-figures-6 | Open Lack – Oxidized Figures #6 | 산화형상 #6 | 2025 | Plaster, metal powder | 10 × 10 × 30 cm | 6 |
+| oxidized-figures-5 | Open Lack – Oxidized Figures #5 | 산화형상 #5 | 2025 | Plaster, metal powder | 15 × 10 × 34 cm | 6 |
+| oxidized-figures-3 | Open Lack – Oxidized Figures #3 | 산화형상 #3 | 2025 | Plaster, metal powder | 8 × 9 × 30 cm | 6 |
+| oxidized-figures-2 | Open Lack – Oxidized Figures #2 | 산화형상 #2 | 2025 | Plaster, metal powder | 7 × 9 × 20 cm | 6 |
+| collective-gaze | Collective Gaze | 응시 | 2025 | Glazed ceramic | 40 × 40 × 80 cm | 9 |
+| the-stranger | The Stranger | 이방인 | 2025 | Glazed ceramic | 30 × 20 cm | 3 |
+| self-portrait | Self-Portrait | 자소상 | 2025 | Plaster, animal horn | 40 × 20 × 40 cm | 4 |
+| arhats-little-beings | Arhats – Little Beings | 나한들 – 작은 존재들 | 2025 | Glazed ceramic | Dimensions variable | 5 |
+| a-hand | A Hand | 손 | 2025 | Ceramic | 25 × 9 × 4 cm | 3 |
+| the-pool-of-two-worlds | The Pool of Two Worlds | 두 세개의 연못 | 2025 | Plaster on wood panel | 30 × 30 × 50 cm | 6 |
+| a-face | A Face | 얼굴 | 2025 | Ceramic | 20 × 20 × 20 cm | 3 |
+| brave-new-world | Brave New World | 멋진 신세계 | 2023 | Plastic resin, acrylic | Dimensions variable | 8 |
+| ecology | Ecology | 생태 | 2023 | Ceramic | 30 × 30 × 25 cm | 6 |
+| combustion | Combustion | 연소 | 2023 | Etching | 21 × 15 cm | 1 |
+| untitled | Untitled | 무제 | 2023 | Lithograph | 20 × 20 cm | 1 |
+| skull | Skull | 해골 | 2023 | Lithograph | 30 × 40 cm | 7 |
+| a-cushion | A Cushion | 쿠션 | 2022 | Granite, marble | 22 × 22 × 10 cm | 3 |
+| abstract-body-3 | Study of Abstract Body #3 | 추상인체 | 2024 | Wood panel, plaster, acrylic | 60 × 90 × 55 cm | 3 |
 
 Notes:
 
@@ -79,3 +79,61 @@ with the other two side by side under it.
 
 The artist's CV card is the first card on the works list page, the exhibition
 the second; the works follow.
+
+## Themes
+
+The artist's four themes, from their classification sheet of 2026-09-11
+(`작업 분류 및 웹페이지 수정희망사항_260911_131321.pdf`). They are the filter
+chips on the list page, in this order. Pressing one hangs the works it marks ●
+(main) first and, under a rule, the ones it marks ○ (related) — each group in
+the list order above. Each card carries its marks as `data-main` /
+`data-related`, by hand in both locales; `check-links.py` holds the cards and
+the chips to the sheet below. The English names are a draft waiting on the
+artist.
+
+| theme | name (EN) | name (KO) |
+|---|---|---|
+| social-structure | Social Structure · Logic · Discipline | 사회구조 · 논리 · 규율 |
+| dismantling | Dismantling | 해체 |
+| residue | Residue · Sense · Spirit | 잔여 · 감각 · 영성 |
+| irreducibility | Irreducibility · Contradiction · Ambivalence | 환원불가성 · 모순성 · 양가성 |
+
+The sheet, for the works on the site:
+
+| work | social-structure | dismantling | residue | irreducibility |
+|---|---|---|---|---|
+| beyond-the-predetermined | | | ● | ● |
+| collective-gaze | ● | ○ | | ● |
+| the-stranger | ● | ○ | | |
+| self-portrait | ○ | ● | ○ | ● |
+| arhats-little-beings | ○ | | ● | |
+| a-hand | | | ● | |
+| the-pool-of-two-worlds | | | ● | |
+| a-face | | | ○ | ● |
+| brave-new-world | ● | ○ | | ○ |
+| ecology | ● | ○ | | ○ |
+| combustion | | | ● | ○ |
+| untitled | | ● | ● | |
+| skull | | | ● | |
+| a-cushion | | ○ | | ● |
+| abstract-body-3 | | | ● | |
+
+The sheet also places six works that are not on the site (불상, Imagine
+재구성, 돌도끼 만들기, 새로운 수, 잔디 자르기, Cock) — the artist is deciding
+whether to add them. The Open Lack – Oxidized Figures are not on the sheet:
+they are a series (below). The sheet has The Stranger as "이방인, 2023" — see
+TODO.md.
+
+## Series
+
+A series is a chip too, after the themes. Pressing it hangs the series' works
+in the list order above, with no rule: a series has no related works. Its
+cards carry it in `data-main`, as a theme's main works carry the theme, so
+`gallery.js` treats the two alike; `check-links.py` holds the cards and the
+chip to this table. The owner asked for the oxidized figures as a series of
+their own (2026-09-13); the artist's 소실점 (vanishing point) series is still
+being made.
+
+| series | name (EN) | name (KO) | works |
+|---|---|---|---|
+| oxidized-figures | Oxidized Figures | 산화연작 | oxidized-figures-10, oxidized-figures-6, oxidized-figures-5, oxidized-figures-3, oxidized-figures-2 |

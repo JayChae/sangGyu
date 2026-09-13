@@ -8,6 +8,16 @@
       인스타 영문 제목과 다른 것들: 폐허풍경 (Beyond the Predetermined),
       산화형상 #N (Open Lack – Oxidized Figures #N), 추상인체 (Study of
       Abstract Body #3), 두 세개의 연못 (The Pool of Two Worlds).
+      작가의 주제 분류표(2026-09-11)에는 또 다르게 적혀 있음: 두 개의 못
+      (사이트: 두 세개의 연못), 집단응시 (응시), 작은 존재–나한들
+      (나한들 – 작은 존재들).
+- [ ] **주제·연작 영문 이름** — 목록 페이지 필터가 된 작가의 네 주제를 영어로
+      옮긴 건 초안 (WORKS.md): Social Structure · Logic · Discipline,
+      Dismantling, Residue · Sense · Spirit, Irreducibility · Contradiction ·
+      Ambivalence. 산화연작 칩은 Oxidized Figures.
+- [ ] **이방인 연도** — 분류표에는 "이방인, 2023"인데 사이트의 이방인은 2025년
+      도자 부조 세 점 (2023년 석고 부조는 사이트에 없음). 일단 사이트의
+      이방인에 분류표의 주제를 붙였음 — 어느 작품을 말한 건지 확인.
 - [ ] **연소 (Combustion)** — 인스타 캡션은 "에칭, 21 × 15 cm"인데 보내준 사진은
       동판 원판으로 보임. 이 사진을 쓰는 게 맞는지 확인.
 - [ ] **두 세개의 연못** — 폴더에 있던 건축 렌더링·다이어그램 PNG 4장은 UI가

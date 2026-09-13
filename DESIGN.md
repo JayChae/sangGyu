@@ -86,9 +86,13 @@ side under it.
 - `.searchbar` — fixed bottom, AI-chat-style panel: rounded 16px, hairline
   border, blur, soft shadow. It is one box, only as wide as the panel, so taps
   beside it reach the gallery underneath. Input on top, filter chips below
-  (like a model picker). Chips are `<button aria-pressed>`; active chip = ink
-  pill, and that pressed chip *is* the filter state — `gallery.js` reads it
-  rather than keeping its own copy.
+  (like a model picker): All, the artist's four themes named as on their
+  sheet, then the series (`WORKS.md`). Chips are `<button aria-pressed>`; active chip =
+  ink pill, and that pressed chip *is* the filter state — `gallery.js` reads
+  it rather than keeping its own copy.
+- `.gallery-related` — under a theme, the rule between its main works and its
+  related ones: a kicker over a hairline, spanning every column so the
+  columns above it close first. Hidden while no related work is on screen.
 - `.work-hero` / `.work-view` — the image plates on a detail page. `site.css`
   centres them; a page's own `<style>` sets only the `max-width` it wants.
 - `.tombstone` — serif muted "year · medium · size" line.
@@ -150,16 +154,16 @@ what the crossing paints is entirely CSS's to decide. Measured in Chrome
 (screencast, frame by frame): out 1.1s; back 14ms with the frame after the list
 already the empty wall, and `name-settle` / `name-light` running from there.
 
-**3 · The works are hung** (list, 0.7s each). Each card lifts 14px and
-resolves, 45ms after the one before it, so the list arrives with the same
-unhurried left-to-right movement. `sibling-index()` carries the rhythm, so
-`WORKS.md` can grow without a rule per card; where it is unsupported the cards
-simply arrive together. Filtering replays it only for cards that genuinely
-come back — `gallery.js` never touches the ones already on screen. The wait is
-capped at six beats: a card still waiting is held at opacity 0, which is also
-how a browser decides nothing has been painted yet, and the columns put a card
-from the middle of the source order at the top of the screen. Six beats is the
-first column's rhythm; past that the wait would only be measured, not seen.
+**3 · The works are hung** (list, 0.7s). Every card lifts 14px and resolves
+at once, so the top edge of the list is one straight line from the first
+frame — the artist asked for it (2026-09-11). It used to be staggered, 45ms a
+card, but the columns are filled one after another, so the top of the second
+column comes from the middle of the source order and rose last: for about
+0.6s the top of the list was a step, not a line. A search replays the
+entrance only for cards that genuinely come back — `gallery.js` never
+touches the ones already on screen. A theme is a new hang: `gallery.js`
+moves the cards into the theme's order, and every card on screen lifts in
+again.
 
 At rest, nothing moves, ever: every one of these fills `backwards` only, so a
 settled page is exactly its plain rules — full ink, no mask dimming, no loop,
