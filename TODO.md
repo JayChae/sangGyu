@@ -12,9 +12,8 @@
       (사이트: 두 세개의 연못), 집단응시 (응시), 작은 존재–나한들
       (나한들 – 작은 존재들).
 - [ ] **주제·연작 영문 이름** — 목록 페이지 필터가 된 작가의 네 주제를 영어로
-      옮긴 건 초안 (WORKS.md): Social Structure · Logic · Discipline,
-      Dismantling, Residue · Sense · Spirit, Irreducibility · Contradiction ·
-      Ambivalence. 산화연작 칩은 Oxidized Figures.
+      옮긴 건 초안 (WORKS.md): Social Structure, Dismantling,
+      Residual Sense, Ambivalence. 산화연작 칩은 Oxidized Figures.
 - [ ] **이방인 연도** — 분류표에는 "이방인, 2023"인데 사이트의 이방인은 2025년
       도자 부조 세 점 (2023년 석고 부조는 사이트에 없음). 일단 사이트의
       이방인에 분류표의 주제를 붙였음 — 어느 작품을 말한 건지 확인.

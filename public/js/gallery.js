@@ -8,8 +8,7 @@
   const input = bar.querySelector("input[type=search]");
   const chips = [...bar.querySelectorAll(".chip")];
   const gallery = document.querySelector(".gallery");
-  const rule = gallery.querySelector(".gallery-related");
-  const cards = [...gallery.children].filter((li) => li !== rule);
+  const cards = [...gallery.children];
   const empty = document.querySelector(".gallery-empty");
 
   // the pressed chip *is* the state — never mirrored into a variable that
@@ -26,29 +25,28 @@
     const tag = theme();
     const q = input.value.trim().toLowerCase();
     let shown = 0;
-    let related = 0;
     for (const card of cards) {
-      const rel = marked(card, "related", tag);
       const hit =
-        (tag === "all" || rel || marked(card, "main", tag)) &&
+        (tag === "all" ||
+          marked(card, "main", tag) ||
+          marked(card, "related", tag)) &&
         (!q || card.dataset.search.includes(q));
       if (card.hidden === hit) card.hidden = !hit;
       if (hit) shown++;
-      if (hit && rel) related++;
     }
-    rule.hidden = related === 0;
     empty.hidden = shown > 0;
   };
 
-  // A theme hangs its main works first and its related ones under the rule,
-  // each group in the list's own order; the rest are hidden, so they stay put.
+  // A theme hangs its main works first and its related ones after them, with
+  // nothing between — each group in the list's own order; the rest are
+  // hidden, so they stay put.
   // Moving a card hangs it afresh, entrance and all — which is why this runs
   // when a new chip is pressed, and never while the reader types.
   const hang = () => {
     const tag = theme();
     const main = cards.filter((c) => tag === "all" || marked(c, "main", tag));
     const related = cards.filter((c) => marked(c, "related", tag));
-    gallery.append(...main, rule, ...related);
+    gallery.append(...main, ...related);
   };
 
   // The bar is fixed to the bottom of the phone, but the results start at the
