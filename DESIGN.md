@@ -86,13 +86,9 @@ side under it.
 - `.searchbar` — fixed bottom, AI-chat-style panel: rounded 16px, hairline
   border, blur, soft shadow. It is one box, only as wide as the panel, so taps
   beside it reach the gallery underneath. Input on top, filter chips below
-  (like a model picker): All, the artist's four themes named as on their
-  sheet, then the series (`WORKS.md`). Chips are `<button aria-pressed>`; active chip =
+  (like a model picker): All, the artist's four themes, then the series (`WORKS.md`). Chips are `<button aria-pressed>`; active chip =
   ink pill, and that pressed chip *is* the filter state — `gallery.js` reads
   it rather than keeping its own copy.
-- `.gallery-related` — under a theme, the rule between its main works and its
-  related ones: a kicker over a hairline, spanning every column so the
-  columns above it close first. Hidden while no related work is on screen.
 - `.work-hero` / `.work-view` — the image plates on a detail page. `site.css`
   centres them; a page's own `<style>` sets only the `max-width` it wants.
 - `.tombstone` — serif muted "year · medium · size" line.

@@ -85,22 +85,23 @@ the second; the works follow.
 The artist's four themes, from their classification sheet of 2026-09-11
 (`작업 분류 및 웹페이지 수정희망사항_260911_131321.pdf`). They are the filter
 chips on the list page, in this order. Pressing one hangs the works it marks ●
-(main) first and, under a rule, the ones it marks ○ (related) — each group in
-the list order above. Each card carries its marks as `data-main` /
+(main) first and the ones it marks ○ (related) right after them, with no
+rule or heading between — each group in the list order above. Each card carries its marks as `data-main` /
 `data-related`, by hand in both locales; `check-links.py` holds the cards and
-the chips to the sheet below. The English names are a draft waiting on the
-artist.
+the chips to the sheet below. Each chip is one short word or two, not the sheet's
+full three-word names (the owner, 2026-09-17); the English names are a draft
+waiting on the artist.
 
 | theme | name (EN) | name (KO) |
 |---|---|---|
-| social-structure | Social Structure · Logic · Discipline | 사회구조 · 논리 · 규율 |
+| social-structure | Social Structure | 사회구조 |
 | dismantling | Dismantling | 해체 |
-| residue | Residue · Sense · Spirit | 잔여 · 감각 · 영성 |
-| irreducibility | Irreducibility · Contradiction · Ambivalence | 환원불가성 · 모순성 · 양가성 |
+| residual-sense | Residual Sense | 잔여적 감각 |
+| ambivalence | Ambivalence | 양가성 |
 
 The sheet, for the works on the site:
 
-| work | social-structure | dismantling | residue | irreducibility |
+| work | social-structure | dismantling | residual-sense | ambivalence |
 |---|---|---|---|---|
 | beyond-the-predetermined | | | ● | ● |
 | collective-gaze | ● | ○ | | ● |
@@ -121,13 +122,13 @@ The sheet, for the works on the site:
 The sheet also places six works that are not on the site (불상, Imagine
 재구성, 돌도끼 만들기, 새로운 수, 잔디 자르기, Cock) — the artist is deciding
 whether to add them. The Open Lack – Oxidized Figures are not on the sheet:
-they are a series (below). The sheet has The Stranger as "이방인, 2023" — see
+they are a series (below), which also holds 폐허풍경 (the owner, 2026-09-17). The sheet has The Stranger as "이방인, 2023" — see
 TODO.md.
 
 ## Series
 
 A series is a chip too, after the themes. Pressing it hangs the series' works
-in the list order above, with no rule: a series has no related works. Its
+in the list order above: a series has no related works. Its
 cards carry it in `data-main`, as a theme's main works carry the theme, so
 `gallery.js` treats the two alike; `check-links.py` holds the cards and the
 chip to this table. The owner asked for the oxidized figures as a series of
@@ -136,4 +137,4 @@ being made.
 
 | series | name (EN) | name (KO) | works |
 |---|---|---|---|
-| oxidized-figures | Oxidized Figures | 산화연작 | oxidized-figures-10, oxidized-figures-6, oxidized-figures-5, oxidized-figures-3, oxidized-figures-2 |
+| oxidized-figures | Oxidized Figures | 산화연작 | beyond-the-predetermined, oxidized-figures-10, oxidized-figures-6, oxidized-figures-5, oxidized-figures-3, oxidized-figures-2 |
