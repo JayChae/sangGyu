@@ -1,10 +1,13 @@
 # Works — single source of truth
 
-Order below = curated order on the list page: the artist's own order (newest
-first, as on Instagram), except that the 2024 study sits last — the list's
-three columns fill top to bottom, so the work about two-thirds down the order
-heads the third column on a desktop, and a study should not. A work page links back to that list and nowhere else,
-so this file is the only place the order is kept.
+Order below = curated order on the list page: the artist's own order, newest
+first — the rows of their sheet *작품들의 연결성* (2026-11-08) read bottom to
+top, which is also how each note on `/notes/` hangs its works ("최신순, 관련작업에
+쓰인 순서의 역순"). Works the sheet leaves out sit at the end of their year. The
+one exception is the 2024 study, which sits last — the list's three columns
+fill top to bottom, so the work about two-thirds down the order heads the third
+column on a desktop, and a study should not. A work page links back to that
+list and nowhere else, so this file is the only place the order is kept.
 
 Titles, years, media and sizes are the artist's captions on Instagram
 (@s_an9_9_artworksofarts), checked against the photo folders the artist sent
@@ -20,13 +23,13 @@ no descriptions, by the artist's request.
 | oxidized-figures-5 | Open Lack – Oxidized Figures #5 | 산화형상 #5 | 2025 | Plaster, metal powder | 15 × 10 × 34 cm | 6 |
 | oxidized-figures-3 | Open Lack – Oxidized Figures #3 | 산화형상 #3 | 2025 | Plaster, metal powder | 8 × 9 × 30 cm | 6 |
 | oxidized-figures-2 | Open Lack – Oxidized Figures #2 | 산화형상 #2 | 2025 | Plaster, metal powder | 7 × 9 × 20 cm | 6 |
+| self-portrait | Self-Portrait | 자소상 | 2025 | Plaster, animal horn | 40 × 20 × 40 cm | 4 |
+| a-face | A Face | 얼굴 | 2025 | Ceramic | 20 × 20 × 20 cm | 3 |
 | collective-gaze | Collective Gaze | 응시 | 2025 | Glazed ceramic | 40 × 40 × 80 cm | 9 |
 | the-stranger | The Stranger | 이방인 | 2025 | Glazed ceramic | 30 × 20 cm | 3 |
-| self-portrait | Self-Portrait | 자소상 | 2025 | Plaster, animal horn | 40 × 20 × 40 cm | 4 |
 | arhats-little-beings | Arhats – Little Beings | 나한들 – 작은 존재들 | 2025 | Glazed ceramic | Dimensions variable | 5 |
-| a-hand | A Hand | 손 | 2025 | Ceramic | 25 × 9 × 4 cm | 3 |
 | the-pool-of-two-worlds | The Pool of Two Worlds | 두 세개의 연못 | 2025 | Plaster on wood panel | 30 × 30 × 50 cm | 6 |
-| a-face | A Face | 얼굴 | 2025 | Ceramic | 20 × 20 × 20 cm | 3 |
+| a-hand | A Hand | 손 | 2025 | Ceramic | 25 × 9 × 4 cm | 3 |
 | brave-new-world | Brave New World | 멋진 신세계 | 2023 | Plastic resin, acrylic | Dimensions variable | 8 |
 | ecology | Ecology | 생태 | 2023 | Ceramic | 30 × 30 × 25 cm | 6 |
 | combustion | Combustion | 연소 | 2023 | Etching | 21 × 15 cm | 1 |
@@ -77,64 +80,101 @@ The Stranger is three reliefs, so it is shown there as three plates: on a
 phone one swipeable strip with arrows and dots, wider the first leading
 with the other two side by side under it.
 
-The artist's CV card is the first card on the works list page, the exhibition
-the second; the works follow.
+The list page opens with three text cards, in the order of the artist's
+sketch (2026-11-08): the CV, the notes (`/notes/`), then the exhibition; the
+works follow.
 
 ## Themes
 
-The artist's four themes, from their classification sheet of 2026-09-11
-(`작업 분류 및 웹페이지 수정희망사항_260911_131321.pdf`). They are the filter
-chips on the list page, in this order. Pressing one hangs the works it marks ●
-(main) first and the ones it marks ○ (related) right after them, with no
-rule or heading between — each group in the list order above. Each card carries its marks as `data-main` /
-`data-related`, by hand in both locales; `check-links.py` holds the cards and
-the chips to the sheet below. Each chip is one short word or two, not the sheet's
-full three-word names (the owner, 2026-09-17); the English names are a draft
-waiting on the artist.
+The artist's eight themes are the headings of their notes, from *작품들의
+연결성* (2026-11-08). It replaces the four-theme sheet of 2026-09-11, and its
+산화 takes over from the 산화연작 series chip, which found the same works (the
+owner, 2026-11-08). Each theme is three things, all in the order below — the
+artist's order of the notes:
 
-| theme | name (EN) | name (KO) |
-|---|---|---|
-| social-structure | Social Structure | 사회구조 |
-| dismantling | Dismantling | 해체 |
-| residual-sense | Residual Sense | 잔여적 감각 |
-| ambivalence | Ambivalence | 양가성 |
+- a note on `/notes/` (`<article id="<theme>">`), the artist's text under the
+  "note" heading, followed by the works it marks that are on the site, in the
+  list order above;
+- a filter chip on the list page, named as in the "chip" columns. A chip is
+  offered only once the theme marks a work on the site — one that finds
+  nothing is not a filter;
+- a tag on each work page it marks, under the tombstone, with the chip's name,
+  linking to the note.
 
-The sheet, for the works on the site:
+Cards carry their themes as `data-themes`, by hand in both locales;
+`check-links.py` holds cards, chips, tags and notes to the two tables below.
+The English chip names are the artist's headings except *Geometric & Organic*,
+a short form of the longest (a draft — TODO.md).
 
-| work | social-structure | dismantling | residual-sense | ambivalence |
+| theme | chip (EN) | chip (KO) | note (EN) | note (KO) |
 |---|---|---|---|---|
-| beyond-the-predetermined | | | ● | ● |
-| collective-gaze | ● | ○ | | ● |
-| the-stranger | ● | ○ | | |
-| self-portrait | ○ | ● | ○ | ● |
-| arhats-little-beings | ○ | | ● | |
-| a-hand | | | ● | |
-| the-pool-of-two-worlds | | | ● | |
-| a-face | | | ○ | ● |
-| brave-new-world | ● | ○ | | ○ |
-| ecology | ● | ○ | | ○ |
-| combustion | | | ● | ○ |
-| untitled | | ● | ● | |
-| skull | | | ● | |
-| a-cushion | | ○ | | ● |
-| abstract-body-3 | | | ● | |
+| geometric-and-organic-forms | Geometric & Organic | 기하와 유기 형태 | Basic Geometric Forms and Organic Forms | 기본 기하적 형태와 유기적 형태 |
+| vanishing-point | Vanishing Point | 소실점 | Vanishing Point | 소실점 |
+| roadkill | Roadkill | 로드킬 | Roadkill | 로드킬 |
+| oxidation | Oxidation | 산화 | Oxidation | 산화 |
+| residual-sensation | Residual Sensation | 잔여적 감각 | Residual Sensation | 잔여적 감각 |
+| irreducibility | Irreducibility | 환원불가능성 | Irreducibility | 환원불가능성 |
+| analysis-and-deconstruction | Analysis and Deconstruction | 분석, 해체 | Analysis and Deconstruction | 분석, 해체 |
+| systems | Systems | 시스템 | Systems | 시스템 |
 
-The sheet also places six works that are not on the site (불상, Imagine
-재구성, 돌도끼 만들기, 새로운 수, 잔디 자르기, Cock) — the artist is deciding
-whether to add them. The Open Lack – Oxidized Figures are not on the sheet:
-they are a series (below), which also holds 폐허풍경 (the owner, 2026-09-17). The sheet has The Stranger as "이방인, 2023" — see
-TODO.md.
+The sheet, for the works on the site (● only — it has no "related" mark):
 
-## Series
+| work | geometric-and-organic-forms | vanishing-point | roadkill | oxidation | residual-sensation | irreducibility | analysis-and-deconstruction | systems |
+|---|---|---|---|---|---|---|---|---|
+| beyond-the-predetermined | | | | ● | ● | ● | | |
+| oxidized-figures-10 | | | | ● | | | | |
+| oxidized-figures-6 | | | | ● | | | | |
+| oxidized-figures-5 | | | | ● | | | | |
+| oxidized-figures-3 | | | | ● | | | | |
+| oxidized-figures-2 | | | | ● | | | | |
+| self-portrait | | | | | ● | ● | ● | ● |
+| a-face | | | | | ● | ● | | |
+| collective-gaze | | | | | | ● | ● | ● |
+| the-stranger | | | | | | | ● | ● |
+| arhats-little-beings | | | | | ● | | | ● |
+| the-pool-of-two-worlds | | | | | ● | | | |
+| brave-new-world | | | | | | ● | ● | ● |
+| ecology | | | | | | ● | ● | ● |
+| combustion | | | | | ● | ● | | |
+| untitled | | | | | ● | | ● | |
+| a-cushion | | | | | | ● | ● | |
 
-A series is a chip too, after the themes. Pressing it hangs the series' works
-in the list order above: a series has no related works. Its
-cards carry it in `data-main`, as a theme's main works carry the theme, so
-`gallery.js` treats the two alike; `check-links.py` holds the cards and the
-chip to this table. The owner asked for the oxidized figures as a series of
-their own (2026-09-13); the artist's 소실점 (vanishing point) series is still
-being made.
+How the sheet's rows map onto the site:
 
-| series | name (EN) | name (KO) | works |
-|---|---|---|---|
-| oxidized-figures | Oxidized Figures | 산화연작 | beyond-the-predetermined, oxidized-figures-10, oxidized-figures-6, oxidized-figures-5, oxidized-figures-3, oxidized-figures-2 |
+- "산화연작#, 2026" is one row for the five *Open Lack – Oxidized Figures*.
+- The sheet names some works differently from the site: 집단응시 is
+  `collective-gaze` (응시), 작은 존재–나한들 is `arhats-little-beings`. It has
+  The Stranger as "이방인, 2023" again — see TODO.md.
+- 작은 존재–나한들 is ● under 시스템 on the sheet but missing from the 시스템
+  note's own list of related works; the site follows the sheet (TODO.md).
+- Three works on the site are not on the sheet — `a-hand`, `skull`,
+  `abstract-body-3` — so they carry no theme and show under All only. 불상 and
+  돌도끼 만들기, on the old sheet, are not on this one.
+
+Works on the sheet that are not on the site yet — the artist is sending their
+photos. Each becomes a row of both tables above once it has a page; the
+themes no site work marks yet (기하와 유기 형태, 소실점, 로드킬) get their chips
+with them. Titles here are the sheet's; the English ones, and media and sizes,
+come from the Instagram captions as for every other work.
+
+| 작품 (not on the site yet) | year | themes |
+|---|---|---|
+| 고속도로 소실점 | 2026 | geometric-and-organic-forms, vanishing-point, residual-sensation, irreducibility |
+| 음각된 | 2026 | geometric-and-organic-forms, roadkill, residual-sensation, irreducibility |
+| 좁은 문 | 2026 | geometric-and-organic-forms, vanishing-point, oxidation, residual-sensation, irreducibility |
+| Cock | 2025 | irreducibility, analysis-and-deconstruction, systems |
+| 잔디 자르기 | 2025 | irreducibility, analysis-and-deconstruction, systems |
+| 새로운 수 | 2024 | analysis-and-deconstruction, systems |
+| Imagine 재구성 | 2023 | residual-sensation, irreducibility, analysis-and-deconstruction, systems |
+
+## Notes
+
+`/notes/` is the artist's own writing, from the same file: the eight notes in
+the order above, each in English on the English page and in Korean on the
+Korean page — the artist wrote both — and the title of their thesis last (its
+PDF is still to come). It is the one place on the site with the artist's words
+about the work; a work page still says only title, year, medium and size, with
+its themes as links to these notes. The text is the artist's, line for line
+(a blank line in the file is a new paragraph, a line break inside one is a
+`<br>`); only plain misspellings are corrected — 맡닿음 → 맞닿음, 엔디 워홀 →
+앤디 워홀 — and anything less certain stays as written and goes to TODO.md.

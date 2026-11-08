@@ -9,9 +9,11 @@
    the indexable pages;
 3. WORKS.md really is the source of truth — the works on disk are exactly the
    works in the table, both list pages walk them in the table's order, and
-   each card carries the marks of the artist's theme sheet and its series,
-   under chips that are the sheet's themes and the series. A work page leads
-   back to the list and nowhere else: no prev/next chain.
+   each card carries the themes the artist's sheet marks it with, under chips
+   that are the sheet's themes that find a work. A work page tags the same
+   themes, linking to their notes, and leads back to the list and nowhere
+   else: no prev/next chain. The notes page holds one note per theme, in
+   order, each followed by exactly its works, newest first.
 4. a plates strip carries one dot per photo, in both locales.
 
 Checks 2 and 3 exist because the only authoring method here is copy-paste-then-
@@ -114,22 +116,26 @@ def table(first):
 
 
 rows = [r[0] for r in table("slug")[1]]
-# the artist's theme sheet: a column per theme, ● a main work, ○ a related one
+# the artist's themes, in the order of their notes, with each one's chip name
+# per locale — the name a chip and a work page's tag both carry
+themes = {r[0]: {"index.html": r[1], "ko.html": r[2]} for r in table("theme")[1]}
+# the artist's sheet: a column per theme, ● where it marks a work
 header, sheet = table("work")
-themes = header[1:]
-marks = {r[0]: dict(zip(themes, r[1:])) for r in sheet}
-# each series and its works — a chip after the themes
-series = {r[0]: r[3].replace(" ", "").split(",") for r in table("series")[1]}
-named = set(marks).union(*series.values())
-if named - set(rows):
-    errors.append("WORKS.md: themes/series name %s, not in the works table"
-                  % sorted(named - set(rows)))
-# a series is one more column of the sheet, every work in it ●: carried in
-# data-main, just as gallery.js reads it
-for name, works in series.items():
-    for work in works:
-        marks.setdefault(work, {})[name] = "●"
-filters = [*themes, *series]
+if header[1:] != list(themes):
+    errors.append("WORKS.md: the sheet's columns %s are not the themes %s"
+                  % (header[1:], list(themes)))
+marked = {r[0]: [t for t, m in zip(header[1:], r[1:]) if m == "●"] for r in sheet}
+if set(marked) - set(rows):
+    errors.append("WORKS.md: the sheet names %s, not in the works table"
+                  % sorted(set(marked) - set(rows)))
+# a theme is offered as a filter only once it finds a work on the site
+filters = [t for t in themes if any(t in m for m in marked.values())]
+
+
+def works_of(theme):
+    """The works on the site a theme marks, in the list's order."""
+    return [w for w in rows if theme in marked.get(w, [])]
+
 
 on_disk = sorted(d.name for d in (ROOT / "works").iterdir() if d.is_dir())
 if sorted(rows) != on_disk:
@@ -144,24 +150,27 @@ else:
         listed = [s for i, s in enumerate(found) if i == 0 or s != found[i - 1]]
         check(page, listed == rows, f"list order {listed} != WORKS.md order {rows}")
 
-        # the filter is the sheet and the series, copied by hand into both
-        # locales: the chips are its themes and series, each card its marks
-        chips = re.findall(r'data-tag="([^"]+)"', html)
-        check(page, chips == ["all", *filters],
-              f"chips {chips} != all + WORKS.md themes and series")
+        # the filter is the sheet, copied by hand into both locales: the chips
+        # are its themes that find a work, each card the themes it is marked
+        chips = re.findall(r'data-tag="([^"]+)"[^>]*>\s*(.+?)\s*</button>', html, re.S)
+        check(page, [c for c, _ in chips] == ["all", *filters],
+              f"chips {[c for c, _ in chips]} != all + the WORKS.md themes that find a work")
+        for tag, label in chips[1:]:
+            check(page, label == themes.get(tag, {}).get(name),
+                  f"chip {tag} reads {label!r}, WORKS.md names it otherwise")
         for card in re.split(r"<li[\s>]", html)[1:]:
             work = re.search(r'href="/works/([a-z0-9-]+)/', card)
             if not work:
                 continue
-            attrs, row = card.split(">", 1)[0], marks.get(work[1], {})
-            for key, mark in (("main", "●"), ("related", "○")):
-                got = (attr(attrs, rf'data-{key}="([^"]*)"') or "").split()
-                want = [f for f in filters if row.get(f) == mark]
-                check(page, sorted(got) == sorted(want),
-                      f"{work[1]}: data-{key} {got} != WORKS.md {want}")
+            got = (attr(card.split(">", 1)[0], r'data-themes="([^"]*)"') or "").split()
+            want = marked.get(work[1], [])
+            check(page, got == want, f"{work[1]}: data-themes {got} != WORKS.md {want}")
 
-        # the one way out of a work is the list — the walk lives there alone,
-        # so a copy-pasted prev/next must not creep back in
+        # a work page tags the themes it is marked with, each a link to its
+        # note, named as its chip; and it leads back to the list and nowhere
+        # else — the walk lives there alone, so a copy-pasted prev/next must
+        # not creep back in
+        notes = re.escape(f"/notes{suffix}")
         for slug in rows:
             work = ROOT / "works" / slug / name
             html = work.read_text(encoding="utf-8")
@@ -169,6 +178,25 @@ else:
                   "work pages carry no rel=prev/next — only the list link")
             check(work, f'<a href="/works{suffix}">' in html,
                   f'must link back to /works{suffix}')
+            tags = re.findall(rf'<a href="{notes}#([a-z-]+)">([^<]+)</a>', html)
+            want = marked.get(slug, [])
+            check(work, [t for t, _ in tags] == want,
+                  f"tags {[t for t, _ in tags]} != WORKS.md {want}")
+            for tag, label in tags:
+                check(work, label == themes.get(tag, {}).get(name),
+                      f"tag {tag} reads {label!r}, WORKS.md names it otherwise")
+
+        # the notes: one <article id> per theme, in the artist's order, each
+        # followed by the works it marks, newest first — the list's order
+        page = ROOT / "notes" / name
+        html = page.read_text(encoding="utf-8") if page.exists() else ""
+        ids = re.findall(r'<article id="([a-z-]+)"', html)
+        check(page, ids == list(themes), f"notes {ids} != WORKS.md themes {list(themes)}")
+        for note in re.split(r"<article id=", html)[1:]:
+            theme = note[1:note.index('"', 1)]
+            works = re.findall(rf'href="/works/([a-z0-9-]+)/{suffix[1:]}"', note)
+            check(page, works == works_of(theme),
+                  f"{theme}: works {works} != WORKS.md {works_of(theme)}")
 
 # ── 4. a plates strip is marked photo for photo ──────────────────
 
@@ -190,4 +218,4 @@ if errors:
     print("\n".join(errors))
     sys.exit(1)
 print(f"OK — {len(pages)} pages: links resolve, EN/KO pairs agree, "
-      f"sitemap complete, {len(rows)} works match WORKS.md order, themes and series")
+      f"sitemap complete, {len(rows)} works match WORKS.md order, themes and notes")

@@ -1,4 +1,4 @@
-// Live search + theme and series filter for the works list. Progressive enhancement:
+// Live search + theme filter for the works list. Progressive enhancement:
 // the bar is hidden in CSS and only revealed here, once it is wired up —
 // without this file (or if it fails to load) the full gallery simply shows.
 (() => {
@@ -15,11 +15,10 @@
   // could disagree with the pill the reader can see
   const theme = () =>
     bar.querySelector('.chip[aria-pressed="true"]').dataset.tag;
-  // does the artist's sheet mark this card ● (data-main) or ○ (data-related)
-  // for the theme? A series' works carry it in data-main: all main, none
-  // related. Both are in WORKS.md; check-links.py holds the cards to it.
-  const marked = (card, key, tag) =>
-    (card.dataset[key] || "").split(" ").includes(tag);
+  // does the artist's sheet mark this card with the theme? The sheet is in
+  // WORKS.md; check-links.py holds every card's data-themes to it.
+  const marked = (card, tag) =>
+    (card.dataset.themes || "").split(" ").includes(tag);
 
   const apply = () => {
     const tag = theme();
@@ -27,9 +26,7 @@
     let shown = 0;
     for (const card of cards) {
       const hit =
-        (tag === "all" ||
-          marked(card, "main", tag) ||
-          marked(card, "related", tag)) &&
+        (tag === "all" || marked(card, tag)) &&
         (!q || card.dataset.search.includes(q));
       if (card.hidden === hit) card.hidden = !hit;
       if (hit) shown++;
@@ -37,16 +34,13 @@
     empty.hidden = shown > 0;
   };
 
-  // A theme hangs its main works first and its related ones after them, with
-  // nothing between — each group in the list's own order; the rest are
-  // hidden, so they stay put.
-  // Moving a card hangs it afresh, entrance and all — which is why this runs
-  // when a new chip is pressed, and never while the reader types.
+  // A theme is a new hang: its works are hung again, in the list's own order
+  // (the rest are hidden, so they stay put). Moving a card hangs it afresh,
+  // entrance and all — which is why this runs when a new chip is pressed, and
+  // never while the reader types.
   const hang = () => {
     const tag = theme();
-    const main = cards.filter((c) => tag === "all" || marked(c, "main", tag));
-    const related = cards.filter((c) => marked(c, "related", tag));
-    gallery.append(...main, ...related);
+    gallery.append(...cards.filter((c) => tag === "all" || marked(c, tag)));
   };
 
   // The bar is fixed to the bottom of the phone, but the results start at the

@@ -52,11 +52,20 @@ side under it.
 ## Layout
 
 - Mobile first. One shared header (`.site-header`), one footer.
+- Landing: the name, centred, on the artist's own drawing of a vanishing point
+  (`vanishing-point.svg`, 2026-11-08) — the one wall on the site that is not
+  plain `--bg`. The drawing is stretched to the screen's shape, corner to
+  corner, so the name always stands where the tunnel ends, on a phone held
+  upright as on a desk: a one-point tunnel stretched along one axis is still
+  an exact one-point tunnel. Its strokes are drawn in screen pixels, so the
+  stretch never thickens one axis' lines. It does not move.
 - Gallery: CSS multi-columns (2 columns, 3 from 760px) — pure-CSS masonry that
   absorbs any aspect ratio. `break-inside: avoid` on items.
 - Detail pages: image first, full column width (max 880px), then a
   `border-top` rule, title, serif tombstone — and nothing else in words: a
-  work page is title, year, medium, size. Every other photo of the work hangs
+  work page is title, year, medium, size, then its themes as a second
+  tombstone line, each a link to the artist's note on it (the artist asked
+  for the tags, 2026-11-08). Every other photo of the work hangs
   below the tombstone as a `.work-view` plate, in the artist's order, with a
   short serif caption where one says something (detail, installation view,
   side) and none otherwise.
@@ -75,23 +84,31 @@ side under it.
   `.work-nav` the rule is already drawn, so the footer drops its own and keeps
   the air. On the list page the room for the fixed search bar is under the
   footer, so at the end of the page the contact stands clear above the bar.
-  The landing has no footer: it is only the name.
+  The landing has no footer: it is only the name on the drawing.
 - `.back` — muted "← Works / ← 작품" link, first element inside a detail
   page's `<main>`.
 - `.gallery` — `<ul>` masonry of `<figure>` cards; caption = title + serif year.
   No hover state: the photograph never dims under the pointer.
 - `.card--exhibition` — the one dark card in the white gallery; orange kicker.
-- `.card--cv` — the artist's card, first in the gallery: the same box on the
-  white wall, ruled in ink, linking to the CV.
+- `.card--cv` / `.card--notes` — the artist's two cards, first in the gallery
+  in the order of the artist's sketch (CV, notes, then the works): the same
+  box on the white wall, ruled in ink.
 - `.searchbar` — fixed bottom, AI-chat-style panel: rounded 16px, hairline
   border, blur, soft shadow. It is one box, only as wide as the panel, so taps
   beside it reach the gallery underneath. Input on top, filter chips below
-  (like a model picker): All, the artist's four themes, then the series (`WORKS.md`). Chips are `<button aria-pressed>`; active chip =
+  (like a model picker): All, then the artist's themes that find a work on
+  the site, in the order of the notes (`WORKS.md`). Chips are `<button aria-pressed>`; active chip =
   ink pill, and that pressed chip *is* the filter state — `gallery.js` reads
   it rather than keeping its own copy.
 - `.work-hero` / `.work-view` — the image plates on a detail page. `site.css`
   centres them; a page's own `<style>` sets only the `max-width` it wants.
-- `.tombstone` — serif muted "year · medium · size" line.
+- `.tombstone` — serif muted "year · medium · size" line; also the line of a
+  work's themes, and of a note's works. A link in it carries a hairline, no
+  louder than the line.
+- `.notes` — the artist's notes: one `<article>` per theme, ruled in hairline
+  like a CV section, its title in sans 600, the text at the reading measure
+  (the artist's line breaks kept as `<br>`), the works it names in a
+  tombstone line under it. The thesis title closes the page.
 - `.cv` — the CV: a `<dl>` per section, the year in the caption serif beside
   its line. Built from tokens only, so it sits on the white wall (`/cv/`) and
   in the dark room (the exhibition page) unchanged. It is English on the
@@ -158,8 +175,8 @@ column comes from the middle of the source order and rose last: for about
 0.6s the top of the list was a step, not a line. A search replays the
 entrance only for cards that genuinely come back — `gallery.js` never
 touches the ones already on screen. A theme is a new hang: `gallery.js`
-moves the cards into the theme's order, and every card on screen lifts in
-again.
+hangs the theme's works again, in the list's order, and every card on screen
+lifts in again.
 
 At rest, nothing moves, ever: every one of these fills `backwards` only, so a
 settled page is exactly its plain rules — full ink, no mask dimming, no loop,
@@ -185,6 +202,8 @@ the landing's type ever changes, rebuild the icon with it.
   animates, only how far the tap carries a scroller the reader could just as
   well have swiped by hand, and `prefers-reduced-motion` drops it to `auto`. A
   fourth animated thing anywhere on the site is still a bug.
-- Never crop an artwork. Never place text over an artwork.
+- Never crop an artwork. Never place text over an artwork. (The landing's
+  drawing is not a work on the list: the artist made it to stand behind the
+  name.)
 - Alt text describes the artwork plainly, in the page language.
 - If a page needs more than this document offers, the page is too complicated.

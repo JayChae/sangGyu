@@ -21,10 +21,11 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   language toggle point at itself and its counterpart (absolute, on `ORIGIN`),
   its `og:image` exists, and `sitemap.xml` lists exactly the indexable pages;
   and the works on disk are exactly `WORKS.md`'s, walked in its order by both
-  list pages and carrying its theme and series marks under its chips, each work
-  page leading back to the list and nowhere else (no
-  `rel=prev/next`). Run it after adding, moving, renaming or reordering
-  anything. There is no other lint/test tooling.
+  list pages and carrying its theme marks under its chips, each work page
+  tagging the same themes (links to their notes) and leading back to the list
+  and nowhere else (no `rel=prev/next`), and the notes page holding one note
+  per theme, each followed by exactly the works it marks. Run it after adding,
+  moving, renaming or reordering anything. There is no other lint/test tooling.
 - `scripts/pages.py` holds the one model of how Cloudflare Pages maps a URL to
   a file (clean URLs, `index.html`, case-sensitivity) and the site's `ORIGIN`
   (`https://sanggyu.pages.dev`). Both `check-links.py` and `serve.py` import
@@ -55,7 +56,7 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   `/ko/` directory tree. Every page links its counterpart (`hreflang`
   alternates + the header language toggle) and carries a self-referencing
   `rel=canonical` and `og:url`, absolute on `ORIGIN`. `og:image` is the page's
-  own hero at the 1200 tier; pages without one (landing, list, CV) use the
+  own hero at the 1200 tier; pages without one (landing, list, CV, notes) use the
   first work on the list, the exhibition page its first featured work.
   `sitemap.xml` is hand-written like everything else — add both URLs of a new
   page to it (`check-links.py` refuses to pass otherwise).
@@ -107,18 +108,22 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
 
 ```
 public/                          ← Cloudflare Pages output directory
-  index.html, ko.html            landing (EN/KO) — only the centered name, linking to /works/
+  index.html, ko.html            landing (EN/KO) — only the centered name on the artist's
+                                 vanishing-point drawing, linking to /works/
   works/index.html, ko.html      gallery list — masonry + bottom search/filter bar
   works/<slug>/index.html, ko.html   one hand-made page per artwork
   cv/index.html, ko.html         the artist's CV (English on both pages) — also the first card on the list
+  notes/index.html, ko.html      the artist's notes, one per theme, + thesis title — the second card
   exhibitions/<name>/            self-contained exhibition mini-sites (see WORKS.md)
   css/site.css                   shared styles (design system)
-  js/gallery.js                  search + theme/series filter for the list page (~80 lines)
+  js/gallery.js                  search + theme filter for the list page (~70 lines)
   img/<slug>/{480,640,960,1200,1600}.webp  one folder per artwork (extra views: <slug>/view2-*.webp;
                                  a replaced photo carries a v2- version, <slug>/v2-*.webp for a hero and
                                  <slug>/view2-v2-*.webp for a view — see build-images.sh)
   manifest.webmanifest, manifest.ko.webmanifest   home-screen install (EN/KO)
   favicon.svg, icon-{192,512}.png   tab icon · app icon (scripts/build-icons.sh)
+  vanishing-point.svg            the landing's background: the artist's drawing (its own
+                                 comment says what was changed from the artist's file)
   sitemap.xml, robots.txt        every indexable page (EN + KO) with hreflang alternates
   _headers                       Cache-Control rules
 scripts/                         pages.py (URL model) · build-images.sh · build-icons.sh · build-qr.py · serve.py · check-links.py
@@ -128,12 +133,16 @@ print/                           not served — QR codes for print (scripts/buil
 ## Content rules
 
 - `WORKS.md` is the single source of truth for the works: slugs, titles,
-  years, media, sizes, the artist's themes and series (the list page's
-  filter) and the curated order (= list-page order). It
+  years, media, sizes, the artist's themes (the list page's filter, the work
+  pages' tags, the notes) and the curated order (= list-page order). It
   also documents the ORIGIN SEOUL 2026 exhibition mini-site.
 - A work page says title, year, medium, size — **no descriptions**, by the
-  artist's request (they live on Instagram), and **never invent a year, a
-  title or a dimension**: the artist's Instagram captions are the source.
+  artist's request (they live on Instagram) — plus its themes as links to the
+  notes. **Never invent a year, a title or a dimension**: the artist's
+  Instagram captions are the source.
+- `/notes/` is the artist's own text, as they sent it in both languages;
+  only plain misspellings are corrected, anything less certain goes to
+  `TODO.md` for the artist.
   Open items waiting on the owner live in `TODO.md` (kept in Korean,
   deliberately).
 - Source photos live outside the repo in `../sangyu/arts`, one folder per

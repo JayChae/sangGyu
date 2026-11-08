@@ -127,7 +127,12 @@ a { color: inherit; text-decoration: none; }
 
 /* ── landing ─────────────────────────────────── */
 
-/* the link is the whole screen, so a tap anywhere enters the works */
+/* the link is the whole screen, so a tap anywhere enters the works. Behind
+   the name hangs the artist's drawing of a vanishing point, made for this
+   page: stretched to the screen's own shape, corner to corner, so the name
+   stands at the point where the tunnel ends on any phone or desk (the file's
+   own comment says how it keeps its lines even when stretched). It never
+   moves. */
 .landing main a {
   min-height: 100dvh;
   display: grid;
@@ -135,6 +140,7 @@ a { color: inherit; text-decoration: none; }
   text-align: center;
   padding: var(--pad);
   overflow: clip; /* the name is widest mid-arrival — never a scrollbar for it */
+  background: url(/vanishing-point.svg) 0 0 / 100% 100% no-repeat;
 }
 
 /* The name arrives once, the way raking light crosses a gallery wall: a soft
@@ -240,14 +246,18 @@ a { color: inherit; text-decoration: none; }
 .gallery figcaption { margin-top: 7px; font-size: 13px; line-height: 1.5; }
 .gallery figcaption time { margin-left: 4px; }
 .gallery-empty { text-align: center; padding: 48px 0; }
-/* Two text cards hang among the photographs: the exhibition and the artist.
-   One box, set the same way; only the wall behind it differs. */
+/* Three text cards hang among the photographs: the artist's CV and notes,
+   and the exhibition. One box, set the same way; only the wall behind it
+   differs. */
 .card--exhibition a,
-.card--cv a { padding: 24px 18px 22px; }
+.card--cv a,
+.card--notes a { padding: 24px 18px 22px; }
 .card--exhibition h2,
-.card--cv h2 { margin-top: 12px; font-size: 20px; font-weight: 600; }
+.card--cv h2,
+.card--notes h2 { margin-top: 12px; font-size: 20px; font-weight: 600; }
 .card--exhibition p,
-.card--cv p {
+.card--cv p,
+.card--notes p {
   margin-top: 8px;
   font-family: var(--serif);
   font-style: italic;
@@ -263,9 +273,10 @@ a { color: inherit; text-decoration: none; }
   color: var(--ink);
 }
 .card--exhibition .kicker { color: var(--accent); }
-/* the artist's card stays on the white wall: an ink rule around it, like the
-   rule over a work's title */
-.card--cv a { border: 1px solid var(--ink); }
+/* the artist's two cards — the CV and the notes — stay on the white wall: an
+   ink rule around each, like the rule over a work's title */
+.card--cv a,
+.card--notes a { border: 1px solid var(--ink); }
 
 /* ── search / filter bar ─────────────────────── */
 
@@ -368,8 +379,24 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.55;
 }
 .cv dt { font-size: 14px; padding-top: 1px; }
-.cv .tombstone a { border-bottom: 1px solid var(--hair); transition: color 0.15s; }
-.cv .tombstone a:hover { color: var(--ink); }
+
+/* ── notes ───────────────────────────────────── */
+
+/* The artist's notes: one ruled article per theme, the way the CV rules its
+   sections, the text held to the reading measure, and under it, in the
+   tombstone's voice, the works the note names. */
+.notes article,
+.notes section { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--hair); }
+.notes article h2 { font-size: 18px; font-weight: 600; line-height: 1.4; }
+.notes article p,
+.notes section p { max-width: var(--measure); margin-top: 12px; }
+.notes .tombstone { margin-top: 18px; }
+.notes cite { font-family: var(--serif); }
+
+/* A link in a tombstone line — the CV's Instagram, a work's themes, a note's
+   works: a hairline, no louder than the line it sits in. */
+.tombstone a { border-bottom: 1px solid var(--hair); transition: color 0.15s; }
+.tombstone a:hover { color: var(--ink); }
 
 /* One way out of a work: back to all of them, centred. No prev/next — the list
    is the only order the site claims. */

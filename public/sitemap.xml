@@ -32,6 +32,16 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/ko" />
   </url>
   <url>
+    <loc>https://sanggyu.pages.dev/notes/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/notes/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/ko" />
+  </url>
+  <url>
     <loc>https://sanggyu.pages.dev/works/a-cushion/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/a-cushion/" />
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/a-cushion/ko" />
