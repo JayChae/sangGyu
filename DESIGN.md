@@ -64,8 +64,8 @@ side under it.
 - Detail pages: image first, full column width (max 880px), then a
   `border-top` rule, title, serif tombstone — and nothing else in words: a
   work page is title, year, medium, size, then its themes as a second
-  tombstone line, each a link to the artist's note on it (the artist asked
-  for the tags, 2026-11-08). Every other photo of the work hangs
+  tombstone line, each a link to the page of the artist's note on it (the
+  artist asked for the tags, 2026-11-08). Every other photo of the work hangs
   below the tombstone as a `.work-view` plate, in the artist's order, with a
   short serif caption where one says something (detail, installation view,
   side) and none otherwise.
@@ -90,9 +90,13 @@ side under it.
 - `.gallery` — `<ul>` masonry of `<figure>` cards; caption = title + serif year.
   No hover state: the photograph never dims under the pointer.
 - `.card--exhibition` — the one dark card in the white gallery; orange kicker.
-- `.card--cv` / `.card--notes` — the artist's two cards, first in the gallery
-  in the order of the artist's sketch (CV, notes, then the works): the same
-  box on the white wall, ruled in ink.
+- `.bars` — the artist's ways in, as long boxes ruled in ink, one under the
+  other: the name on the left in sans 600, a muted serif line on the right
+  (under it on a phone, when the two do not fit). Across the top of the list,
+  above the "Works" title, the CV and the notes, in the order of the artist's
+  sketch; on `/notes/`, one per theme, counting its works. The artist asked
+  for long boxes rather than cards (2026-11-09). Outside the gallery, so the
+  search and the chips never hide them.
 - `.searchbar` — fixed bottom, AI-chat-style panel: rounded 16px, hairline
   border, blur, soft shadow. It is one box, only as wide as the panel, so taps
   beside it reach the gallery underneath. Input on top, filter chips below
@@ -103,12 +107,15 @@ side under it.
 - `.work-hero` / `.work-view` — the image plates on a detail page. `site.css`
   centres them; a page's own `<style>` sets only the `max-width` it wants.
 - `.tombstone` — serif muted "year · medium · size" line; also the line of a
-  work's themes, and of a note's works. A link in it carries a hairline, no
-  louder than the line.
-- `.notes` — the artist's notes: one `<article>` per theme, ruled in hairline
-  like a CV section, its title in sans 600, the text at the reading measure
-  (the artist's line breaks kept as `<br>`), the works it names in a
-  tombstone line under it. The thesis title closes the page.
+  work's themes. A link in it carries a hairline, no louder than the line.
+- `.notes` — the artist's notes. `/notes/` is the themes as `.bars`, then the
+  thesis title. Each theme has its own page (`/notes/<theme>/`), set like a
+  work page without the photo: the note's title as the `<h1>` under the ink
+  rule, the text at the reading measure (the artist's line breaks kept as
+  `<br>`), then, ruled in hairline like a CV section, the works it names — the
+  list's own `.gallery`, the same cards in the same order, photos and all
+  (the artist asked for it, 2026-11-09). A note no work on the site carries
+  yet is the text alone.
 - `.cv` — the CV: a `<dl>` per section, the year in the caption serif beside
   its line. Built from tokens only, so it sits on the white wall (`/cv/`) and
   in the dark room (the exhibition page) unchanged. It is English on the
@@ -167,7 +174,8 @@ what the crossing paints is entirely CSS's to decide. Measured in Chrome
 (screencast, frame by frame): out 1.1s; back 14ms with the frame after the list
 already the empty wall, and `name-settle` / `name-light` running from there.
 
-**3 · The works are hung** (list, 0.7s). Every card lifts 14px and resolves
+**3 · The works are hung** (list, and under a note — the same `.gallery`,
+0.7s). Every card lifts 14px and resolves
 at once, so the top edge of the list is one straight line from the first
 frame — the artist asked for it (2026-09-11). It used to be staggered, 45ms a
 card, but the columns are filled one after another, so the top of the second

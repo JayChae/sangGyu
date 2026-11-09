@@ -2,8 +2,8 @@
 
 Order below = curated order on the list page: the artist's own order, newest
 first — the rows of their sheet *작품들의 연결성* (2026-11-08) read bottom to
-top, which is also how each note on `/notes/` hangs its works ("최신순, 관련작업에
-쓰인 순서의 역순"). Works the sheet leaves out sit at the end of their year. The
+top, which is also how each note's page under `/notes/` hangs its works
+("최신순, 관련작업에 쓰인 순서의 역순"). Works the sheet leaves out sit at the end of their year. The
 one exception is the 2024 study, which sits last — the list's three columns
 fill top to bottom, so the work about two-thirds down the order heads the third
 column on a desktop, and a study should not. A work page links back to that
@@ -80,9 +80,10 @@ The Stranger is three reliefs, so it is shown there as three plates: on a
 phone one swipeable strip with arrows and dots, wider the first leading
 with the other two side by side under it.
 
-The list page opens with three text cards, in the order of the artist's
-sketch (2026-11-08): the CV, the notes (`/notes/`), then the exhibition; the
-works follow.
+The list page opens with the artist's two bars across the top, in the order
+of their sketch (2026-11-08): the CV, then the notes (`/notes/`) — long boxes
+rather than cards, at the artist's request (2026-11-09). Under them the
+gallery: the exhibition card first, then the works.
 
 ## Themes
 
@@ -92,14 +93,15 @@ The artist's eight themes are the headings of their notes, from *작품들의
 owner, 2026-11-08). Each theme is three things, all in the order below — the
 artist's order of the notes:
 
-- a note on `/notes/` (`<article id="<theme>">`), the artist's text under the
-  "note" heading, followed by the works it marks that are on the site, in the
-  list order above;
+- a note: a bar on `/notes/` named by the "note" heading and counting its
+  works, leading to the theme's own page (`/notes/<theme>/`) — the artist's
+  text under that heading, then the works it marks that are on the site, as
+  cards in the list order above;
 - a filter chip on the list page, named as in the "chip" columns. A chip is
   offered only once the theme marks a work on the site — one that finds
   nothing is not a filter;
 - a tag on each work page it marks, under the tombstone, with the chip's name,
-  linking to the note.
+  linking to the note's page.
 
 Cards carry their themes as `data-themes`, by hand in both locales;
 `check-links.py` holds cards, chips, tags and notes to the two tables below.
@@ -170,9 +172,11 @@ come from the Instagram captions as for every other work.
 ## Notes
 
 `/notes/` is the artist's own writing, from the same file: the eight notes in
-the order above, each in English on the English page and in Korean on the
-Korean page — the artist wrote both — and the title of their thesis last (its
-PDF is still to come). It is the one place on the site with the artist's words
+the order above, as bars, each its own page — in English on the English pages
+and in Korean on the Korean ones, the artist wrote both — and the title of
+their thesis last (its PDF is still to come). The artist asked for the bars
+and the pages, with each note's works shown as photos like the list
+(2026-11-09). It is the one place on the site with the artist's words
 about the work; a work page still says only title, year, medium and size, with
 its themes as links to these notes. The text is the artist's, line for line
 (a blank line in the file is a new paragraph, a line break inside one is a

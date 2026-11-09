@@ -12,8 +12,9 @@
    each card carries the themes the artist's sheet marks it with, under chips
    that are the sheet's themes that find a work. A work page tags the same
    themes, linking to their notes, and leads back to the list and nowhere
-   else: no prev/next chain. The notes page holds one note per theme, in
-   order, each followed by exactly its works, newest first.
+   else: no prev/next chain. The notes page holds one bar per theme, in
+   order, named as its note and counting its works; each theme's own page
+   carries that name and hangs exactly those works, newest first.
 4. a plates strip carries one dot per photo, in both locales.
 
 Checks 2 and 3 exist because the only authoring method here is copy-paste-then-
@@ -119,6 +120,8 @@ rows = [r[0] for r in table("slug")[1]]
 # the artist's themes, in the order of their notes, with each one's chip name
 # per locale — the name a chip and a work page's tag both carry
 themes = {r[0]: {"index.html": r[1], "ko.html": r[2]} for r in table("theme")[1]}
+# … and the heading of each one's note, per locale
+note_names = {r[0]: {"index.html": r[3], "ko.html": r[4]} for r in table("theme")[1]}
 # the artist's sheet: a column per theme, ● where it marks a work
 header, sheet = table("work")
 if header[1:] != list(themes):
@@ -170,7 +173,6 @@ else:
         # note, named as its chip; and it leads back to the list and nowhere
         # else — the walk lives there alone, so a copy-pasted prev/next must
         # not creep back in
-        notes = re.escape(f"/notes{suffix}")
         for slug in rows:
             work = ROOT / "works" / slug / name
             html = work.read_text(encoding="utf-8")
@@ -178,7 +180,7 @@ else:
                   "work pages carry no rel=prev/next — only the list link")
             check(work, f'<a href="/works{suffix}">' in html,
                   f'must link back to /works{suffix}')
-            tags = re.findall(rf'<a href="{notes}#([a-z-]+)">([^<]+)</a>', html)
+            tags = re.findall(rf'<a href="/notes/([a-z-]+)/{suffix[1:]}">([^<]+)</a>', html)
             want = marked.get(slug, [])
             check(work, [t for t, _ in tags] == want,
                   f"tags {[t for t, _ in tags]} != WORKS.md {want}")
@@ -186,17 +188,31 @@ else:
                 check(work, label == themes.get(tag, {}).get(name),
                       f"tag {tag} reads {label!r}, WORKS.md names it otherwise")
 
-        # the notes: one <article id> per theme, in the artist's order, each
-        # followed by the works it marks, newest first — the list's order
+        # the notes: /notes/ is one bar per theme, in the artist's order, named
+        # as its note and counting its works; each theme's own page carries
+        # that name and hangs exactly the works it marks, newest first — the
+        # list's order
         page = ROOT / "notes" / name
-        html = page.read_text(encoding="utf-8") if page.exists() else ""
-        ids = re.findall(r'<article id="([a-z-]+)"', html)
-        check(page, ids == list(themes), f"notes {ids} != WORKS.md themes {list(themes)}")
-        for note in re.split(r"<article id=", html)[1:]:
-            theme = note[1:note.index('"', 1)]
-            works = re.findall(rf'href="/works/([a-z0-9-]+)/{suffix[1:]}"', note)
-            check(page, works == works_of(theme),
-                  f"{theme}: works {works} != WORKS.md {works_of(theme)}")
+        html = page.read_text(encoding="utf-8")
+        bars = re.findall(rf'<a href="/notes/([a-z-]+)/{suffix[1:]}">([^<]+?)\s*'
+                          r'(?:<small>(\d+)[^<]*</small>)?</a>', html)
+        check(page, [b[0] for b in bars] == list(themes),
+              f"notes {[b[0] for b in bars]} != WORKS.md themes {list(themes)}")
+        for theme, label, count in bars:
+            want = works_of(theme)
+            check(page, label == note_names.get(theme, {}).get(name),
+                  f"{theme}: bar reads {label!r}, WORKS.md names the note otherwise")
+            check(page, int(count or 0) == len(want),
+                  f"{theme}: bar counts {count or 0} works, WORKS.md marks {len(want)}")
+            note = ROOT / "notes" / theme / name
+            if not note.exists():
+                continue  # check 1 has already reported the bar's broken link
+            html = note.read_text(encoding="utf-8")
+            check(note, f'<h1 itemprop="name">{label}</h1>' in html,
+                  f"its <h1> must read {label!r}, as its bar")
+            found = re.findall(rf'href="/works/([a-z0-9-]+)/{suffix[1:]}"', html)
+            works = [s for i, s in enumerate(found) if i == 0 or s != found[i - 1]]
+            check(note, works == want, f"works {works} != WORKS.md {want}")
 
 # ── 4. a plates strip is marked photo for photo ──────────────────
 

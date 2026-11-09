@@ -78,6 +78,7 @@ a { color: inherit; text-decoration: none; }
 .gallery figcaption time,
 .gallery-empty,
 .detail figcaption,
+.bars small,
 .cv dt {
   font-family: var(--serif);
   font-style: italic;
@@ -246,37 +247,48 @@ a { color: inherit; text-decoration: none; }
 .gallery figcaption { margin-top: 7px; font-size: 13px; line-height: 1.5; }
 .gallery figcaption time { margin-left: 4px; }
 .gallery-empty { text-align: center; padding: 48px 0; }
-/* Three text cards hang among the photographs: the artist's CV and notes,
-   and the exhibition. One box, set the same way; only the wall behind it
-   differs. */
-.card--exhibition a,
-.card--cv a,
-.card--notes a { padding: 24px 18px 22px; }
-.card--exhibition h2,
-.card--cv h2,
-.card--notes h2 { margin-top: 12px; font-size: 20px; font-weight: 600; }
-.card--exhibition p,
-.card--cv p,
-.card--notes p {
+/* One text card hangs among the photographs: the exhibition, a swatch of its
+   dark room — so it must read as the same room: re-point the tokens rather
+   than restate the hex. */
+.card--exhibition a {
+  --ink: var(--dark-ink);
+  --muted: var(--dark-muted);
+  padding: 24px 18px 22px;
+  background: var(--dark-bg);
+  color: var(--ink);
+}
+.card--exhibition h2 { margin-top: 12px; font-size: 20px; font-weight: 600; }
+.card--exhibition p {
   margin-top: 8px;
   font-family: var(--serif);
   font-style: italic;
   font-size: 13px;
   color: var(--muted);
 }
-/* A swatch of the exhibition's dark room, so it must read as the same room:
-   re-point the tokens rather than restate the hex. */
-.card--exhibition a {
-  --ink: var(--dark-ink);
-  --muted: var(--dark-muted);
-  background: var(--dark-bg);
-  color: var(--ink);
-}
 .card--exhibition .kicker { color: var(--accent); }
-/* the artist's two cards — the CV and the notes — stay on the white wall: an
-   ink rule around each, like the rule over a work's title */
-.card--cv a,
-.card--notes a { border: 1px solid var(--ink); }
+
+/* ── bars ────────────────────────────────────── */
+
+/* The artist's ways in, as long boxes ruled in ink, like the rule over a
+   work's title: the CV and the notes across the top of the list, and on the
+   notes page one per theme (the artist asked for both, 2026-11-09). The name
+   on the left, a muted line on the right — under it, on a phone, when the
+   two do not fit one line. */
+.bars { list-style: none; display: grid; gap: 10px; margin-top: 12px; }
+.bars a {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2px 16px;
+  padding: 14px 18px;
+  border: 1px solid var(--ink);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.bars small { font-size: 13px; font-weight: 400; }
+.bars + .page-title { margin-top: 32px; }
 
 /* ── search / filter bar ─────────────────────── */
 
@@ -382,19 +394,21 @@ a { color: inherit; text-decoration: none; }
 
 /* ── notes ───────────────────────────────────── */
 
-/* The artist's notes: one ruled article per theme, the way the CV rules its
-   sections, the text held to the reading measure, and under it, in the
-   tombstone's voice, the works the note names. */
-.notes article,
+/* The artist's notes: /notes/ is the themes as bars, then the thesis; each
+   theme has its own page — the note held to the reading measure, then, ruled
+   off the way the CV rules its sections, the works it names, hung as on the
+   list. */
+.notes h1 { line-height: 1.35; } /* the longest heading wraps on a phone */
+.notes .bars { margin-top: 28px; }
 .notes section { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--hair); }
-.notes article h2 { font-size: 18px; font-weight: 600; line-height: 1.4; }
 .notes article p,
 .notes section p { max-width: var(--measure); margin-top: 12px; }
-.notes .tombstone { margin-top: 18px; }
+.notes .work-head + p { margin-top: 20px; }
+.notes .gallery { margin-top: 18px; }
 .notes cite { font-family: var(--serif); }
 
-/* A link in a tombstone line — the CV's Instagram, a work's themes, a note's
-   works: a hairline, no louder than the line it sits in. */
+/* A link in a tombstone line — the CV's Instagram, a work's themes: a
+   hairline, no louder than the line it sits in. */
 .tombstone a { border-bottom: 1px solid var(--hair); transition: color 0.15s; }
 .tombstone a:hover { color: var(--ink); }
 
