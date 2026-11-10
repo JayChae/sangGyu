@@ -2,10 +2,12 @@
 #
 # The app icon → public/icon-{192,512}.png
 #
-# The home-screen icon is the landing page's name, cropped to its initials and
-# hung on the same warm-white wall: system sans 600, tracked 0.14em, ink on
-# #f7f6f3 — the treatment of `.landing h1` in css/site.css. Keep the two in
-# step; if the landing's type changes, this file changes with it.
+# The home-screen icon is the landing page's name, cropped to its initials:
+# system sans 600, tracked 0.14em — the treatment of `.landing h1` in
+# css/site.css — in ink on the site's warm-white wall, #f7f6f3 (--bg). The
+# landing itself stands on the artist's vanishing-point drawing; the icon
+# keeps the plain wall. Keep the type in step: if the landing's type changes,
+# this file changes with it.
 #
 # PNG, not the SVG favicon: Android requires raster manifest icons, and iOS
 # reads only <link rel="apple-touch-icon">.

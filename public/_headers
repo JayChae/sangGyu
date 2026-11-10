@@ -17,9 +17,9 @@
   X-Content-Type-Options: nosniff
   Cache-Control: public, max-age=0, must-revalidate
 
-# CSS/JS share a contract with the HTML (class names, data-tags), and the HTML
-# revalidates on every visit — so keep these short enough that the two cannot
-# drift far apart. Filenames are not fingerprinted, so this is the only brake.
+# CSS/JS share a contract with the HTML (class names, the plates strip's
+# markup the exhibition script reads), and the HTML revalidates on every
+# visit — so keep these short enough that the two cannot drift far apart. Filenames are not fingerprinted, so this is the only brake.
 # Re-checking costs one round trip and returns a bodyless 304 when unchanged.
 #
 # Matching on the extension rather than the folder also covers the exhibition
@@ -44,7 +44,10 @@
 # The favicons are tiny and near-static; without a rule they fall through to
 # /* and revalidate on every navigation, costing a round trip per page view.
 # A month, not a year, and not immutable: unlike an artwork photo these are not
-# renamed when they change, so staleness has to stay bounded.
+# renamed when they change, so staleness has to stay bounded. The same goes for
+# the landing's background, the artist's drawing /vanishing-point.svg — which
+# is why it lives beside the favicon and not under /img/: being the later rule,
+# this one would quietly take the immutable year off it there anyway.
 /*.svg
   ! Cache-Control
   Cache-Control: public, max-age=2592000

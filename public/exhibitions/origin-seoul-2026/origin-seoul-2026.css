@@ -97,9 +97,9 @@ body.exhibition {
 }
 
 /* The arrows are the script's: a control that does nothing is worse than none,
-   so they stay hidden until it has wired them (like the list page's search
-   bar). The dots are not a control but a mark — three reliefs, and which one
-   you are on — so they are drawn either way; with no script none is lit, and
+   so they stay hidden until it has wired them. The dots are not a control but
+   a mark — three reliefs, and which one you are on — so they are drawn either
+   way; with no script none is lit, and
    three plain dots say "three" without claiming to know which one you see. */
 .plates-arrow {
   display: none; /* revealed by origin-seoul-2026.js — see .plates-ready */

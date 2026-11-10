@@ -6,8 +6,8 @@
   --muted: #6e6e6e;
   --hair: #dcdcdc;
   --accent: #f7931a;
-  /* the dark room: the exhibition mini-site and the one dark card on the
-     list page are the same room, so its three values live here, once */
+  /* the dark room: the exhibition mini-site re-points --bg/--ink/--muted
+     at these three (DESIGN.md "Tokens") */
   --dark-bg: #0e0e0e;
   --dark-ink: #f2f2f2;
   --dark-muted: #9b9b9b;
@@ -76,7 +76,6 @@ a { color: inherit; text-decoration: none; }
    One fact, one rule — each component below adds only its own size and box. */
 .site-footer small,
 .gallery figcaption time,
-.gallery-empty,
 .detail figcaption,
 .cv dt {
   font-family: var(--serif);
@@ -122,12 +121,15 @@ a { color: inherit; text-decoration: none; }
 .site-footer small { font-size: 12px; }
 .site-footer a { transition: color 0.15s; }
 .site-footer a:hover { color: var(--ink); }
-/* the credit: a hairline, no louder than the © beside it */
-.site-footer small a { border-bottom: 1px solid var(--hair); }
 
 /* ── landing ─────────────────────────────────── */
 
-/* the link is the whole screen, so a tap anywhere enters the works */
+/* the link is the whole screen, so a tap anywhere enters the works. Behind
+   the name hangs the artist's drawing of a vanishing point, made for this
+   page: stretched to the screen's own shape, corner to corner, so the name
+   stands at the point where the tunnel ends on any phone or desk (the file's
+   own comment says how it keeps its lines even when stretched). It never
+   moves. */
 .landing main a {
   min-height: 100dvh;
   display: grid;
@@ -135,6 +137,7 @@ a { color: inherit; text-decoration: none; }
   text-align: center;
   padding: var(--pad);
   overflow: clip; /* the name is widest mid-arrival — never a scrollbar for it */
+  background: url(/vanishing-point.svg) 0 0 / 100% 100% no-repeat;
 }
 
 /* The name arrives once, the way raking light crosses a gallery wall: a soft
@@ -199,29 +202,23 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto;
   padding: 6px var(--pad) 44px;
 }
-/* gallery.js adds .search-ready once the bar actually works. The room for the
-   fixed bar is under the footer, not under the list, so at the end of the
-   page the contact line stands clear above the bar instead of behind it.
-   The Korean names are shorter, so its chips wrap onto fewer rows and its bar
-   needs less room. */
-.search-ready .site-footer { padding-bottom: 200px; }
-.search-ready:lang(ko) .site-footer { padding-bottom: 175px; }
-.page-title { margin: 12px 0 24px; }
+.page-title { margin: 32px 0 24px; } /* under the bars */
 .gallery { list-style: none; columns: 2; column-gap: 12px; }
-.gallery > li { break-inside: avoid; margin-bottom: 20px; }
+/* The air under a card is padding, not margin: WebKit carries a margin over
+   a column break, so on an iPhone the second column started 20px below the
+   first and the top of the list was a step (the artist, 2026-11-10). Padding
+   is part of the card and stays in the column it ends. */
+.gallery > li { break-inside: avoid; padding-bottom: 20px; }
 @media (min-width: 760px) {
   .gallery { columns: 3; column-gap: 22px; }
-  .gallery > li { margin-bottom: 30px; }
+  .gallery > li { padding-bottom: 30px; }
 }
 /* The works are hung, not dropped: every card lifts into place at once, so
    the top edge of the list is one straight line from the first frame — the
    artist asked for it. A stagger cannot give that here: the columns are filled
    one after another, so the top of the second column comes from the middle
    of the source order and rose last, and for about 0.6s the top of the list
-   was a step. A search replays the entrance only for cards that actually come
-   back: gallery.js leaves the ones already on screen untouched. A theme is a
-   new hang: gallery.js moves the cards into its order, and every card on
-   screen lifts in again. */
+   was a step. A note's works under it are hung the same way. */
 .gallery > li {
   animation: plate-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
@@ -239,84 +236,21 @@ a { color: inherit; text-decoration: none; }
 .gallery img { width: 100%; }
 .gallery figcaption { margin-top: 7px; font-size: 13px; line-height: 1.5; }
 .gallery figcaption time { margin-left: 4px; }
-.gallery-empty { text-align: center; padding: 48px 0; }
-/* Two text cards hang among the photographs: the exhibition and the artist.
-   One box, set the same way; only the wall behind it differs. */
-.card--exhibition a,
-.card--cv a { padding: 24px 18px 22px; }
-.card--exhibition h2,
-.card--cv h2 { margin-top: 12px; font-size: 20px; font-weight: 600; }
-.card--exhibition p,
-.card--cv p {
-  margin-top: 8px;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 13px;
-  color: var(--muted);
-}
-/* A swatch of the exhibition's dark room, so it must read as the same room:
-   re-point the tokens rather than restate the hex. */
-.card--exhibition a {
-  --ink: var(--dark-ink);
-  --muted: var(--dark-muted);
-  background: var(--dark-bg);
-  color: var(--ink);
-}
-.card--exhibition .kicker { color: var(--accent); }
-/* the artist's card stays on the white wall: an ink rule around it, like the
-   rule over a work's title */
-.card--cv a { border: 1px solid var(--ink); }
 
-/* ── search / filter bar ─────────────────────── */
+/* ── bars ────────────────────────────────────── */
 
-/* One fixed box, only as wide as the panel — so taps outside it reach the
-   gallery underneath without a pointer-events dance. */
-.searchbar {
-  display: none; /* revealed by gallery.js — see .search-ready */
-  position: fixed;
-  inset: auto var(--pad) calc(30px + env(safe-area-inset-bottom));
-  max-width: 560px;
-  margin-inline: auto;
-  background: rgba(252, 251, 249, 0.92);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--hair);
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.14);
-  padding: 3px 6px 6px;
-  transition: border-color 0.15s;
-}
-.search-ready .searchbar { display: block; }
-.searchbar:focus-within { border-color: var(--ink); }
-.searchbar input {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  background: none;
-  font: 15px var(--sans);
-  color: var(--ink);
-  padding: 8px 8px 6px;
-}
-.searchbar input::placeholder { color: var(--muted); }
-/* Packed tight on purpose: the theme names are long, and every row the chips
-   wrap onto lifts the bar further over the page. The chips keep their height
-   (a thumb still hits them); only the air between and beside them is cut. */
-.chips { display: flex; flex-wrap: wrap; gap: 4px; padding: 0 2px; }
-.chip {
-  font: 12px var(--sans);
-  color: var(--muted);
-  background: var(--bg);
-  border: 1px solid var(--hair);
-  border-radius: 999px;
-  padding: 4px 9px;
-  cursor: pointer;
-  transition: color 0.15s, background 0.15s;
-}
-.chip:hover { color: var(--ink); }
-.chip[aria-pressed="true"] {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--bg);
+/* The artist's ways in, as long boxes ruled in ink, like the rule over a
+   work's title: the CV and the notes across the top of the list, and on the
+   notes page one per theme (the artist asked for both, 2026-11-09): the name
+   alone, nothing beside it (the artist, 2026-11-10). */
+.bars { list-style: none; display: grid; gap: 10px; margin-top: 12px; }
+.bars a {
+  display: block;
+  padding: 14px 18px;
+  border: 1px solid var(--ink);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 /* ── artwork detail ──────────────────────────── */
@@ -368,8 +302,30 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.55;
 }
 .cv dt { font-size: 14px; padding-top: 1px; }
-.cv .tombstone a { border-bottom: 1px solid var(--hair); transition: color 0.15s; }
-.cv .tombstone a:hover { color: var(--ink); }
+
+/* ── notes ───────────────────────────────────── */
+
+/* The artist's notes: /notes/ is the themes as bars, then the thesis; each
+   theme has its own page — the note held to the reading measure, then, ruled
+   off the way the CV rules its sections, the works it names, hung as on the
+   list. */
+.notes h1 { line-height: 1.35; } /* the longest heading wraps on a phone */
+.notes .bars { margin-top: 28px; }
+.notes section { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--hair); }
+.notes article > p,
+.notes section > p { max-width: var(--measure); margin-top: 12px; }
+.notes .work-head + p { margin-top: 20px; }
+.notes .gallery { margin-top: 18px; }
+.notes cite { font-family: var(--serif); }
+
+/* A link in a tombstone line — the CV's Instagram, a work's themes — in the
+   CV, the exhibition with a page of its own, and the footer's credit: a
+   hairline, no louder than the line it sits in. */
+.tombstone a,
+.cv dd a,
+.site-footer small a { border-bottom: 1px solid var(--hair); transition: color 0.15s; }
+.tombstone a:hover { color: var(--ink); } /* the line is muted: the link steps up */
+.cv dd a:hover { color: var(--muted); }   /* the line is ink: the link steps back */
 
 /* One way out of a work: back to all of them, centred. No prev/next — the list
    is the only order the site claims. */
