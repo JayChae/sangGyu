@@ -128,16 +128,35 @@ a { color: inherit; text-decoration: none; }
    the name hangs the artist's drawing of a vanishing point, made for this
    page: stretched to the screen's own shape, corner to corner, so the name
    stands at the point where the tunnel ends on any phone or desk (the file's
-   own comment says how it keeps its lines even when stretched). It never
-   moves. */
+   own comment says how it keeps its lines even when stretched). */
 .landing main a {
   min-height: 100dvh;
   display: grid;
   place-content: center;
   text-align: center;
   padding: var(--pad);
-  overflow: clip; /* the name is widest mid-arrival — never a scrollbar for it */
+  overflow: clip; /* the name is widest mid-arrival — and the drawing too */
+  position: relative;
+  isolation: isolate; /* the drawing's layer goes under the name */
+}
+/* The drawing hangs on its own layer so that it can take one step as the
+   page arrives: it starts two frames deep and settles back onto the wall,
+   the tunnel flowing inward toward the point once and then still. The
+   drawing is self-similar — each frame is the one outside it scaled by 0.925
+   about the vanishing point — so starting at 1/0.925² is the same tunnel two
+   frames on, and the step lands on the artist's file exactly as drawn. Only
+   `scale` moves, so it is painted once and the compositor does the rest; a
+   reader who asked for less motion simply sees it hang there. */
+.landing main a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: url(/vanishing-point.svg) 0 0 / 100% 100% no-repeat;
+  animation: tunnel-step 2.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+@keyframes tunnel-step {
+  from { scale: 1.1687; }
 }
 
 /* The name arrives once, the way raking light crosses a gallery wall: a soft
@@ -187,8 +206,10 @@ a { color: inherit; text-decoration: none; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .landing h1:hover { letter-spacing: 0.17em; margin-left: 0.17em; }
 }
-/* no light, no focus pull, no travel — the name simply appears */
+/* no step, no light, no focus pull, no travel — the drawing simply hangs
+   there and the name simply appears */
 @media (prefers-reduced-motion: reduce) {
+  .landing main a::before { animation: none; }
   .landing h1 { mask: none; animation: name-fade 0.7s ease-out backwards; }
 }
 @keyframes name-fade {
