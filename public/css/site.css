@@ -128,8 +128,7 @@ a { color: inherit; text-decoration: none; }
    the name hangs the artist's drawing of a vanishing point, made for this
    page: stretched to the screen's own shape, corner to corner, so the name
    stands at the point where the tunnel ends on any phone or desk (the file's
-   own comment says how it keeps its lines even when stretched). It never
-   moves. */
+   own comment says how it keeps its lines even when stretched). */
 .landing main a {
   min-height: 100dvh;
   display: grid;
@@ -137,28 +136,63 @@ a { color: inherit; text-decoration: none; }
   text-align: center;
   padding: var(--pad);
   overflow: clip; /* the name is widest mid-arrival — never a scrollbar for it */
+  position: relative;
+  isolation: isolate; /* the two layers below go between drawing and name */
   background: url(/vanishing-point.svg) 0 0 / 100% 100% no-repeat;
 }
 
-/* The name arrives once, the way raking light crosses a gallery wall: a soft
-   lit edge travels left to right while the tracking settles and the letters
-   come into focus. The mask is that edge — a gradient three times wider than
-   the line, slid across it; at rest only its opaque end covers the text, so
-   nothing is left running and nothing is dimmed. Two curves: the type snaps
-   out of the blur and then micro-settles (1.4s), the light crosses at its own
-   even, decelerating pace (1.8s), so a letter is still resolving as the light
-   reaches it. Tracking and the optical margin always move together, or the
-   name drifts off centre on the way in. */
+/* The tunnel is drawn once, from the outside in, as the page arrives — the
+   artist's note on the vanishing point: a repeated pattern, followed toward
+   the point where it ends. ::before is the drawing's four walls with no line
+   on them, shrinking into the vanishing point. Each wall is a triangle whose
+   apex is that point, so the shrinking cover lies exactly on the walls
+   beneath it, and each frame (the screen's own shape) appears whole as the
+   cover's edge passes it. ::after is the drawing's air, taken out of the file
+   for this, so the lines arrive under the haze, not through it. Both repeat
+   the file's own colours: change them together.
+   Only `scale` moves, so the drawing is painted once and the compositor does
+   the rest. At rest the cover is scaled to nothing: a browser that cannot
+   run the animation, or a reader who asked for less motion, simply sees the
+   drawing. The curve: equal slices of time draw equal numbers of frames
+   (each is 0.925 of the one outside it), eased in and out —
+   1 − 0.925^(42·u), u = cubic-bezier(0.45, 0, 0.55, 1). */
+.landing main a::before,
+.landing main a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.landing main a::before {
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3840 2160' preserveAspectRatio='none'><path fill='%23eaeae8' d='M0 0h3840v2160H0z'/><path fill='%23ededeb' d='M0 0h3840L1920 1080z'/><path fill='%23f0f0ee' d='M0 2160h3840L1920 1080z'/><path fill='%23e8e8e6' d='M0 0v2160l1920-1080zM3840 0v2160L1920 1080z'/></svg>")
+    0 0 / 100% 100%;
+  scale: 0;
+  animation: tunnel-draw 1.5s linear(0, 0.056 10%, 0.217 20%, 0.44 30%,
+    0.654 40%, 0.805 50%, 0.891 60%, 0.932 70%, 0.952 80%, 0.96 90%, 1)
+    backwards;
+}
+@keyframes tunnel-draw {
+  from { scale: 1; }
+}
+.landing main a::after {
+  background: radial-gradient(72% 72%,
+    rgb(243 243 241 / 0.95), rgb(242 242 240 / 0.91) 8%,
+    rgb(241 241 239 / 0.79) 20%, rgb(241 241 239 / 0.5) 38%,
+    rgb(239 239 237 / 0.12) 67%, rgb(239 239 237 / 0));
+}
+
+/* The name arrives where the lines end: as the tunnel reaches its point, the
+   letters come out of the blur and their tracking closes in — the same
+   inward movement, so the page makes one gesture, not two. The type snaps
+   into focus and then micro-settles (1.4s). Tracking and the optical margin
+   always move together, or the name drifts off centre on the way in. */
 .landing h1 {
   font-size: clamp(24px, 6.4vw, 54px);
   font-weight: 600;
   letter-spacing: 0.14em;
   margin-left: 0.14em; /* optically recenters the tracked-out caps */
   white-space: nowrap;
-  mask: linear-gradient(100deg, #000 40%, transparent 58%) 0 0 / 300% 100%
-    no-repeat;
-  animation: name-settle 1.4s cubic-bezier(0.16, 1, 0.3, 1) backwards,
-    name-light 1.8s ease-out backwards;
+  animation: name-settle 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.7s backwards;
   transition: letter-spacing 0.6s ease, margin-left 0.6s ease, opacity 0.3s;
 }
 /* Only a from-frame: the animation lands on the rule above — or on the hover
@@ -172,9 +206,6 @@ a { color: inherit; text-decoration: none; }
     filter: blur(0.18em); /* em, so it scales with the clamped size */
   }
 }
-@keyframes name-light {
-  from { mask-position: 100% 0; }
-}
 /* The whole screen is the link, but only the name answers to the pointer: the
    hover hangs on the <h1>, whose box is exactly the line of text (the grid
    centres a max-content track), so it fires near the letters and nowhere else.
@@ -187,9 +218,11 @@ a { color: inherit; text-decoration: none; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .landing h1:hover { letter-spacing: 0.17em; margin-left: 0.17em; }
 }
-/* no light, no focus pull, no travel — the name simply appears */
+/* no drawing in, no focus pull, no travel — the drawing is simply there and
+   the name simply appears */
 @media (prefers-reduced-motion: reduce) {
-  .landing h1 { mask: none; animation: name-fade 0.7s ease-out backwards; }
+  .landing main a::before { animation: none; }
+  .landing h1 { animation: name-fade 0.7s ease-out backwards; }
 }
 @keyframes name-fade {
   from { opacity: 0; }

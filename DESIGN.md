@@ -56,7 +56,10 @@ side under it.
   corner, so the name always stands where the tunnel ends, on a phone held
   upright as on a desk: a one-point tunnel stretched along one axis is still
   an exact one-point tunnel. Its strokes are drawn in screen pixels, so the
-  stretch never thickens one axis' lines. It does not move.
+  stretch never thickens one axis' lines. It moves once: as the page arrives
+  its frames are drawn in from the screen's edge to the vanishing point, and
+  the name comes into focus where they end (only a `scale` animates — see
+  `site.css`). Then nothing moves.
 - Gallery: CSS multi-columns (2 columns, 3 from 760px) — pure-CSS masonry that
   absorbs any aspect ratio. `break-inside: avoid` on items, and the air under
   each is `padding-bottom`, never a margin: WebKit carries a margin over a
