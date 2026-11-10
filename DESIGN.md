@@ -19,10 +19,11 @@ The exhibition mini-site is the single inversion: a dark room with one accent.
 | `--max` | `1080px` | page max width |
 | `--measure` | `34em` | body-text line length |
 
-There are two dark surfaces — the exhibition mini-site and `.card--exhibition`
-on the list page — and they must read as the same room, so the three dark
-values are tokens in `site.css` and both surfaces re-point `--bg/--ink/--muted`
-at them. Nothing else changes — same components, inverted room.
+The one dark surface is the exhibition mini-site: it re-points
+`--bg/--ink/--muted` at the three dark tokens. Nothing else changes — same
+components, inverted room. The exhibition is over, so the list no longer
+carries a card for it: it is a line in the CV's group exhibitions, linking
+its page (the artist, 2026-11-10) — the QR printed for it still lands there.
 Exhibition styles live inside the exhibition's own folder, named after it
 (`exhibitions/origin-seoul-2026/origin-seoul-2026.css`, and any script beside
 it) — one of each per exhibition, so future exhibitions stay self-contained.
@@ -60,7 +61,10 @@ side under it.
   an exact one-point tunnel. Its strokes are drawn in screen pixels, so the
   stretch never thickens one axis' lines. It does not move.
 - Gallery: CSS multi-columns (2 columns, 3 from 760px) — pure-CSS masonry that
-  absorbs any aspect ratio. `break-inside: avoid` on items.
+  absorbs any aspect ratio. `break-inside: avoid` on items, and the air under
+  each is `padding-bottom`, never a margin: WebKit carries a margin over a
+  column break, so on an iPhone every column after the first started 20px
+  low. The tops of the columns are one line (the artist, 2026-11-10).
 - Detail pages: image first, full column width (max 880px), then a
   `border-top` rule, title, serif tombstone — and nothing else in words: a
   work page is title, year, medium, size, then its themes as a second
@@ -82,28 +86,18 @@ side under it.
   serif italic. 13px muted sans, links to ink on hover, no underlines but the
   hairline under the credit. On a phone the two simply stack, left. After a
   `.work-nav` the rule is already drawn, so the footer drops its own and keeps
-  the air. On the list page the room for the fixed search bar is under the
-  footer, so at the end of the page the contact stands clear above the bar.
-  The landing has no footer: it is only the name on the drawing.
+  the air. The landing has no footer: it is only the name on the drawing.
 - `.back` — muted "← Works / ← 작품" link, first element inside a detail
   page's `<main>`.
 - `.gallery` — `<ul>` masonry of `<figure>` cards; caption = title + serif year.
   No hover state: the photograph never dims under the pointer.
-- `.card--exhibition` — the one dark card in the white gallery; orange kicker.
 - `.bars` — the artist's ways in, as long boxes ruled in ink, one under the
-  other: the name on the left in sans 600, a muted serif line on the right
-  (under it on a phone, when the two do not fit). Across the top of the list,
-  above the "Works" title, the CV and the notes, in the order of the artist's
-  sketch; on `/notes/`, one per theme, counting its works. The artist asked
-  for long boxes rather than cards (2026-11-09). Outside the gallery, so the
-  search and the chips never hide them.
-- `.searchbar` — fixed bottom, AI-chat-style panel: rounded 16px, hairline
-  border, blur, soft shadow. It is one box, only as wide as the panel, so taps
-  beside it reach the gallery underneath. Input on top, filter chips below
-  (like a model picker): All, then the artist's themes that find a work on
-  the site, in the order of the notes (`WORKS.md`). Chips are `<button aria-pressed>`; active chip =
-  ink pill, and that pressed chip *is* the filter state — `gallery.js` reads
-  it rather than keeping its own copy.
+  other, each the name alone in sans 600. Across the top of the list, above
+  the "Works" title, the CV and the notes, in the order of the artist's
+  sketch; on `/notes/`, one per theme. The artist asked for long boxes rather
+  than cards (2026-11-09), and for nothing in them but the name (2026-11-10).
+  There is no search bar and no filter: a theme's works are its note's page
+  (the artist, 2026-11-10).
 - `.work-hero` / `.work-view` — the image plates on a detail page. `site.css`
   centres them; a page's own `<style>` sets only the `max-width` it wants.
 - `.tombstone` — serif muted "year · medium · size" line; also the line of a
@@ -180,11 +174,7 @@ at once, so the top edge of the list is one straight line from the first
 frame — the artist asked for it (2026-09-11). It used to be staggered, 45ms a
 card, but the columns are filled one after another, so the top of the second
 column comes from the middle of the source order and rose last: for about
-0.6s the top of the list was a step, not a line. A search replays the
-entrance only for cards that genuinely come back — `gallery.js` never
-touches the ones already on screen. A theme is a new hang: `gallery.js`
-hangs the theme's works again, in the list's order, and every card on screen
-lifts in again.
+0.6s the top of the list was a step, not a line.
 
 At rest, nothing moves, ever: every one of these fills `backwards` only, so a
 settled page is exactly its plain rules — full ink, no mask dimming, no loop,
@@ -201,8 +191,7 @@ the landing's type ever changes, rebuild the icon with it.
 
 ## Rules
 
-- No shadows except the search bar. No border radius except the search bar,
-  the chips, and `.exh-plates`'s arrows and dots — round because the shape is
+- No shadows. No border radius except `.exh-plates`'s arrows and dots — round because the shape is
   the affordance, on top of a photo that offers no edge to align to. No
   animation except `opacity`/`color` transitions ≤ 200ms — and the three
   moments above, which are deliberate and closed. `.exh-plates` glides when an

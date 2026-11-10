@@ -21,12 +21,11 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   language toggle point at itself and its counterpart (absolute, on `ORIGIN`),
   its `og:image` exists, and `sitemap.xml` lists exactly the indexable pages;
   and the works on disk are exactly `WORKS.md`'s, walked in its order by both
-  list pages and carrying its theme marks under its chips, each work page
-  tagging the same themes (links to their notes) and leading back to the list
-  and nowhere else (no `rel=prev/next`), and the notes page holding one bar
-  per theme, each to its own page hanging exactly the works it marks. Run it
-  after adding, moving, renaming or reordering anything. There is no other
-  lint/test tooling.
+  list pages, each work page tagging the themes `WORKS.md` marks it with
+  (links to their notes) and leading back to the list and nowhere else (no
+  `rel=prev/next`), and the notes page holding one bar per theme, each to its
+  own page hanging exactly the works it marks. Run it after adding, moving,
+  renaming or reordering anything. There is no other lint/test tooling.
 - `scripts/pages.py` holds the one model of how Cloudflare Pages maps a URL to
   a file (clean URLs, `index.html`, case-sensitivity) and the site's `ORIGIN`
   (`https://sanggyu.pages.dev`). Both `check-links.py` and `serve.py` import
@@ -63,13 +62,14 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   `sitemap.xml` is hand-written like everything else — add both URLs of a new
   page to it (`check-links.py` refuses to pass otherwise).
 - **Hypermedia philosophy.** HATEOAS: every page reachable by links, navigation
-  is plain `<a>`. Semantic HTML5 (`<article>`, `<figure>`, `<time>`, `<search>`,
+  is plain `<a>`. Semantic HTML5 (`<article>`, `<figure>`, `<time>`, `<nav>`,
   `rel="prev/next"`). Schema.org via Microdata (`VisualArtwork`, `Person`,
   `ExhibitionEvent`).
 - **Use HTML to the fullest.** Prefer an HTML element or attribute over CSS,
-  and CSS over JS. JS is a progressive enhancement only (the gallery
-  search/filter, and the arrows and dots on the exhibition's phone photo strip
-  — which swipes on its own, in CSS; the site works without either).
+  and CSS over JS. JS is a progressive enhancement only (the arrows and dots
+  on the exhibition's phone photo strip — which swipes on its own, in CSS; the
+  site works without it). The list page has none: no search, no filter — a
+  theme's works are its note's page (the artist, 2026-11-10).
 - **Images are always WebP**, responsive (`srcset` 480/640/960/1200/1600) with
   explicit `width`/`height` (no layout shift), `loading="lazy"` below the fold
   — and on the masonry list, on *every* card. The columns are filled one after
@@ -112,14 +112,14 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
 public/                          ← Cloudflare Pages output directory
   index.html, ko.html            landing (EN/KO) — only the centered name on the artist's
                                  vanishing-point drawing, linking to /works/
-  works/index.html, ko.html      gallery list — the CV and notes as bars, then masonry + bottom search/filter bar
+  works/index.html, ko.html      gallery list — the CV and notes as bars, then the masonry
   works/<slug>/index.html, ko.html   one hand-made page per artwork
-  cv/index.html, ko.html         the artist's CV (English on both pages) — the first bar on the list
+  cv/index.html, ko.html         the artist's CV (English on both pages) — the first bar on the list;
+                                 its group exhibitions link the ORIGIN SEOUL 2026 page
   notes/index.html, ko.html      the artist's themes as bars + thesis title — the second bar
   notes/<theme>/index.html, ko.html   one page per theme: the artist's note, then its works as on the list
   exhibitions/<name>/            self-contained exhibition mini-sites (see WORKS.md)
   css/site.css                   shared styles (design system)
-  js/gallery.js                  search + theme filter for the list page (~70 lines)
   img/<slug>/{480,640,960,1200,1600}.webp  one folder per artwork (extra views: <slug>/view2-*.webp;
                                  a replaced photo carries a v2- version, <slug>/v2-*.webp for a hero and
                                  <slug>/view2-v2-*.webp for a view — see build-images.sh)
@@ -136,9 +136,9 @@ print/                           not served — QR codes for print (scripts/buil
 ## Content rules
 
 - `WORKS.md` is the single source of truth for the works: slugs, titles,
-  years, media, sizes, the artist's themes (the list page's filter, the work
-  pages' tags, the notes) and the curated order (= list-page order). It
-  also documents the ORIGIN SEOUL 2026 exhibition mini-site.
+  years, media, sizes, the artist's themes (the work pages' tags, the notes)
+  and the curated order (= list-page order). It also documents the ORIGIN
+  SEOUL 2026 exhibition mini-site.
 - A work page says title, year, medium, size — **no descriptions**, by the
   artist's request (they live on Instagram) — plus its themes as links to the
   notes. **Never invent a year, a title or a dimension**: the artist's
