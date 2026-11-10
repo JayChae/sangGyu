@@ -1,23 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3840 2160" preserveAspectRatio="none">
 <!-- The artist's drawing for the landing (geometric_tunnel_atmospheric_exact.svg,
-     2026-11-08), changed in three ways only: coordinates rounded to two
+     2026-11-08), changed in four ways only: coordinates rounded to two
      decimals; preserveAspectRatio=none, so it fills any screen corner to
-     corner with the vanishing point at the centre; and strokes drawn in
+     corner with the vanishing point at the centre; strokes drawn in
      screen pixels (non-scaling-stroke) at half the file's width, the
      weight they have on a 1920-wide screen, so stretching cannot thicken
-     one axis' lines and thin the other's. What every frame shares (its
-     colour, no fill) is set once, on their group: it draws the same. -->
+     one axis' lines and thin the other's; and its last layer, the
+     atmosphere (a radial haze, lightest at the vanishing point), is
+     painted by the page instead (site.css, "landing"), so the frames can
+     be drawn in under the air rather than through it. What every frame
+     shares (its colour, no fill) is set once, on their group: it draws
+     the same. -->
 <style>path{vector-effect:non-scaling-stroke;fill:none}</style>
-<defs>
- <radialGradient id="aerial" gradientUnits="objectBoundingBox" cx="0.5" cy="0.5" r="0.72">
-  <stop offset="0" stop-color="#f3f3f1" stop-opacity="0.95"/>
-  <stop offset="0.08" stop-color="#f2f2f0" stop-opacity="0.91"/>
-  <stop offset="0.2" stop-color="#f1f1ef" stop-opacity="0.79"/>
-  <stop offset="0.38" stop-color="#f1f1ef" stop-opacity="0.5"/>
-  <stop offset="0.67" stop-color="#efefed" stop-opacity="0.12"/>
-  <stop offset="1" stop-color="#efefed" stop-opacity="0"/>
- </radialGradient>
-</defs>
 <rect x="0" y="0" width="3840" height="2160" fill="#eaeae8"/>
 <polygon points="0,0 3840,0 1920,1080" fill="#ededeb"/>
 <polygon points="0,2160 3840,2160 1920,1080" fill="#f0f0ee"/>
@@ -107,5 +101,4 @@
 <path d="M1915.25,1077.33 H1924.74 V1082.66 H1915.25 Z" stroke-width="0.755" stroke-opacity="0.14"/>
 <path d="M1915.61,1077.53 H1924.38 V1082.46 H1915.61 Z" stroke-width="0.75" stroke-opacity="0.14"/>
 </g>
-<rect x="0" y="0" width="3840" height="2160" fill="url(#aerial)"/>
 </svg>
