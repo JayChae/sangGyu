@@ -62,8 +62,8 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   `sitemap.xml` is hand-written like everything else — add both URLs of a new
   page to it (`check-links.py` refuses to pass otherwise).
 - **Hypermedia philosophy.** HATEOAS: every page reachable by links, navigation
-  is plain `<a>`. Semantic HTML5 (`<article>`, `<figure>`, `<time>`, `<nav>`,
-  `rel="prev/next"`). Schema.org via Microdata (`VisualArtwork`, `Person`,
+  is plain `<a>`. Semantic HTML5 (`<article>`, `<figure>`, `<time>`, `<nav>`).
+  Schema.org via Microdata (`VisualArtwork`, `Person`,
   `ExhibitionEvent`).
 - **Use HTML to the fullest.** Prefer an HTML element or attribute over CSS,
   and CSS over JS. JS is a progressive enhancement only (the arrows and dots
@@ -104,7 +104,9 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   installing from `/works/ko` must open at `/ko`, not at the English landing,
   so `ko.html` links `manifest.ko.webmanifest` and everything else links
   `manifest.webmanifest`. `theme_color`/`background_color` are the `--bg`
-  token, matching each page's `theme-color` meta.
+  token, matching each page's `theme-color` meta — except the landing's,
+  which is the drawing's ceiling (`#ededeb`), the colour that meets the
+  browser bar there.
 
 ## Structure
 

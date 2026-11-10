@@ -80,26 +80,21 @@ The Stranger is three reliefs, so it is shown there as three plates: on a
 phone one swipeable strip with arrows and dots, wider the first leading
 with the other two side by side under it.
 
-The list page opens with the artist's two bars across the top, in the order
-of their sketch (2026-11-08): the CV, then the notes (`/notes/`) — long boxes
-rather than cards, at the artist's request (2026-11-09), each the name alone
-(2026-11-10). Under them the gallery: the works, and nothing else — no search,
-no filter, no exhibition card. The exhibition is over: it is the first of the
-CV's group exhibitions now, linking the mini-site (the artist, 2026-11-10).
+The exhibition is over, so the list carries no card for it: it is the first
+of the CV's group exhibitions, linking the mini-site, and the QR printed for
+it still lands there (the artist, 2026-11-10).
 
 ## Themes
 
 The artist's eight themes are the headings of their notes, from *작품들의
-연결성* (2026-11-08). It replaces the four-theme sheet of 2026-09-11, and its
-산화 takes over from the 산화연작 series chip, which found the same works (the
-owner, 2026-11-08). Each theme is two things, both in the order below — the
-artist's order of the notes:
+연결성* (2026-11-08), which replaces the four-theme sheet of 2026-09-11. Each
+theme is two things, both in the order below — the artist's order of the
+notes:
 
 - a note: a bar on `/notes/` named by the "note" heading, leading to the
   theme's own page (`/notes/<theme>/`) — the artist's text under that
   heading, then the works it marks that are on the site, as cards in the list
-  order above. That page is the theme's filter: the list has none since the
-  artist dropped the search bar (2026-11-10);
+  order above;
 - a tag on each work page it marks, under the tombstone, named as in the
   "tag" columns, linking to the note's page.
 
@@ -149,14 +144,15 @@ How the sheet's rows map onto the site:
 - 작은 존재–나한들 is ● under 시스템 on the sheet but missing from the 시스템
   note's own list of related works; the site follows the sheet (TODO.md).
 - Three works on the site are not on the sheet — `a-hand`, `skull`,
-  `abstract-body-3` — so they carry no theme and are on no note's page. 불상 and
-  돌도끼 만들기, on the old sheet, are not on this one.
+  `abstract-body-3` — so they carry no theme and are on no note's page.
 
 Works on the sheet that are not on the site yet — the artist is sending their
 photos. Each becomes a row of both tables above once it has a page; the
 themes no site work marks yet (기하와 유기 형태, 소실점, 로드킬) get their first
-works on their note's page with them. Titles here are the sheet's; the English ones, and media and sizes,
-come from the Instagram captions as for every other work.
+works on their note's page with them. Titles here are the sheet's; the
+English ones, and media and sizes, come from the Instagram captions as for
+every other work. `check-links.py` holds the themes column to the theme keys
+above.
 
 | 작품 (not on the site yet) | year | themes |
 |---|---|---|

@@ -24,6 +24,7 @@ the copies drift. Exits 1 on any failure.
 """
 import re
 import sys
+from html import unescape
 from pathlib import Path
 
 from pages import ORIGIN, ROOT, counterpart, exists, route, url_of
@@ -42,6 +43,13 @@ def attr(html, pattern):
     """The single capture of `pattern`, or None if it is absent."""
     found = re.findall(pattern, html)
     return found[0] if len(found) == 1 else None
+
+
+def slugs(pattern, html):
+    """The slugs `pattern` links in `html`, in order. A card names its slug
+    twice — the <a href> and its itemprop="url" — so a run counts once."""
+    found = re.findall(pattern, html)
+    return [s for i, s in enumerate(found) if i == 0 or s != found[i - 1]]
 
 
 # ── 1. every internal link resolves ──────────────────────────────
@@ -111,16 +119,19 @@ def table(first):
             found.append(cells)
         elif found:
             break
+    if not found:
+        errors.append(f"WORKS.md: no table headed {first!r}")
+        return [], []
     header, _separator, *body = found
     return header, body
 
 
 rows = [r[0] for r in table("slug")[1]]
 # the artist's themes, in the order of their notes, with the name a work
-# page's tag gives each one, per locale
-themes = {r[0]: {"index.html": r[1], "ko.html": r[2]} for r in table("theme")[1]}
-# … and the heading of each one's note, per locale
-note_names = {r[0]: {"index.html": r[3], "ko.html": r[4]} for r in table("theme")[1]}
+# page's tag gives each one, per locale, and the heading of each one's note.
+theme_rows = table("theme")[1]
+themes = {r[0]: {"index.html": r[1], "ko.html": r[2]} for r in theme_rows}
+note_names = {r[0]: {"index.html": r[3], "ko.html": r[4]} for r in theme_rows}
 # the artist's sheet: a column per theme, ● where it marks a work
 header, sheet = table("work")
 if header[1:] != list(themes):
@@ -130,11 +141,20 @@ marked = {r[0]: [t for t, m in zip(header[1:], r[1:]) if m == "●"] for r in sh
 if set(marked) - set(rows):
     errors.append("WORKS.md: the sheet names %s, not in the works table"
                   % sorted(set(marked) - set(rows)))
+# the sheet's works not on the site yet keep their themes as a list of keys,
+# waiting for a page: a mistyped key would surface only when it gets one
+for r in table("작품 (not on the site yet)")[1]:
+    unknown = [t.strip() for t in r[2].split(",") if t.strip() not in themes]
+    if unknown:
+        errors.append("WORKS.md: %s is marked %s, not among the themes"
+                      % (r[0], unknown))
 
 
-def works_of(theme):
-    """The works on the site a theme marks, in the list's order."""
-    return [w for w in rows if theme in marked.get(w, [])]
+def note_links(html, suffix):
+    """Each link to a note's page in `html`: (theme, its text). The text is
+    unescaped — WORKS.md writes the names plain, a page may write "&amp;"."""
+    found = re.findall(rf'<a href="/notes/([a-z-]+)/{suffix[1:]}">([^<]+)</a>', html)
+    return [(theme, unescape(text)) for theme, text in found]
 
 
 on_disk = sorted(d.name for d in (ROOT / "works").iterdir() if d.is_dir())
@@ -143,11 +163,10 @@ if sorted(rows) != on_disk:
                   % (sorted(rows), on_disk))
 else:
     for name, suffix in (("index.html", "/"), ("ko.html", "/ko")):
+        work_link = rf'href="/works/([a-z0-9-]+)/{suffix[1:]}"'
         page = ROOT / "works" / name
         html = page.read_text(encoding="utf-8")
-        # each card names its slug twice — the <a href> and its itemprop="url"
-        found = re.findall(r'href="/works/([a-z0-9-]+)/(?:ko)?"', html)
-        listed = [s for i, s in enumerate(found) if i == 0 or s != found[i - 1]]
+        listed = slugs(work_link, html)
         check(page, listed == rows, f"list order {listed} != WORKS.md order {rows}")
 
         # a work page tags the themes it is marked with, each a link to its
@@ -161,7 +180,7 @@ else:
                   "work pages carry no rel=prev/next — only the list link")
             check(work, f'<a href="/works{suffix}">' in html,
                   f'must link back to /works{suffix}')
-            tags = re.findall(rf'<a href="/notes/([a-z-]+)/{suffix[1:]}">([^<]+)</a>', html)
+            tags = note_links(html, suffix)
             want = marked.get(slug, [])
             check(work, [t for t, _ in tags] == want,
                   f"tags {[t for t, _ in tags]} != WORKS.md {want}")
@@ -174,21 +193,21 @@ else:
         # exactly the works it marks, newest first — the list's order
         page = ROOT / "notes" / name
         html = page.read_text(encoding="utf-8")
-        bars = re.findall(rf'<a href="/notes/([a-z-]+)/{suffix[1:]}">([^<]+)</a>', html)
+        bars = note_links(html, suffix)
         check(page, [b[0] for b in bars] == list(themes),
               f"notes {[b[0] for b in bars]} != WORKS.md themes {list(themes)}")
         for theme, label in bars:
-            want = works_of(theme)
             check(page, label == note_names.get(theme, {}).get(name),
                   f"{theme}: bar reads {label!r}, WORKS.md names the note otherwise")
             note = ROOT / "notes" / theme / name
-            if not note.exists():
+            if not exists(note):
                 continue  # check 1 has already reported the bar's broken link
             html = note.read_text(encoding="utf-8")
-            check(note, f'<h1 itemprop="name">{label}</h1>' in html,
+            h1 = attr(html, r'<h1 itemprop="name">([^<]+)</h1>')
+            check(note, h1 and unescape(h1) == label,
                   f"its <h1> must read {label!r}, as its bar")
-            found = re.findall(rf'href="/works/([a-z0-9-]+)/{suffix[1:]}"', html)
-            works = [s for i, s in enumerate(found) if i == 0 or s != found[i - 1]]
+            works = slugs(work_link, html)
+            want = [w for w in rows if theme in marked.get(w, [])]
             check(note, works == want, f"works {works} != WORKS.md {want}")
 
 # ── 4. a plates strip is marked photo for photo ──────────────────

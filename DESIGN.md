@@ -21,10 +21,7 @@ The exhibition mini-site is the single inversion: a dark room with one accent.
 
 The one dark surface is the exhibition mini-site: it re-points
 `--bg/--ink/--muted` at the three dark tokens. Nothing else changes — same
-components, inverted room. The exhibition is over, so the list no longer
-carries a card for it: it is a line in the CV's group exhibitions, linking
-its page (the artist, 2026-11-10) — the QR printed for it still lands there.
-Exhibition styles live inside the exhibition's own folder, named after it
+components, inverted room. Exhibition styles live inside the exhibition's own folder, named after it
 (`exhibitions/origin-seoul-2026/origin-seoul-2026.css`, and any script beside
 it) — one of each per exhibition, so future exhibitions stay self-contained.
 The one component with no equivalent on a work page is `.exh-plates`, a work
@@ -96,8 +93,6 @@ side under it.
   the "Works" title, the CV and the notes, in the order of the artist's
   sketch; on `/notes/`, one per theme. The artist asked for long boxes rather
   than cards (2026-11-09), and for nothing in them but the name (2026-11-10).
-  There is no search bar and no filter: a theme's works are its note's page
-  (the artist, 2026-11-10).
 - `.work-hero` / `.work-view` — the image plates on a detail page. `site.css`
   centres them; a page's own `<style>` sets only the `max-width` it wants.
 - `.tombstone` — serif muted "year · medium · size" line; also the line of a
@@ -184,8 +179,8 @@ no repaint. `prefers-reduced-motion` drops all travel and leaves a plain fade
 ## App icon
 
 The home-screen icon is the landing name cropped to its initials — `PSG`, ink
-on the warm-white wall, set the way `.landing h1` is set (sans 600, tracked
-`.14em`). Rendered, never hand-drawn: `scripts/build-icons.sh`, which also
+on the plain `--bg` wall (not the landing's drawing), set the way
+`.landing h1` is set (sans 600, tracked `.14em`). Rendered, never hand-drawn: `scripts/build-icons.sh`, which also
 holds the maskable safe-zone budget that caps how large the letters may go. If
 the landing's type ever changes, rebuild the icon with it.
 
