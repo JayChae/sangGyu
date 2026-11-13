@@ -62,6 +62,13 @@ side under it.
   each is `padding-bottom`, never a margin: WebKit carries a margin over a
   column break, so on an iPhone every column after the first started 20px
   low. The tops of the columns are one line (the artist, 2026-11-10).
+  Above the masonry hang the artist's pinned works (`.pinned`, 2026-11-13), in
+  the order they named them, in justified rows: every photo in a row the same
+  height, the row filled edge to edge, nothing cropped — five photos in a
+  masonry of their own left a hole under the shorter columns. Each card
+  carries its photo's shape as `--r`; on a phone they break one, two, two,
+  from 760px two, then three. Change the five and the cards' `sizes` (stated
+  per card, measured) need a new look.
 - Detail pages: image first, full column width (max 880px), then a
   `border-top` rule, title, serif tombstone — and nothing else in words: a
   work page is title, year, medium, size, then its themes as a second
@@ -87,7 +94,8 @@ side under it.
 - `.back` — muted "← Works / ← 작품" link, first element inside a detail
   page's `<main>`.
 - `.gallery` — `<ul>` masonry of `<figure>` cards; caption = title + serif year.
-  No hover state: the photograph never dims under the pointer.
+  No hover state: the photograph never dims under the pointer. `.pinned` is
+  the same cards in justified rows (see Layout).
 - `.bars` — the artist's ways in, as long boxes ruled in ink, one under the
   other, each the name alone in sans 600. Across the top of the list, above
   the "Works" title, the CV and the notes, in the order of the artist's
@@ -96,9 +104,11 @@ side under it.
 - `.work-hero` / `.work-view` — the image plates on a detail page. `site.css`
   centres them; a page's own `<style>` sets only the `max-width` it wants.
 - `.tombstone` — serif muted "year · medium · size" line; also the line of a
-  work's themes. A link in it carries a hairline, no louder than the line.
+  work's themes, and under the thesis its PDF. A link in it — or in a plate's
+  caption (A New Number's PDF) — carries a hairline, no louder than the line.
 - `.notes` — the artist's notes. `/notes/` is the themes as `.bars`, then the
-  thesis title. Each theme has its own page (`/notes/<theme>/`), set like a
+  thesis title, and under it the PDF as a tombstone line (language, pages,
+  size: it is 1.7 MB, so the reader is told before tapping). Each theme has its own page (`/notes/<theme>/`), set like a
   work page without the photo: the note's title as the `<h1>` under the ink
   rule, the text at the reading measure (the artist's line breaks kept as
   `<br>`), then, ruled in hairline like a CV section, the works it names — the
