@@ -232,6 +232,22 @@ a { color: inherit; text-decoration: none; }
   from { opacity: 0; }
 }
 
+/* The artist's pinned works come first on the list, in the order they named
+   them (2026-11-13). Five photos in a masonry of their own leave a hole under
+   the shorter columns, so they hang in justified rows instead: every photo in
+   a row the same height, the row filled edge to edge, nothing cropped. Each
+   card carries its photo's shape as --r (width ÷ height); --row is the height
+   a row starts from before it stretches, a share of the column's width chosen
+   so these five break the same way at every width — on a phone one, two,
+   two; from 760px two, then three. The gaps are the gallery's own
+   column-gap. A different five still fill their rows; only where the rows
+   break, and so each card's `sizes`, would need a new look. */
+.pinned { display: flex; flex-wrap: wrap; --row: calc((100vw - 40px) * 0.41); }
+.pinned > li { flex: var(--r) 1 calc(var(--r) * var(--row)); min-width: 0; }
+@media (min-width: 760px) {
+  .pinned { --row: calc(min(100vw - 40px, 1040px) * 0.33); }
+}
+
 .gallery a { display: block; }
 .gallery img { width: 100%; }
 .gallery figcaption { margin-top: 7px; font-size: 13px; line-height: 1.5; }
@@ -318,13 +334,16 @@ a { color: inherit; text-decoration: none; }
 .notes .gallery { margin-top: 18px; }
 .notes cite { font-family: var(--serif); }
 
-/* A link in a tombstone line — the CV's Instagram, a work's themes — in the
-   CV, the exhibition with a page of its own, and the footer's credit: a
-   hairline, no louder than the line it sits in. */
+/* A link in a tombstone line — the CV's Instagram, a work's themes, the
+   thesis PDF — in a plate's caption (A New Number's PDF), in the CV, the
+   exhibition with a page of its own, and the footer's credit: a hairline, no
+   louder than the line it sits in. */
 .tombstone a,
+.detail figcaption a,
 .cv dd a,
 .site-footer small a { border-bottom: 1px solid var(--hair); transition: color 0.15s; }
-.tombstone a:hover { color: var(--ink); } /* the line is muted: the link steps up */
+.tombstone a:hover,
+.detail figcaption a:hover { color: var(--ink); } /* the line is muted: the link steps up */
 .cv dd a:hover { color: var(--muted); }   /* the line is ink: the link steps back */
 
 /* One way out of a work: back to all of them, centred. No prev/next — the list

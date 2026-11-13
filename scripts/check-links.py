@@ -8,7 +8,8 @@
    counterpart, and names an og:image that exists; sitemap.xml lists exactly
    the indexable pages;
 3. WORKS.md really is the source of truth — the works on disk are exactly the
-   works in the table and both list pages walk them in the table's order. A
+   works in the table and both list pages walk them in the table's order,
+   the artist's pinned works taken out and hung first, in their own list. A
    work page tags the themes the artist's sheet marks it with, linking to
    their notes, and leads back to the list and nowhere else: no prev/next
    chain. The notes page holds one bar per theme, in order, named as its
@@ -127,6 +128,11 @@ def table(first):
 
 
 rows = [r[0] for r in table("slug")[1]]
+# the artist's pinned works: first on the list, in this order, then the rest
+pinned = [r[0] for r in table("pinned")[1]]
+if set(pinned) - set(rows):
+    errors.append("WORKS.md: pins %s, not in the works table"
+                  % sorted(set(pinned) - set(rows)))
 # the artist's themes, in the order of their notes, with the name a work
 # page's tag gives each one, per locale, and the heading of each one's note.
 theme_rows = table("theme")[1]
@@ -167,7 +173,11 @@ else:
         page = ROOT / "works" / name
         html = page.read_text(encoding="utf-8")
         listed = slugs(work_link, html)
-        check(page, listed == rows, f"list order {listed} != WORKS.md order {rows}")
+        want = pinned + [w for w in rows if w not in pinned]
+        check(page, listed == want, f"list order {listed} != WORKS.md order {want}")
+        top = re.search(r'<ul class="gallery pinned">(.*?)</ul>', html, re.S)
+        top = slugs(work_link, top.group(1)) if top else []
+        check(page, top == pinned, f"pinned row holds {top}, WORKS.md pins {pinned}")
 
         # a work page tags the themes it is marked with, each a link to its
         # note, named as WORKS.md's tag column; and it leads back to the list and nowhere
@@ -230,4 +240,4 @@ if errors:
     print("\n".join(errors))
     sys.exit(1)
 print(f"OK — {len(pages)} pages: links resolve, EN/KO pairs agree, "
-      f"sitemap complete, {len(rows)} works match WORKS.md order, themes and notes")
+      f"sitemap complete, {len(rows)} works match WORKS.md order and pins, themes and notes")

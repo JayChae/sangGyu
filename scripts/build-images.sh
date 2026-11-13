@@ -1,5 +1,5 @@
 #!/bin/bash
-# Convert the artist's source photos (../sangyu/arts, one folder per work,
+# Convert the artist's source photos (../proposal/arts, one folder per work,
 # named by the artist) to responsive WebP into public/img/.
 # One folder per artwork: public/img/<slug>/{480,640,960,1200,1600}.webp
 # (extra views get a prefix, e.g. the-stranger/view2-480.webp).
@@ -26,14 +26,14 @@
 # the new file a version prefix and update the srcset. Overwriting in place
 # strands returning visitors. The works below whose hero is a different photo
 # (or a different crop) from the 2026-07 set carry "v2-" for exactly that
-# reason; that first set is kept in ../sangyu/arts/_old-2026-07.
+# reason; that first set is kept in ../proposal/arts/_old-2026-07.
 #
 # Every photo the artist sent is used: the first line of a work is its hero,
 # the rest are its views, in the order of the artist's folder.
 set -e
 cd "$(dirname "$0")/.."
 
-SRC="../sangyu/arts"
+SRC="../proposal/arts"
 OUT="public/img"
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
@@ -78,10 +78,24 @@ upright() { # $1=photo → it, or an upright copy of it in $TMP
   echo "$out"
 }
 
-convert() { # $1=source photo  $2=slug  $3=optional filename prefix (e.g. "view2-")
+# A work that is a document (a-new-number is a PDF) hangs its first page:
+# rendered at 300 dpi, so an A4 page is ~2480px wide and fills every tier. The
+# whole PDF is served beside the work's page and linked under that plate.
+first_page() { # $1=PDF → its first page as a PNG in $TMP
+  pdftoppm -f 1 -l 1 -r 300 -png -singlefile "$1" "$TMP/page"
+  echo "$TMP/page.png"
+}
+
+# A photo that came with a plain white band along its edges (an edited copy,
+# not the room) loses the band and nothing else: $4 is cwebp's "x y w h" crop
+# in source pixels, measured where it is used.
+convert() { # $1=source photo  $2=slug  $3=optional filename prefix (e.g. "view2-")  $4=optional crop
   mkdir -p "$OUT/$2"
   local photo src_w
-  photo=$(upright "$SRC/$1")
+  case "$1" in
+    *.pdf) photo=$(first_page "$SRC/$1");;
+    *) photo=$(upright "$SRC/$1");;
+  esac
   src_w=$(sips -g pixelWidth "$photo" | awk '/pixelWidth:/ { print $2 }')
   for w in 480 640 960 1200 1600; do
     local out="$OUT/$2/${3}${w}.webp"
@@ -90,12 +104,25 @@ convert() { # $1=source photo  $2=slug  $3=optional filename prefix (e.g. "view2
       continue
     fi
     if [ "$out" -nt "$SRC/$1" ]; then continue; fi
-    cwebp -quiet -q 82 -metadata none -resize "$w" 0 "$photo" -o "$out" &
+    cwebp -quiet -q 82 -metadata none ${4:+-crop $4} -resize "$w" 0 "$photo" -o "$out" &
   done
   wait
   echo "→ $2/${3}* (원본 ${src_w}px)"
 }
 
+
+convert "고속도로 위 소실점-2026/원근맞춤.jpg"                               highway-vanishing-point
+convert "고속도로 위 소실점-2026/원근맞춤2.jpg"                              highway-vanishing-point view2-
+
+convert "로드킬-2026/IMG_6308.jpg"                                       imprinted-in-negative
+convert "로드킬-2026/IMG_6309.jpg"                                       imprinted-in-negative view2-
+convert "로드킬-2026/IMG_6310.jpg"                                       imprinted-in-negative view3-
+
+# rows 0–21 and 2765–2786 of this one are a white band, not the room
+convert "좁은 문-2026/5 복사본.jpg"                                        the-narrow-gate "" "0 22 2057 2743"
+convert "좁은 문-2026/IMG_6324 복사본.jpg"                                 the-narrow-gate view2-
+convert "좁은 문-2026/IMG_6326 복사본.jpg"                                 the-narrow-gate view3-
+convert "좁은 문-2026/IMG_6328 복사본.jpg"                                 the-narrow-gate view4-
 
 convert "폐허풍경(beyond the predetermined)/완성본 전경 복사본.jpg"                beyond-the-predetermined v2-
 convert "폐허풍경(beyond the predetermined)/IMG_6226.jpg"                  beyond-the-predetermined view2-
@@ -179,9 +206,16 @@ convert "두 세개의 연못/2.png"                                            
 convert "두 세개의 연못/스크린샷 2026-08-20 12.41.38.png"                        the-pool-of-two-worlds view5-
 convert "두 세개의 연못/스크린샷 2026-08-20 12.41.51.png"                        the-pool-of-two-worlds view6-
 
+convert "잔디자르기-2025/잔디자르기1.jpg"                                    mowing-the-lawn
+convert "잔디자르기-2025/잔디자르기2.jpg"                                    mowing-the-lawn view2-
+convert "잔디자르기-2025/잔디자르기3.jpg"                                    mowing-the-lawn view3-
+convert "잔디자르기-2025/잔디자르기4.jpg"                                    mowing-the-lawn view4-
+
 convert "얼굴/IMG_9086.jpeg"                                             a-face
 convert "얼굴/IMG_8594.jpeg"                                             a-face view2-
 convert "얼굴/IMG_8598.jpeg"                                             a-face view3-
+
+convert "새로운 수-2024/新数字.pdf"                                         a-new-number
 
 convert "멋진 신세계/IMG_3208.jpeg"                                         brave-new-world
 convert "멋진 신세계/IMG_2581.jpeg"                                         brave-new-world view2-v2-

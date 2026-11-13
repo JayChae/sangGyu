@@ -11,7 +11,7 @@ output directory — files are served exactly as committed.
 ```
 ./serve.sh [port]                 # local preview → http://localhost:8000
 python3 scripts/check-links.py    # the test suite (exit 1 on failure)
-scripts/build-images.sh           # source photos (../sangyu/arts/<work>/) → WebP in public/img/ (needs cwebp + jpegtran: brew install webp)
+scripts/build-images.sh           # source photos (../proposal/arts/<work>/) → WebP in public/img/ (needs cwebp + jpegtran: brew install webp; pdftoppm for a PDF work: brew install poppler)
 scripts/build-icons.sh            # the app icon → public/icon-{192,512}.png (needs Chrome)
 python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR for any page → print/qr-<path>.{svg,png} (default: the exhibition page, 50 mm square, black; --clear = no white behind the PNG)
 ```
@@ -21,11 +21,12 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   language toggle point at itself and its counterpart (absolute, on `ORIGIN`),
   its `og:image` exists, and `sitemap.xml` lists exactly the indexable pages;
   and the works on disk are exactly `WORKS.md`'s, walked in its order by both
-  list pages, each work page tagging the themes `WORKS.md` marks it with
-  (links to their notes) and leading back to the list and nowhere else (no
-  `rel=prev/next`), and the notes page holding one bar per theme, each to its
-  own page hanging exactly the works it marks. Run it after adding, moving,
-  renaming or reordering anything. There is no other lint/test tooling.
+  list pages (its pinned works taken out and hung first), each work page
+  tagging the themes `WORKS.md` marks it with (links to their notes) and
+  leading back to the list and nowhere else (no `rel=prev/next`), and the
+  notes page holding one bar per theme, each to its own page hanging exactly
+  the works it marks. Run it after adding, moving, renaming or reordering
+  anything. There is no other lint/test tooling.
 - `scripts/pages.py` holds the one model of how Cloudflare Pages maps a URL to
   a file (clean URLs, `index.html`, case-sensitivity) and the site's `ORIGIN`
   (`https://sanggyu.pages.dev`). Both `check-links.py` and `serve.py` import
@@ -72,11 +73,12 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   theme's works are its note's page (the artist, 2026-11-10).
 - **Images are always WebP**, responsive (`srcset` 480/640/960/1200/1600) with
   explicit `width`/`height` (no layout shift), `loading="lazy"` below the fold
-  — and on the masonry list, on *every* card. The columns are filled one after
-  another, so source order is not screen order there: the card at the top of
-  the second column sits in the middle of the HTML. Marking the first few
-  eager therefore preloads photos below the fold and leaves the ones a reader
-  actually sees to the lazy queue. Let the browser decide instead.
+  — and on the list, on *every* card, the pinned rows included. The columns
+  are filled one after another, so source order is not screen order there:
+  the card at the top of the second column sits in the middle of the HTML.
+  Marking the first few eager therefore preloads photos below the fold and
+  leaves the ones a reader actually sees to the lazy queue. Let the browser
+  decide instead.
   `sizes` must state the *rendered* width, gutters subtracted — an overstated
   `sizes` silently ships the next tier up to every phone. When bytes need
   cutting, add a tier that fits rather than lowering quality: a retina desktop
@@ -114,11 +116,12 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
 public/                          ← Cloudflare Pages output directory
   index.html, ko.html            landing (EN/KO) — only the centered name on the artist's
                                  vanishing-point drawing, linking to /works/
-  works/index.html, ko.html      gallery list — the CV and notes as bars, then the masonry
+  works/index.html, ko.html      gallery list — the CV and notes as bars, then the artist's
+                                 pinned works in justified rows, then the masonry
   works/<slug>/index.html, ko.html   one hand-made page per artwork
   cv/index.html, ko.html         the artist's CV (English on both pages) — the first bar on the list;
                                  its group exhibitions link the ORIGIN SEOUL 2026 page
-  notes/index.html, ko.html      the artist's themes as bars + thesis title — the second bar
+  notes/index.html, ko.html      the artist's themes as bars + thesis title and its PDF — the second bar
   notes/<theme>/index.html, ko.html   one page per theme: the artist's note, then its works as on the list
   exhibitions/<name>/            self-contained exhibition mini-sites (see WORKS.md)
   css/site.css                   shared styles (design system)
@@ -144,16 +147,19 @@ print/                           not served — QR codes for print (scripts/buil
 - A work page says title, year, medium, size — **no descriptions**, by the
   artist's request (they live on Instagram) — plus its themes as links to the
   notes. **Never invent a year, a title or a dimension**: the artist's
-  Instagram captions are the source.
+  Instagram captions are the source. A work not on Instagram takes what the
+  artist sent (folder name, message, sheet); an English title made up to fill
+  the gap is a draft, marked as one in `WORKS.md` and `TODO.md` until the
+  artist confirms it.
 - `/notes/` is the artist's own text, as they sent it in both languages;
   only plain misspellings are corrected, anything less certain goes to
   `TODO.md` for the artist.
   Open items waiting on the owner live in `TODO.md` (kept in Korean,
   deliberately).
-- Source photos live outside the repo in `../sangyu/arts`, one folder per
-  work named by the artist in Korean (note the different spelling: `sangyu`,
-  not `sangGyu`); the CV PDF is there too. `_old-2026-07/` holds the first
-  photo set.
+- Source photos live outside the repo in `../proposal/arts`, one folder per
+  work named by the artist in Korean; the CV PDF, the thesis PDF and the sheet
+  *작품들의 연결성* are there too. `_old-2026-07/` holds the first photo set.
+  (It used to be `../sangyu/arts`; that folder is gone.)
 
 ## Gotchas
 
