@@ -83,6 +83,10 @@ Notes:
   (50 × 15 × 200 cm) and the cube (70 × 70 × 70 cm); its first photo came
   with a white band along the top and bottom, which `build-images.sh` trims
   off (the band only, not the room).
+- `mowing-the-lawn` leads with the artist's third photo, the hole seen from
+  above (the owner, 2026-11-15); its hero and the two photos it moved down
+  (`view2-v2-`, `view3-v2-`) carry v2-, since the first names had already
+  gone out under the year-long cache.
 - `a-new-number` is a PDF, not a photo: sixteen A4 pages of one number,
   "0.111…". Its page hangs the first page as the image and links the whole
   PDF under it (`public/works/a-new-number/a-new-number.pdf`, as sent).

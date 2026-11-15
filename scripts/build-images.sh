@@ -206,9 +206,11 @@ convert "두 세개의 연못/2.png"                                            
 convert "두 세개의 연못/스크린샷 2026-08-20 12.41.38.png"                        the-pool-of-two-worlds view5-
 convert "두 세개의 연못/스크린샷 2026-08-20 12.41.51.png"                        the-pool-of-two-worlds view6-
 
-convert "잔디자르기-2025/잔디자르기1.jpg"                                    mowing-the-lawn
-convert "잔디자르기-2025/잔디자르기2.jpg"                                    mowing-the-lawn view2-
-convert "잔디자르기-2025/잔디자르기3.jpg"                                    mowing-the-lawn view3-
+# the third photo leads (the artist, 2026-11-15), so it and the two it moved
+# down carry v2-
+convert "잔디자르기-2025/잔디자르기3.jpg"                                    mowing-the-lawn v2-
+convert "잔디자르기-2025/잔디자르기1.jpg"                                    mowing-the-lawn view2-v2-
+convert "잔디자르기-2025/잔디자르기2.jpg"                                    mowing-the-lawn view3-v2-
 convert "잔디자르기-2025/잔디자르기4.jpg"                                    mowing-the-lawn view4-
 
 convert "얼굴/IMG_9086.jpeg"                                             a-face
