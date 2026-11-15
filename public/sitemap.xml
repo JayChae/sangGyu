@@ -152,6 +152,16 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/a-hand/ko" />
   </url>
   <url>
+    <loc>https://sanggyu.pages.dev/works/a-new-number/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/a-new-number/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/a-new-number/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/works/a-new-number/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/a-new-number/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/a-new-number/ko" />
+  </url>
+  <url>
     <loc>https://sanggyu.pages.dev/works/abstract-body-3/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/abstract-body-3/" />
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/abstract-body-3/ko" />
@@ -222,6 +232,26 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/ecology/ko" />
   </url>
   <url>
+    <loc>https://sanggyu.pages.dev/works/highway-vanishing-point/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/highway-vanishing-point/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/highway-vanishing-point/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/works/highway-vanishing-point/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/highway-vanishing-point/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/highway-vanishing-point/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/works/imprinted-in-negative/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/imprinted-in-negative/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/imprinted-in-negative/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/works/imprinted-in-negative/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/imprinted-in-negative/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/imprinted-in-negative/ko" />
+  </url>
+  <url>
     <loc>https://sanggyu.pages.dev/works/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/" />
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/ko" />
@@ -230,6 +260,16 @@
     <loc>https://sanggyu.pages.dev/works/ko</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/" />
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/works/mowing-the-lawn/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/mowing-the-lawn/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/mowing-the-lawn/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/works/mowing-the-lawn/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/mowing-the-lawn/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/mowing-the-lawn/ko" />
   </url>
   <url>
     <loc>https://sanggyu.pages.dev/works/oxidized-figures-10/</loc>
@@ -300,6 +340,16 @@
     <loc>https://sanggyu.pages.dev/works/skull/ko</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/skull/" />
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/skull/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/works/the-narrow-gate/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/the-narrow-gate/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/the-narrow-gate/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/works/the-narrow-gate/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/works/the-narrow-gate/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/works/the-narrow-gate/ko" />
   </url>
   <url>
     <loc>https://sanggyu.pages.dev/works/the-pool-of-two-worlds/</loc>
