@@ -111,10 +111,8 @@ side under it.
   size: it is 1.7 MB, so the reader is told before tapping). Each theme has its own page (`/notes/<theme>/`), set like a
   work page without the photo: the note's title as the `<h1>` under the ink
   rule, the text at the reading measure (the artist's line breaks kept as
-  `<br>`), then, ruled in hairline like a CV section, the works it names — the
-  list's own `.gallery`, the same cards in the same order, photos and all
-  (the artist asked for it, 2026-11-09). A note no work on the site carries
-  yet is the text alone.
+  `<br>`), and nothing under it: the works a note names used to hang there as
+  the list's cards, and came down with the notes' rewrite (2026-11-22).
 - `.cv` — the CV: a `<dl>` per section, the year in the caption serif beside
   its line. Built from tokens only, so it sits on the white wall (`/cv/`) and
   in the dark room (the exhibition page) unchanged. It is English on the
@@ -173,9 +171,8 @@ what the crossing paints is entirely CSS's to decide. Measured in Chrome
 (screencast, frame by frame): out 1.1s; back 14ms with the frame after the list
 already the empty wall, and `name-settle` / `name-light` running from there.
 
-**3 · The works are hung** (list, and under a note — the same `.gallery`,
-0.7s). Every card lifts 14px and resolves
-at once, so the top edge of the list is one straight line from the first
+**3 · The works are hung** (the list's `.gallery`, 0.7s). Every card lifts
+14px and resolves at once, so the top edge of the list is one straight line from the first
 frame — the artist asked for it (2026-09-11). It used to be staggered, 45ms a
 card, but the columns are filled one after another, so the top of the second
 column comes from the middle of the source order and rose last: for about

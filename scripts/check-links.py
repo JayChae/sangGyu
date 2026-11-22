@@ -13,8 +13,8 @@
    work page tags the themes the artist's sheet marks it with, linking to
    their notes, and leads back to the list and nowhere else: no prev/next
    chain. The notes page holds one bar per theme, in order, named as its
-   note; each theme's own page carries that name and hangs exactly the works
-   it marks, newest first.
+   note; each theme's own page carries that name and hangs no works — a note
+   is its text alone.
 4. a plates strip carries one dot per photo, in both locales.
 
 Checks 2 and 3 exist because the only authoring method here is copy-paste-then-
@@ -150,7 +150,8 @@ if set(marked) - set(rows):
 # the sheet's works not on the site yet keep their themes as a list of keys,
 # waiting for a page: a mistyped key would surface only when it gets one
 for r in table("작품 (not on the site yet)")[1]:
-    unknown = [t.strip() for t in r[2].split(",") if t.strip() not in themes]
+    waiting = [t.strip() for t in r[2].split(",") if t.strip()]
+    unknown = [t for t in waiting if t not in themes]
     if unknown:
         errors.append("WORKS.md: %s is marked %s, not among the themes"
                       % (r[0], unknown))
@@ -199,8 +200,8 @@ else:
                       f"tag {tag} reads {label!r}, WORKS.md names it otherwise")
 
         # the notes: /notes/ is one bar per theme, in the artist's order, named
-        # as its note; each theme's own page carries that name and hangs
-        # exactly the works it marks, newest first — the list's order
+        # as its note; each theme's own page carries that name and links no
+        # work — the cards that hung under a note must not creep back in
         page = ROOT / "notes" / name
         html = page.read_text(encoding="utf-8")
         bars = note_links(html, suffix)
@@ -216,9 +217,8 @@ else:
             h1 = attr(html, r'<h1 itemprop="name">([^<]+)</h1>')
             check(note, h1 and unescape(h1) == label,
                   f"its <h1> must read {label!r}, as its bar")
-            works = slugs(work_link, html)
-            want = [w for w in rows if theme in marked.get(w, [])]
-            check(note, works == want, f"works {works} != WORKS.md {want}")
+            check(note, not slugs(work_link, html),
+                  "a note hangs no works — its text alone")
 
 # ── 4. a plates strip is marked photo for photo ──────────────────
 

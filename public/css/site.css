@@ -218,7 +218,7 @@ a { color: inherit; text-decoration: none; }
    artist asked for it. A stagger cannot give that here: the columns are filled
    one after another, so the top of the second column comes from the middle
    of the source order and rose last, and for about 0.6s the top of the list
-   was a step. A note's works under it are hung the same way. */
+   was a step. */
 .gallery > li {
   animation: plate-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
@@ -321,17 +321,15 @@ a { color: inherit; text-decoration: none; }
 
 /* ── notes ───────────────────────────────────── */
 
-/* The artist's notes: /notes/ is the themes as bars, then the thesis; each
-   theme has its own page — the note held to the reading measure, then, ruled
-   off the way the CV rules its sections, the works it names, hung as on the
-   list. */
+/* The artist's notes: /notes/ is the themes as bars, then the thesis, ruled
+   off the way the CV rules its sections; each theme has its own page — the
+   note held to the reading measure, and nothing under it. */
 .notes h1 { line-height: 1.35; } /* the longest heading wraps on a phone */
 .notes .bars { margin-top: 28px; }
 .notes section { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--hair); }
 .notes article > p,
 .notes section > p { max-width: var(--measure); margin-top: 12px; }
 .notes .work-head + p { margin-top: 20px; }
-.notes .gallery { margin-top: 18px; }
 .notes cite { font-family: var(--serif); }
 
 /* A link in a tombstone line — the CV's Instagram, a work's themes, the
