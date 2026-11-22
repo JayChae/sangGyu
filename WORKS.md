@@ -1,8 +1,8 @@
 # Works — single source of truth
 
 Order below = the artist's own order, newest first — the rows of their sheet
-*작품들의 연결성* (2026-11-08) read bottom to top, which is how each note's
-page under `/notes/` hangs its works ("최신순, 관련작업에 쓰인 순서의 역순").
+*작품들의 연결성* (2026-11-08) read bottom to top ("최신순, 관련작업에 쓰인
+순서의 역순").
 Works the sheet leaves out sit at the end of their year. The one exception is
 the 2024 study, which sits last — the list's columns fill top to bottom, so a
 work from late in the order heads a column on a desktop, and a study should
@@ -21,8 +21,9 @@ posts, April–June 2026, are other works, and older posts no longer show
 without logging in), so for them the sources are the artist's own: the year in
 their folder name, the size in the artist's message of that day, the Korean
 title from the sheet. Their English titles are **drafts** — 음각된's is the
-artist's own phrase for it in the Roadkill note ("life imprinted in negative"),
-the other four plain translations — and their medium is not known yet, so
+artist's own phrase for it in the Roadkill note of 2026-11-08 ("life imprinted
+in negative" — a note since taken down, see "Notes"), the other four plain
+translations — and their medium is not known yet, so
 their pages leave it out (— below). Both wait for the artist (TODO.md).
 
 | slug | title (EN) | title (KO) | year | medium | size | photos |
@@ -117,8 +118,7 @@ it still lands there (the artist, 2026-11-10).
 
 The artist's pinned works, first on the list page in this order, before
 everything else (the artist, 2026-11-13: "위에 맨 먼저 보이게 고정"). They hang
-there and nowhere else on the list; the rest follow in the order above. A
-note's page keeps the order above — pinning is the list's alone.
+there and nowhere else on the list; the rest follow in the order above.
 `check-links.py` holds the list to this table.
 
 | pinned |
@@ -131,15 +131,17 @@ note's page keeps the order above — pinning is the list's alone.
 
 ## Themes
 
-The artist's eight themes are the headings of their notes, from *작품들의
-연결성* (2026-11-08), which replaces the four-theme sheet of 2026-09-11. Each
-theme is two things, both in the order below — the artist's order of the
-notes:
+The artist's five themes are the headings of their notes, as rewritten and
+sent through the owner on 2026-11-22. They replace the eight notes of
+*작품들의 연결성* (2026-11-08): four keep their heading with a new text, 음각
+is new, and 로드킬, 환원불가능성, 분석·해체 and 시스템 are gone — their pages,
+and their tags on the work pages with them. Each theme is two things, both in
+the order below — the artist's order of the notes:
 
 - a note: a bar on `/notes/` named by the "note" heading, leading to the
   theme's own page (`/notes/<theme>/`) — the artist's text under that
-  heading, then the works it marks that are on the site, as cards in the list
-  order above;
+  heading, and nothing else: no works hang under a note (the owner,
+  2026-11-22);
 - a tag on each work page it marks, under the tombstone, named as in the
   "tag" columns, linking to the note's page.
 
@@ -151,39 +153,32 @@ form of the longest (a draft — TODO.md).
 |---|---|---|---|---|
 | geometric-and-organic-forms | Geometric & Organic | 기하와 유기 형태 | Basic Geometric Forms and Organic Forms | 기본 기하적 형태와 유기적 형태 |
 | vanishing-point | Vanishing Point | 소실점 | Vanishing Point | 소실점 |
-| roadkill | Roadkill | 로드킬 | Roadkill | 로드킬 |
 | oxidation | Oxidation | 산화 | Oxidation | 산화 |
 | residual-sensation | Residual Sensation | 잔여적 감각 | Residual Sensation | 잔여적 감각 |
-| irreducibility | Irreducibility | 환원불가능성 | Irreducibility | 환원불가능성 |
-| analysis-and-deconstruction | Analysis and Deconstruction | 분석, 해체 | Analysis and Deconstruction | 분석, 해체 |
-| systems | Systems | 시스템 | Systems | 시스템 |
+| intaglio | Intaglio | 음각 | Intaglio | 음각 |
 
-The sheet, for the works on the site (● only — it has no "related" mark):
+The marks are still the sheet's of 2026-11-08, for the four themes that stayed
+(● only — it has no "related" mark). The sheet has no column for 음각 and the
+new notes name no works, so nothing is tagged with it yet — the column waits
+for the artist (TODO.md); it is not ours to fill.
 
-| work | geometric-and-organic-forms | vanishing-point | roadkill | oxidation | residual-sensation | irreducibility | analysis-and-deconstruction | systems |
-|---|---|---|---|---|---|---|---|---|
-| highway-vanishing-point | ● | ● | | | ● | ● | | |
-| imprinted-in-negative | ● | | ● | | ● | ● | | |
-| the-narrow-gate | ● | ● | | ● | ● | ● | | |
-| beyond-the-predetermined | | | | ● | ● | ● | | |
-| oxidized-figures-10 | | | | ● | | | | |
-| oxidized-figures-6 | | | | ● | | | | |
-| oxidized-figures-5 | | | | ● | | | | |
-| oxidized-figures-3 | | | | ● | | | | |
-| oxidized-figures-2 | | | | ● | | | | |
-| self-portrait | | | | | ● | ● | ● | ● |
-| mowing-the-lawn | | | | | | ● | ● | ● |
-| a-face | | | | | ● | ● | | |
-| collective-gaze | | | | | | ● | ● | ● |
-| the-stranger | | | | | | | ● | ● |
-| arhats-little-beings | | | | | ● | | | ● |
-| the-pool-of-two-worlds | | | | | ● | | | |
-| a-new-number | | | | | | | ● | ● |
-| brave-new-world | | | | | | ● | ● | ● |
-| ecology | | | | | | ● | ● | ● |
-| combustion | | | | | ● | ● | | |
-| untitled | | | | | ● | | ● | |
-| a-cushion | | | | | | ● | ● | |
+| work | geometric-and-organic-forms | vanishing-point | oxidation | residual-sensation | intaglio |
+|---|---|---|---|---|---|
+| highway-vanishing-point | ● | ● | | ● | |
+| imprinted-in-negative | ● | | | ● | |
+| the-narrow-gate | ● | ● | ● | ● | |
+| beyond-the-predetermined | | | ● | ● | |
+| oxidized-figures-10 | | | ● | | |
+| oxidized-figures-6 | | | ● | | |
+| oxidized-figures-5 | | | ● | | |
+| oxidized-figures-3 | | | ● | | |
+| oxidized-figures-2 | | | ● | | |
+| self-portrait | | | | ● | |
+| a-face | | | | ● | |
+| arhats-little-beings | | | | ● | |
+| the-pool-of-two-worlds | | | | ● | |
+| combustion | | | | ● | |
+| untitled | | | | ● | |
 
 How the sheet's rows map onto the site:
 
@@ -193,36 +188,39 @@ How the sheet's rows map onto the site:
   고속도로 소실점 is `highway-vanishing-point` (고속도로 위 소실점 — the
   artist's folder and message). It has
   The Stranger as "이방인, 2023" again — see TODO.md.
-- 작은 존재–나한들 is ● under 시스템 on the sheet but missing from the 시스템
-  note's own list of related works; the site follows the sheet (TODO.md).
-- Three works on the site are not on the sheet — `a-hand`, `skull`,
-  `abstract-body-3` — so they carry no theme and are on no note's page.
+- Ten works on the site carry no theme. Seven were marked only under themes
+  that are gone — `mowing-the-lawn`, `collective-gaze`, `the-stranger`,
+  `a-new-number`, `brave-new-world`, `ecology`, `a-cushion` — and three were
+  never on the sheet: `a-hand`, `skull`, `abstract-body-3`.
 
 Works on the sheet that are not on the site yet — the artist has not sent
 their photos. Each becomes a row of both tables above once it has a page.
 Titles here are the sheet's; the English ones, and media and sizes, come from
 the Instagram captions as for every other work. `check-links.py` holds the
-themes column to the theme keys above.
+themes column to the theme keys above; Cock's is empty because every theme
+the sheet marked it with is gone.
 
 | 작품 (not on the site yet) | year | themes |
 |---|---|---|
-| Cock | 2025 | irreducibility, analysis-and-deconstruction, systems |
-| Imagine 재구성 | 2023 | residual-sensation, irreducibility, analysis-and-deconstruction, systems |
+| Cock | 2025 | |
+| Imagine 재구성 | 2023 | residual-sensation |
 
 ## Notes
 
-`/notes/` is the artist's own writing, from the same file: the eight notes in
-the order above, as bars, each its own page — in English on the English pages
-and in Korean on the Korean ones, the artist wrote both — and the title of
-their thesis last, with the thesis itself as a PDF under it
+`/notes/` is the artist's own writing: the five notes in the order above, as
+bars, each its own page — in English on the English pages and in Korean on the
+Korean ones, the artist wrote both — and the title of their thesis last, with
+the thesis itself as a PDF under it
 (`public/notes/the-sacred-in-a-godless-age.pdf` — the file the artist sent,
 2026-11-13, published as sent at the owner's word: its cover carries the
 student number, and its declaration pages the signatures of the artist and
-three advisors). The artist asked for the bars
-and the pages, with each note's works shown as photos like the list
-(2026-11-09). It is the one place on the site with the artist's words
+three advisors). The artist asked for the bars and the pages (2026-11-09). A
+note's page is its text alone: the works that used to hang under each note,
+as photos like the list, came down with the rewrite of 2026-11-22 (the
+owner). It is the one place on the site with the artist's words
 about the work; a work page still says only title, year, medium and size, with
 its themes as links to these notes. The text is the artist's, line for line
 (a blank line in the file is a new paragraph, a line break inside one is a
-`<br>`); only plain misspellings are corrected — 맡닿음 → 맞닿음, 엔디 워홀 →
-앤디 워홀 — and anything less certain stays as written and goes to TODO.md.
+`<br>`); only plain misspellings are corrected — none in this text — and
+anything less certain stays as written and goes to TODO.md. The eight notes it
+replaced are in the git history (before 2026-11-22).

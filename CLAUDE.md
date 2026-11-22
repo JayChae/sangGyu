@@ -24,8 +24,8 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   list pages (its pinned works taken out and hung first), each work page
   tagging the themes `WORKS.md` marks it with (links to their notes) and
   leading back to the list and nowhere else (no `rel=prev/next`), and the
-  notes page holding one bar per theme, each to its own page hanging exactly
-  the works it marks. Run it after adding, moving, renaming or reordering
+  notes page holding one bar per theme, each to its own page, which hangs no
+  works. Run it after adding, moving, renaming or reordering
   anything. There is no other lint/test tooling.
 - `scripts/pages.py` holds the one model of how Cloudflare Pages maps a URL to
   a file (clean URLs, `index.html`, case-sensitivity) and the site's `ORIGIN`
@@ -57,9 +57,9 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   `/ko/` directory tree. Every page links its counterpart (`hreflang`
   alternates + the header language toggle) and carries a self-referencing
   `rel=canonical` and `og:url`, absolute on `ORIGIN`. `og:image` is the page's
-  own hero at the 1200 tier; pages without one (landing, list, CV, notes) use the
-  first work on the list, a theme's note its first work (or the list's, while it
-  has none), the exhibition page its first featured work.
+  own hero at the 1200 tier; pages without one (landing, list, CV, the notes
+  and each theme's note) use the first work on the list, the exhibition page
+  its first featured work.
   `sitemap.xml` is hand-written like everything else — add both URLs of a new
   page to it (`check-links.py` refuses to pass otherwise).
 - **Hypermedia philosophy.** HATEOAS: every page reachable by links, navigation
@@ -69,8 +69,9 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
 - **Use HTML to the fullest.** Prefer an HTML element or attribute over CSS,
   and CSS over JS. JS is a progressive enhancement only (the arrows and dots
   on the exhibition's phone photo strip — which swipes on its own, in CSS; the
-  site works without it). The list page has none: no search, no filter — a
-  theme's works are its note's page (the artist, 2026-11-10).
+  site works without it). The list page has none: no search, no filter (the
+  artist, 2026-11-10) — and a theme's note no longer lists its works either
+  (2026-11-22), so a work's themes are found on the work's own page alone.
 - **Images are always WebP**, responsive (`srcset` 480/640/960/1200/1600) with
   explicit `width`/`height` (no layout shift), `loading="lazy"` below the fold
   — and on the list, on *every* card, the pinned rows included. The columns
@@ -122,7 +123,7 @@ public/                          ← Cloudflare Pages output directory
   cv/index.html, ko.html         the artist's CV (English on both pages) — the first bar on the list;
                                  its group exhibitions link the ORIGIN SEOUL 2026 page
   notes/index.html, ko.html      the artist's themes as bars + thesis title and its PDF — the second bar
-  notes/<theme>/index.html, ko.html   one page per theme: the artist's note, then its works as on the list
+  notes/<theme>/index.html, ko.html   one page per theme: the artist's note, its text alone — no works under it
   exhibitions/<name>/            self-contained exhibition mini-sites (see WORKS.md)
   css/site.css                   shared styles (design system)
   img/<slug>/{480,640,960,1200,1600}.webp  one folder per artwork (extra views: <slug>/view2-*.webp;
