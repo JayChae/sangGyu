@@ -32,7 +32,8 @@ side under it.
 
 ## Type
 
-- Body: 16px / 1.7 sans. Korean pages add `letter-spacing: -0.01em`.
+- Body: 16px / 1.7 sans. Korean text adds `letter-spacing: -0.01em`, keyed to
+  `[lang="ko"]` wherever it starts; English set inside it (`[lang="en"]`) does not.
 - Kicker: 11px serif, uppercase, `letter-spacing: .22em`, muted.
 - Captions / tombstones / years: serif italic, 13–14px, muted. The trio
   (serif + italic + muted) is one grouped rule per stylesheet; a component
@@ -73,7 +74,7 @@ side under it.
   `border-top` rule, title, serif tombstone — and nothing else in words: a
   work page is title, year, medium, size, then its themes as a second
   tombstone line, each a link to the page of the artist's note on it (the
-  artist asked for the tags, 2026-11-08). Every other photo of the work hangs
+  artist asked for the tags, 2026-11-08, and redrew them 2026-11-27). Every other photo of the work hangs
   below the tombstone as a `.work-view` plate, in the artist's order, with a
   short serif caption where one says something (detail, installation view,
   side) and none otherwise.
@@ -99,24 +100,30 @@ side under it.
 - `.bars` — the artist's ways in, as long boxes ruled in ink, one under the
   other, each the name alone in sans 600. Across the top of the list, above
   the "Works" title, the CV and the notes, in the order of the artist's
-  sketch; on `/notes/`, one per theme. The artist asked for long boxes rather
-  than cards (2026-11-09), and for nothing in them but the name (2026-11-10).
+  sketch. The artist asked for long boxes rather than cards (2026-11-09), and
+  for nothing in them but the name (2026-11-10).
 - `.work-hero` / `.work-view` — the image plates on a detail page. `site.css`
   centres them; a page's own `<style>` sets only the `max-width` it wants.
 - `.tombstone` — serif muted "year · medium · size" line; also the line of a
   work's themes, and under the thesis its PDF. A link in it — or in a plate's
   caption (A New Number's PDF) — carries a hairline, no louder than the line.
-- `.notes` — the artist's notes. `/notes/` is the themes as `.bars`, then the
-  thesis title, and under it the PDF as a tombstone line (language, pages,
-  size: it is 1.7 MB, so the reader is told before tapping). Each theme has its own page (`/notes/<theme>/`), set like a
-  work page without the photo: the note's title as the `<h1>` under the ink
-  rule, the text at the reading measure (the artist's line breaks kept as
-  `<br>`), and nothing under it: the works a note names used to hang there as
-  the list's cards, and came down with the notes' rewrite (2026-11-22).
+- `.notes` — the artist's notes. `/notes/` is the themes as a `.tree`, then
+  the thesis title, and under it the PDF as a tombstone line (language, pages,
+  size: it is 1.7 MB, so the reader is told before tapping). Each theme has
+  its own page (`/notes/<theme>/`), set like a work page without the photo:
+  the note's title as the `<h1>` under the ink rule, the text at the reading
+  measure, a `<p>` per paragraph; then, ruled off in hairline under a
+  "Related works" kicker, the works the artist marks with the theme, as the
+  list's `.gallery` cards (the artist, 2026-11-27). A note no work is marked
+  with is its text alone.
+- `.tree` — the themes as the artist drew them (2026-11-27): a nested `<ul>`,
+  each name hanging from the one above by an ink ㄴ. The names are set like
+  `.bars` and are the only thing in it: no box, no photo.
 - `.cv` — the CV: a `<dl>` per section, the year in the caption serif beside
   its line. Built from tokens only, so it sits on the white wall (`/cv/`) and
-  in the dark room (the exhibition page) unchanged. It is English on the
-  Korean pages too (`lang="en"`, no Korean tracking) — the owner's choice.
+  in the dark room (the exhibition page) unchanged. `/cv/ko` is the artist's
+  Korean CV (2026-11-27); the exhibition page's CV is English on both pages
+  (`lang="en"`).
 - `.work-nav` — the one way out of a work: a single centred "All works /
   전체 작품" link under a hairline. No prev/next; the list holds the order.
 
@@ -171,7 +178,8 @@ what the crossing paints is entirely CSS's to decide. Measured in Chrome
 (screencast, frame by frame): out 1.1s; back 14ms with the frame after the list
 already the empty wall, and `name-settle` / `name-light` running from there.
 
-**3 · The works are hung** (the list's `.gallery`, 0.7s). Every card lifts
+**3 · The works are hung** (the list's `.gallery`, and the same cards under a
+note, 0.7s). Every card lifts
 14px and resolves at once, so the top edge of the list is one straight line from the first
 frame — the artist asked for it (2026-09-11). It used to be staggered, 45ms a
 card, but the columns are filled one after another, so the top of the second
@@ -201,7 +209,10 @@ the landing's type ever changes, rebuild the icon with it.
   animates, only how far the tap carries a scroller the reader could just as
   well have swiped by hand, and `prefers-reduced-motion` drops it to `auto`. A
   fourth animated thing anywhere on the site is still a bug.
-- Never crop an artwork. Never place text over an artwork. (The landing's
+- Never crop an artwork, nor fit it to a fixed ratio or frame: every photo
+  keeps its own shape, everywhere — the list, a note's works, a work page
+  (the owner, 2026-11-27: "예술 작품은 있는 그대로 보여주고 싶으니까 정형화된
+  비율로 맞추지 않는 걸 목표로"). Never place text over an artwork. (The landing's
   drawing is not a work on the list: the artist made it to stand behind the
   name.)
 - Alt text describes the artwork plainly, in the page language.

@@ -23,10 +23,11 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   and the works on disk are exactly `WORKS.md`'s, walked in its order by both
   list pages (its pinned works taken out and hung first), each work page
   tagging the themes `WORKS.md` marks it with (links to their notes) and
-  leading back to the list and nowhere else (no `rel=prev/next`), and the
-  notes page holding one bar per theme, each to its own page, which hangs no
-  works. Run it after adding, moving, renaming or reordering
-  anything. There is no other lint/test tooling.
+  leading back to the list and nowhere else (no `rel=prev/next`), the notes
+  page drawing the themes as `WORKS.md`'s tree, and each theme's page
+  hanging exactly the works `WORKS.md` marks with it. Run it after adding,
+  moving, renaming or reordering anything. There is no other lint/test
+  tooling.
 - `scripts/pages.py` holds the one model of how Cloudflare Pages maps a URL to
   a file (clean URLs, `index.html`, case-sensitivity) and the site's `ORIGIN`
   (`https://sanggyu.pages.dev`). Both `check-links.py` and `serve.py` import
@@ -70,8 +71,8 @@ python3 scripts/build-qr.py [--mm N] [--clear] [/path ...]   # print-ready QR fo
   and CSS over JS. JS is a progressive enhancement only (the arrows and dots
   on the exhibition's phone photo strip — which swipes on its own, in CSS; the
   site works without it). The list page has none: no search, no filter (the
-  artist, 2026-11-10) — and a theme's note no longer lists its works either
-  (2026-11-22), so a work's themes are found on the work's own page alone.
+  artist, 2026-11-10). The way from a theme to its works is a plain page:
+  the theme's note, its works hung under it (2026-11-27).
 - **Images are always WebP**, responsive (`srcset` 480/640/960/1200/1600) with
   explicit `width`/`height` (no layout shift), `loading="lazy"` below the fold
   — and on the list, on *every* card, the pinned rows included. The columns
@@ -120,10 +121,10 @@ public/                          ← Cloudflare Pages output directory
   works/index.html, ko.html      gallery list — the CV and notes as bars, then the artist's
                                  pinned works in justified rows, then the masonry
   works/<slug>/index.html, ko.html   one hand-made page per artwork
-  cv/index.html, ko.html         the artist's CV (English on both pages) — the first bar on the list;
+  cv/index.html, ko.html         the artist's CV (EN / the artist's own KO) — the first bar on the list;
                                  its group exhibitions link the ORIGIN SEOUL 2026 page
-  notes/index.html, ko.html      the artist's themes as bars + thesis title and its PDF — the second bar
-  notes/<theme>/index.html, ko.html   one page per theme: the artist's note, its text alone — no works under it
+  notes/index.html, ko.html      the artist's themes as their tree + thesis title and its PDF — the second bar
+  notes/<theme>/index.html, ko.html   one page per theme: the artist's note, then the works marked with it
   exhibitions/<name>/            self-contained exhibition mini-sites (see WORKS.md)
   css/site.css                   shared styles (design system)
   img/<slug>/{480,640,960,1200,1600}.webp  one folder per artwork (extra views: <slug>/view2-*.webp;

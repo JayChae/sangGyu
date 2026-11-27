@@ -42,14 +42,14 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/ko" />
   </url>
   <url>
-    <loc>https://sanggyu.pages.dev/notes/geometric-and-organic-forms/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/geometric-and-organic-forms/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/geometric-and-organic-forms/ko" />
+    <loc>https://sanggyu.pages.dev/notes/residual-sensation/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/residual-sensation/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/residual-sensation/ko" />
   </url>
   <url>
-    <loc>https://sanggyu.pages.dev/notes/geometric-and-organic-forms/ko</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/geometric-and-organic-forms/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/geometric-and-organic-forms/ko" />
+    <loc>https://sanggyu.pages.dev/notes/residual-sensation/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/residual-sensation/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/residual-sensation/ko" />
   </url>
   <url>
     <loc>https://sanggyu.pages.dev/notes/vanishing-point/</loc>
@@ -62,24 +62,24 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/vanishing-point/ko" />
   </url>
   <url>
-    <loc>https://sanggyu.pages.dev/notes/oxidation/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/oxidation/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/oxidation/ko" />
+    <loc>https://sanggyu.pages.dev/notes/negativity/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/negativity/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/negativity/ko" />
   </url>
   <url>
-    <loc>https://sanggyu.pages.dev/notes/oxidation/ko</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/oxidation/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/oxidation/ko" />
+    <loc>https://sanggyu.pages.dev/notes/negativity/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/negativity/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/negativity/ko" />
   </url>
   <url>
-    <loc>https://sanggyu.pages.dev/notes/residual-sensation/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/residual-sensation/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/residual-sensation/ko" />
+    <loc>https://sanggyu.pages.dev/notes/trace/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/trace/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/trace/ko" />
   </url>
   <url>
-    <loc>https://sanggyu.pages.dev/notes/residual-sensation/ko</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/residual-sensation/" />
-    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/residual-sensation/ko" />
+    <loc>https://sanggyu.pages.dev/notes/trace/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/trace/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/trace/ko" />
   </url>
   <url>
     <loc>https://sanggyu.pages.dev/notes/intaglio/</loc>
@@ -90,6 +90,26 @@
     <loc>https://sanggyu.pages.dev/notes/intaglio/ko</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/intaglio/" />
     <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/intaglio/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/notes/oxidation/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/oxidation/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/oxidation/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/notes/oxidation/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/oxidation/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/oxidation/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/notes/ruins-and-remnants/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/ruins-and-remnants/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/ruins-and-remnants/ko" />
+  </url>
+  <url>
+    <loc>https://sanggyu.pages.dev/notes/ruins-and-remnants/ko</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sanggyu.pages.dev/notes/ruins-and-remnants/" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sanggyu.pages.dev/notes/ruins-and-remnants/ko" />
   </url>
   <url>
     <loc>https://sanggyu.pages.dev/works/a-cushion/</loc>

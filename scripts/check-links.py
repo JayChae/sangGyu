@@ -12,9 +12,10 @@
    the artist's pinned works taken out and hung first, in their own list. A
    work page tags the themes the artist's sheet marks it with, linking to
    their notes, and leads back to the list and nowhere else: no prev/next
-   chain. The notes page holds one bar per theme, in order, named as its
-   note; each theme's own page carries that name and hangs no works — a note
-   is its text alone.
+   chain. The notes page draws the themes as the artist's tree, each branch
+   under the one WORKS.md hangs it from, named as its tag; each theme's own
+   page carries its note's name and hangs the works the sheet marks with it,
+   newest first, as WORKS.md's works table (the pins are the list's alone).
 4. a plates strip carries one dot per photo, in both locales.
 
 Checks 2 and 3 exist because the only authoring method here is copy-paste-then-
@@ -133,11 +134,14 @@ pinned = [r[0] for r in table("pinned")[1]]
 if set(pinned) - set(rows):
     errors.append("WORKS.md: pins %s, not in the works table"
                   % sorted(set(pinned) - set(rows)))
-# the artist's themes, in the order of their notes, with the name a work
-# page's tag gives each one, per locale, and the heading of each one's note.
+# the artist's themes, their tree read top to bottom: the theme each hangs
+# under, the name a work page's tag (and the tree) gives it, per locale, and
+# the heading of its note. A nested list reads top to bottom too, so a page
+# draws exactly these rows, in this order, or the table is not a tree.
 theme_rows = table("theme")[1]
-themes = {r[0]: {"index.html": r[1], "ko.html": r[2]} for r in theme_rows}
-note_names = {r[0]: {"index.html": r[3], "ko.html": r[4]} for r in theme_rows}
+under = {r[0]: r[1] for r in theme_rows}
+themes = {r[0]: {"index.html": r[2], "ko.html": r[3]} for r in theme_rows}
+note_names = {r[0]: {"index.html": r[4], "ko.html": r[5]} for r in theme_rows}
 # the artist's sheet: a column per theme, ● where it marks a work
 header, sheet = table("work")
 if header[1:] != list(themes):
@@ -147,21 +151,35 @@ marked = {r[0]: [t for t, m in zip(header[1:], r[1:]) if m == "●"] for r in sh
 if set(marked) - set(rows):
     errors.append("WORKS.md: the sheet names %s, not in the works table"
                   % sorted(set(marked) - set(rows)))
-# the sheet's works not on the site yet keep their themes as a list of keys,
-# waiting for a page: a mistyped key would surface only when it gets one
-for r in table("작품 (not on the site yet)")[1]:
-    waiting = [t.strip() for t in r[2].split(",") if t.strip()]
-    unknown = [t for t in waiting if t not in themes]
-    if unknown:
-        errors.append("WORKS.md: %s is marked %s, not among the themes"
-                      % (r[0], unknown))
+
+
+def note_link(suffix):
+    """A link to a note's page, capturing (theme, its text)."""
+    return rf'<a href="/notes/([a-z-]+)/{suffix[1:]}">([^<]+)</a>'
 
 
 def note_links(html, suffix):
     """Each link to a note's page in `html`: (theme, its text). The text is
     unescaped — WORKS.md writes the names plain, a page may write "&amp;"."""
-    found = re.findall(rf'<a href="/notes/([a-z-]+)/{suffix[1:]}">([^<]+)</a>', html)
+    found = re.findall(note_link(suffix), html)
     return [(theme, unescape(text)) for theme, text in found]
+
+
+def tree(html, suffix):
+    """Each link to a note's page in `html`, top to bottom: (theme, the theme
+    it hangs under, its text). A link hangs under the <li> around the <li> it
+    sits in; one in no <li> at all is a root, so a stray link shows up too."""
+    found, open_ = [], []
+    for li, end, theme, text in re.findall(rf'(<li\b)|(</li>)|{note_link(suffix)}', html):
+        if li:
+            open_.append("")
+        elif end:
+            open_ = open_[:-1]
+        else:
+            found.append((theme, open_[-2] if len(open_) > 1 else "", unescape(text)))
+            if open_:
+                open_[-1] = theme
+    return found
 
 
 on_disk = sorted(d.name for d in (ROOT / "works").iterdir() if d.is_dir())
@@ -199,26 +217,23 @@ else:
                 check(work, label == themes.get(tag, {}).get(name),
                       f"tag {tag} reads {label!r}, WORKS.md names it otherwise")
 
-        # the notes: /notes/ is one bar per theme, in the artist's order, named
-        # as its note; each theme's own page carries that name and links no
-        # work — the cards that hung under a note must not creep back in
+        # the notes: the tree, then each note's name and works
         page = ROOT / "notes" / name
         html = page.read_text(encoding="utf-8")
-        bars = note_links(html, suffix)
-        check(page, [b[0] for b in bars] == list(themes),
-              f"notes {[b[0] for b in bars]} != WORKS.md themes {list(themes)}")
-        for theme, label in bars:
-            check(page, label == note_names.get(theme, {}).get(name),
-                  f"{theme}: bar reads {label!r}, WORKS.md names the note otherwise")
+        drawn = tree(html, suffix)
+        want = [(t, under[t], themes[t][name]) for t in themes]
+        check(page, drawn == want, f"tree {drawn} != WORKS.md {want}")
+        for theme in themes:
             note = ROOT / "notes" / theme / name
             if not exists(note):
-                continue  # check 1 has already reported the bar's broken link
+                continue  # check 1 has already reported the tree's broken link
             html = note.read_text(encoding="utf-8")
+            label = note_names[theme][name]
             h1 = attr(html, r'<h1 itemprop="name">([^<]+)</h1>')
-            check(note, h1 and unescape(h1) == label,
-                  f"its <h1> must read {label!r}, as its bar")
-            check(note, not slugs(work_link, html),
-                  "a note hangs no works — its text alone")
+            check(note, h1 and unescape(h1) == label, f"its <h1> must read {label!r}")
+            hung = slugs(work_link, html)
+            want = [w for w in rows if theme in marked.get(w, [])]
+            check(note, hung == want, f"hangs {hung}, WORKS.md marks {want}")
 
 # ── 4. a plates strip is marked photo for photo ──────────────────
 
